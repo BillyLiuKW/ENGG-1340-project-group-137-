@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/kongwabillyliu/Desktop/ENGG-1340-project-group-137-",
+      "program": "/Users/kongwabillyliu/Desktop/ENGG-1340-project-group-137-/build/Debug/outDebug"
+    }
+  ]
+}
