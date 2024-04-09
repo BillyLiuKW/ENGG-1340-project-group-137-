@@ -1,9 +1,12 @@
+//Handles Game Logic
 #include <iostream>
 
-int main() {
-  bool game = true;
-  do{
-    
-  }while(game)
-  return 0
-}
+using namespace std;
+
+class GAME{
+    public:
+        void StartGame();
+        void Display(){
+            
+        }
+};

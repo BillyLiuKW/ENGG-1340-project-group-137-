@@ -1,6 +1,8 @@
+//Write moves
 #include <iostream>
+using namespace std;
 
-class skill{
+class moves{
   public:
     double base_attack;
-}
+};
