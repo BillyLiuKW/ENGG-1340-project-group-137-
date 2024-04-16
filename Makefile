@@ -1,18 +1,24 @@
-OBJECTS = character.o
+OBJECTS = character.o game.o moves.o main.o
 
-game: $(OBJECTS) 
-	g++ $(OBJECTS) -o game
+play: $(OBJECTS) 
+	g++ $(OBJECTS) -o play
 
-GAME.o: game.cpp game.h
-	g++ -c game.cpp -o GAME.o
+game.o: game.cpp game.hpp character.cpp character.hpp moves.cpp moves.hpp
+	g++ -c game.cpp -o game.o
 
-character.o: character.cpp character.h
-	g++  -c character.cpp -o character.o
+moves.o: moves.cpp moves.hpp
+	g++ -c moves.cpp -o moves.o
+
+main.o: main.cpp game.cpp game.hpp character.cpp character.hpp moves.cpp moves.hpp
+	g++ -c main.cpp -o main.o
+
+character.o: character.cpp character.hpp
+	g++ -c character.cpp -o character.o
 
 test: 
-	./game
+	./play
 clean:
-	rm -f $(OBJECTS) game
+	rm -f $(OBJECTS) play
 
 
-.PHONY: clean
+.PHONY: clean test
