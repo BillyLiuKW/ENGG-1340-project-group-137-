@@ -5,5 +5,5 @@ int main() {
   do{
     
   }while(game)
-  return 0
+  return 0;
 }

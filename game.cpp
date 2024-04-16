@@ -1,28 +1,35 @@
 //Handles Game Logic
 #include <iostream>
+#include <string>
+#include <iomanip>
 #include "character.h"
 using namespace std;
 
+void pass() {
+    int a = 0;
+}
+
 class GAME{
     public:
+        // To handle the game logic.
         void StartGame(MainCharacter m, Enemy e);
         // To display the gameplay screen. 
-        void Display();
-        // To check whether the maincharacter or the enemy die. It reads both 
-        bool checkhp(MainCharacter m, Enemy e);
-        // To check whether the user choose skill out of range (e.g. there are totally 4 skills but the user entered to use the 5th skill)
-        bool illegalmove(int chosen);
+        void Display(const string& Maincharacter_name, int Maincharacter_hp, int Maincharacter_atk, const string& enemy_name, int enemy_hp, int enemy_atk);
+        // To check whether the character dies. It can check both ends.
+        bool survive(int hp);
+        // To check whether the user choose skill out of range (e.g. there are totally 4 skills but the user chose the 5th skill)
+        bool invalid_skill(int chosen);
 };
 
 void GAME::StartGame(MainCharacter m, Enemy e) {
-    Display();
+    Display(m.name,m.hp, m.atk, e.name, e.hp, e.atk);
     while (true) {
         // Get user input for chosen skill
-        int chosenSkill;
+        int chosen_Skill;
         cout << "Please choose the skill you want to apply : ";
-        cin >> chosenSkill;
+        cin >> chosen_Skill;
         // Check if the chosen skill is illegal
-        if (! illegalmove(chosenSkill)) {
+        if (! invalid_skill(chosen_Skill)) {
             // Perform the skill action
             // ...
             
@@ -30,12 +37,17 @@ void GAME::StartGame(MainCharacter m, Enemy e) {
             // ...
             
             // Check if any character has died
-            if (! checkhp(m, e)) {
-                // Handle game over or retry option
-                break;
+            pass();
+            if (! survive(m.hp)) {
+            //player dead and need functions to provide retry function 
+            pass();
+            }
+
+            else if (! survive(e.hp)) {
+                pass();
             }
         } else {
-            cout << "Illegal move! Please choose a valid skill." << endl;
+            cout << "Invalid choice! Please choose a valid skill." << endl;
         }
     }
 }
@@ -136,18 +148,17 @@ void GAME::Display(const string& Maincharacter_name, int Maincharacter_hp, int M
     // For example, you can print a visual representation of the battle or any other relevant information
 }
 
-bool GAME::checkhp(MainCharacter m, Enemy e) {
-    if (m.hp <= 0) {
+bool GAME::survive(int hp) {
+    if (hp <= 0) {
         return false;
-        // may insert another function to store game status and provide options for retry.
     }
 
-    else if (e.hp <= 0) {
-        return true;
-        //may insert another function to store game status and proceed to next level.
+    else {
+        return true; 
     }
 }
 
-bool GAME::illegalmove(int chosen) {
+bool GAME::invalid_skill(int chosen) {
     // Insert code to check if the chosen skill is out of range
+    pass();
 }
