@@ -9,9 +9,17 @@ using namespace std;
 
 MainCharacter::MainCharacter(){
     int hp = 100; // Numbers subject to change
+    int max_hp = hp;
     int atk = 25;
     int def = 10;
     string name = "Hero";
+    image =
+    {
+        "",
+    };
+    height = image.size();
+    width = image[0].size();
+    
     vector<int> moveSet;
     //moveSet[0-3] (int) = ID for a move in moves.cpp
 
@@ -79,9 +87,13 @@ Enemy::Enemy(int type){
             {
                 Dummy* dummyEnemy = new Dummy();
                 hp = dummyEnemy->hp;
+                max_hp = dummyEnemy->hp;
                 atk = dummyEnemy->atk;
                 def = dummyEnemy->def;
                 name = dummyEnemy->name;
+                image = dummyEnemy->image;
+                height = image.size();
+                width = image[0].size();
                 delete dummyEnemy;
                 break;
             }
@@ -89,9 +101,13 @@ Enemy::Enemy(int type){
             {
                 Goblin* goblinEnemy = new Goblin();
                 hp = goblinEnemy->hp;
+                max_hp = goblinEnemy->hp;
                 atk = goblinEnemy->atk;
                 def = goblinEnemy->def;
                 name = goblinEnemy->name;
+                image = goblinEnemy->image;
+                height = image.size();
+                width = image[0].size();
                 delete goblinEnemy;
                 break;
                 }
