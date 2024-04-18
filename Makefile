@@ -2,22 +2,22 @@ OBJECTS = character.o game.o moves.o main.o
 FLAGS = "-std=c++11"
 
 play: $(OBJECTS) 
-	g++ $(OBJECTS) -o play
+	g++ $(FLAGS) $(OBJECTS) -o play
 
 game.o: game.cpp game.hpp character.cpp character.hpp moves.cpp moves.hpp
-	g++ -c game.cpp -o game.o
+	g++ $(FLAGS) -c game.cpp -o game.o
 
 moves.o: moves.cpp moves.hpp
-	g++ -c moves.cpp -o moves.o
+	g++ $(FLAGS) -c moves.cpp -o moves.o
 
 main.o: main.cpp game.cpp game.hpp character.cpp character.hpp moves.cpp moves.hpp
-	g++ -c main.cpp -o main.o
+	g++ $(FLAGS) -c main.cpp -o main.o
 
 character.o: character.cpp character.hpp
-	g++ -c character.cpp -o character.o
+	g++ $(FLAGS) -c character.cpp -o character.o
 
 screen.o: screen.cpp screen.hpp textformat.hpp character.cpp character.hpp
-	g++ -std=c++11 -c screen.cpp -o screen.o
+	g++ $(FLAGS) -std=c++11 -c screen.cpp -o screen.o
 
 test: 
 	./play
