@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <vector>
 using namespace std;
 
 class MainCharacter{
@@ -21,6 +22,7 @@ class Dummy{
         int atk;
         int def;
         string name;
+        vector<string> image;
 };
 class Goblin{
     public:
@@ -29,6 +31,7 @@ class Goblin{
         int atk;
         int def;
         string name;
+        vector<string> image;
 };
 class Enemy{
     public:
@@ -37,6 +40,7 @@ class Enemy{
         int atk;
         int def;
         string name;
+        vector<string> image;
 };
 
 #endif
