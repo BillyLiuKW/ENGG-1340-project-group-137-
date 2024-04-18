@@ -15,7 +15,7 @@ main.o: main.cpp game.cpp game.hpp character.cpp character.hpp moves.cpp moves.h
 character.o: character.cpp character.hpp
 	g++ -c character.cpp -o character.o
 
-screen.o: screen.cpp screen.hpp textformat.hpp
+screen.o: screen.cpp screen.hpp textformat.hpp character.cpp character.hpp
 	g++ -std=c++11 -c screen.cpp -o screen.o
 
 test: 
