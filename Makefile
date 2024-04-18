@@ -17,7 +17,7 @@ character.o: character.cpp character.hpp
 	g++ $(FLAGS) -c character.cpp -o character.o
 
 screen.o: screen.cpp screen.hpp textformat.hpp character.cpp character.hpp
-	g++ $(FLAGS) -std=c++11 -c screen.cpp -o screen.o
+	g++ $(FLAGS) -c screen.cpp -o screen.o
 
 test: 
 	./play
