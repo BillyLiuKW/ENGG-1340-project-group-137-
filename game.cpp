@@ -4,6 +4,7 @@
 #include <iomanip>
 #include "character.hpp"
 #include "game.hpp"
+#include "screen.hpp"
 using namespace std;
 
 void pass() {
