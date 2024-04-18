@@ -170,7 +170,7 @@ void Screen::insert_battelfield(MainCharacter& m, Enemy& e){
 void Screen::insert_information(int start_row, int start_col, Enemy info){
     string ATK_info = "ATK: " + to_string(info.atk);
     int max_health_bar = 10;
-    int health_bar =  info.hp/info.max_hp * max_health_bar;
+    int health_bar =  info.hp * max_health_bar / info.max_hp;
     if (health_bar > max_health_bar){
         health_bar = max_health_bar;
     }
@@ -190,7 +190,7 @@ void Screen::insert_information(int start_row, int start_col, Enemy info){
 void Screen::insert_information(int start_row, int start_col, MainCharacter info){
     string ATK_info = "ATK: " + to_string(info.atk);
     int max_health_bar = 10;
-    int health_bar =  info.hp/info.max_hp * max_health_bar;
+    int health_bar =  info.hp * max_health_bar / info.max_hp;
     if (health_bar > max_health_bar){
         health_bar = max_health_bar;
     }
