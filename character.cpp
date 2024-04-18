@@ -8,11 +8,11 @@
 using namespace std;
 
 MainCharacter::MainCharacter(){
-    int hp = 100; // Numbers subject to change
-    int max_hp = hp;
-    int atk = 25;
-    int def = 10;
-    string name = "Hero";
+    hp = 100; // Numbers subject to change
+    max_hp = hp;
+    atk = 25;
+    def = 10;
+    name = "Hero";
     image =
     {
         "aaaaaaaaaaaaaaaaaaaaa",
@@ -34,7 +34,7 @@ MainCharacter::MainCharacter(){
     height = image.size();
     width = image[0].size();
     
-    vector<int> moveSet;
+    moveSet;
     //moveSet[0-3] (int) = ID for a move in moves.cpp
 
 
