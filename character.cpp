@@ -29,21 +29,21 @@ Dummy::Dummy(){
     name = "Dummy";
     image =
     {
-    "      {;   ...      "
-    "     xp|  rnczLL    "
-    "   .10//  zvZLZ|'   "
-    "  ^}xi\"   UYLZpp]   "
-    " '[zi$  {cndpbkY//  "
-    "lvXz' :tnvvzYYUOUYx,"
-    " ^~}Qt>'fYYYJLLmpr~?"
-    "   .)ZZ.rJYJLZ0wq~fC"
-    "        vCJQQmZwbhY\""
-    "        'LULOqZdwL  "
-    "         $`lC.';$   "
-    "           UUX      "
-    "           Yx'      "
-    "           Jx.      "
-    "           OQ-      "
+        "      {;   ...      "
+        "     xp|  rnczLL    "
+        "   .10//  zvZLZ|'   "
+        "  ^}xi\"   UYLZpp]   "
+        " '[zi$  {cndpbkY//  "
+        "lvXz' :tnvvzYYUOUYx,"
+        " ^~}Qt>'fYYYJLLmpr~?"
+        "   .)ZZ.rJYJLZ0wq~fC"
+        "        vCJQQmZwbhY\""
+        "        'LULOqZdwL  "
+        "         $`lC.';$   "
+        "           UUX      "
+        "           Yx'      "
+        "           Jx.      "
+        "           OQ-      "
     }
 }
 
