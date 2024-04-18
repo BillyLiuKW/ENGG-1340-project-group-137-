@@ -12,7 +12,7 @@ void pass() {
 }
 
 
-
+// update 1.0.0 new display is avaliable
 void GAME::StartGame(MainCharacter& m, Enemy& e) { 
     display.insert_battelfield(m, e); // new display
     display.print_screen();
