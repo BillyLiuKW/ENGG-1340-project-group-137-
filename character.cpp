@@ -94,6 +94,58 @@ Goblin::Goblin(){
     };
 }
 
+Mutant::Mutant(){
+    hp = 85;
+    atk = 30;
+    def = 10;
+    name = "Mutant";
+    image = 
+    {
+        "     ww    i     hd     ",
+        "      tw  o   ifw       ",
+        "     ; ??fbhjwu }@      ",
+        "    <adsad#^CADmhg>>    ",
+        "     \\ADd#fdgPdgf/      ",
+        " uu   \\ja\\u/^%/   uu    ",
+        "  rty  i$YDnjdI@  uyy   ",
+        "  adasL  dja_d  dasyu   ",
+        "         k dad d        ",
+        "         t wrr @        ",
+        "         ( wre )        ",
+        "   tjoej & #GT ^ gnjrg  ",
+        "   tuu   { +da }   ert  ",
+        "  uu     % Wds $     uu ",
+        "         !ANJDS*DS^     "
+    };
+}
+
+Robot::Robot(){
+    hp = 220;
+    atk = 10;
+    def = 20;
+    name = "Robot";
+    image = 
+    {
+        "       gg               gg      ",
+        "        ggg           ggg       ",
+        "          &NKA&Ye3adnl)         ",
+        "        e!n o dna o k!ppp       ",
+        "        eppdkasdkAMSDKSopp      ",
+        "           #*&DSAJDSNA9         ",             
+        "   wSidjjdks<D:ALP{#KP)ACPA}[]w ",
+        "   wew[MKLADM(#0l[da;[3wPE])czw ",
+        "   wwwedasd]salsa[dlEP92-2c]cjw ",
+        "   wsas#*DI*       &{D]sa3o}ifw ",
+        "   wrer&$//' ^][   ds$mc$g\"vaw  ",
+        "       ANJirj349p9eJcfadad;e    ",
+        "       |dkadmk     sdadd*|      ",
+        "       |las,d,     masmdl|      ",
+        "       |ND*UH*     tD[3,s|      ",
+      
+    };
+}
+
+
 Enemy::Enemy(int type){
         switch(type){
             //When making Enemy objects, use the following syntax: Enemy enemy(1) to create different types of enemies
@@ -123,6 +175,34 @@ Enemy::Enemy(int type){
                 height = image.size();
                 width = image[0].size();
                 delete goblinEnemy;
+                break;
+                }
+            case 4:
+            {
+                Mutant* mutantEnemy = new Mutant();
+                hp = mutantEnemy->hp;
+                max_hp = mutantEnemy->hp;
+                atk = mutantEnemy->atk;
+                def = mutantEnemy->def;
+                name = mutantEnemy->name;
+                image = mutantEnemy->image;
+                height = image.size();
+                width = image[0].size();
+                delete mutantEnemy;
+                break;
+                }
+            case 6:
+            {
+                Robot* robotEnemy = new Robot();
+                hp = robotEnemy->hp;
+                max_hp = robotEnemy->hp;
+                atk = robotEnemy->atk;
+                def = robotEnemy->def;
+                name = robotEnemy->name;
+                image = robotEnemy->image;
+                height = image.size();
+                width = image[0].size();
+                delete robotEnemy;
                 break;
                 }
             default:

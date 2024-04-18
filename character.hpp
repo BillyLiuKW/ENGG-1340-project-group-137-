@@ -42,6 +42,28 @@ class Goblin{
         int height;
         int width;
 };
+class Mutant{
+    public:
+        Mutant();
+        int hp;
+        int atk;
+        int def;
+        string name;
+        vector<string> image;
+        int height;
+        int width;
+};
+class Robot{
+    public:
+        Robot();
+        int hp;
+        int atk;
+        int def;
+        string name;
+        vector<string> image;
+        int height;
+        int width;
+};
 class Enemy{
     public:
         Enemy(int type);
