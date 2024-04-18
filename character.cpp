@@ -44,7 +44,7 @@ Dummy::Dummy(){
         "           Yx'      "
         "           Jx.      "
         "           OQ-      "
-    }
+    };
 }
 
 Goblin::Goblin(){
@@ -69,7 +69,7 @@ Goblin::Goblin(){
         "       Mao  &Wb\"     "
         "      hQk   oh*      "
         "      pZh   MM#ho    "
-    }
+    };
 }
 
 Enemy::Enemy(int type){
