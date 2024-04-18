@@ -153,17 +153,17 @@ void Screen::insert_dialog(){
 }
 void Screen::insert_battelfield(MainCharacter& m, Enemy& e){
     //caculate the centre
-    int start_row = 5;
+    int start_row = 3;
     int start_col = (0+width-1)/2 - e.width/2;
 
     //display enemy
     insert_item(start_row, start_col, e.image, {});
     insert_information(start_row, start_col, e);
-    start_row += (e.height + 3 + 5); // new row = original row + enemy height + infomation height + spacing 5
+    start_row += (e.height + 3 + 3); // new row = original row + enemy height + infomation height + spacing 5
     //diaplay a speration
     insert_speration(start_row);
 
-    start_row += 5; //spacing
+    start_row += 3; //spacing
     insert_item(start_row, start_col, m.image, {});
     insert_information(start_row, start_col, m);
 }
