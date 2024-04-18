@@ -1,5 +1,6 @@
 #include "screen.hpp"
 #include "textformat.hpp"
+#include "character.hpp"
 
 #include <iostream>
 #include <ctime>
@@ -150,9 +151,59 @@ void Screen::insert_speration(int row){
 void Screen::insert_dialog(){
     
 }
-void Screen::insert_battelfield(){
-    //insert all enemy and your character
+void Screen::insert_battelfield(MainCharacter& m, Enemy& e){
+    //caculate the centre
+    int start_row = 5;
+    int start_col = (0+width-1)/2 - e.width/2;
+
+    //display enemy
+    insert_item(start_row, start_col, e.image, {});
+    insert_information(start_row, start_col, e);
+    start_row += (e.height + 3 + 5); // new row = original row + enemy height + infomation height + spacing 5
+    //diaplay a speration
+    insert_speration(start_row);
+
+    start_row += 5; //spacing
+    insert_item(start_row, start_col, m.image, {});
+    insert_information(start_row, start_col, e);
 }
-void Screen::insert_information(){
-    //insert the character information under the figure, include name, HP. SP... (use in insert_battelfield)
+void Screen::insert_information(int start_row, int start_col, Enemy info){
+    string ATK_info = "ATK: " + to_string(info.atk);
+    int max_health_bar = 10;
+    int health_bar =  info.hp/info.max_hp * max_health_bar;
+    if (health_bar > max_health_bar){
+        health_bar = max_health_bar;
+    }
+    if (health_bar < 0){
+        health_bar = 0;
+    }
+    string spacing(max_health_bar, ' ');
+    string health = to_string(info.hp);
+    string hp_info = "HP [" + spacing + "] " + health;
+    for (int i = 0; i < health_bar; i++){
+        hp_info[4+i] = '=';
+    }
+    insert_item(start_row + info.height + 1, start_col, {info.name}, {});
+    insert_item(start_row + info.height + 1, start_col, {ATK_info}, {"cyan"});
+    insert_item(start_row + info.height + 2, start_col, {hp_info}, {"red","bold"});
 }
+void Screen::insert_information(int start_row, int start_col, MainCharacter info){
+    string ATK_info = "ATK: " + to_string(info.atk);
+    int max_health_bar = 10;
+    int health_bar =  info.hp/info.max_hp * max_health_bar;
+    if (health_bar > max_health_bar){
+        health_bar = max_health_bar;
+    }
+    if (health_bar < 0){
+        health_bar = 0;
+    }
+    string spacing(max_health_bar, ' ');
+    string health = to_string(info.hp);
+    string hp_info = "HP [" + spacing + "] " + health;
+    for (int i = 0; i < health_bar; i++){
+        hp_info[4+i] = '=';
+    }
+    insert_item(start_row + info.height + 1, start_col, {info.name}, {});
+    insert_item(start_row + info.height + 1, start_col, {ATK_info}, {"cyan"});
+    insert_item(start_row + info.height + 2, start_col, {hp_info}, {"red","bold"});
+    }
