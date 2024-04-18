@@ -164,8 +164,8 @@ void Screen::insert_battelfield(MainCharacter& m, Enemy& e){
     insert_speration(start_row);
 
     start_row += 5; //spacing
-    insert_item(start_row, start_col, m.image, {});
-    insert_information(start_row, start_col, e);
+    //insert_item(start_row, start_col, m.image, {});
+    //insert_information(start_row, start_col, e);
 }
 void Screen::insert_information(int start_row, int start_col, Enemy info){
     string ATK_info = "ATK: " + to_string(info.atk);
