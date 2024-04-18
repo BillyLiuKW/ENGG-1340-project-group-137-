@@ -1,4 +1,4 @@
-OBJECTS = character.o game.o moves.o main.o
+OBJECTS = character.o game.o moves.o main.o screen.o
 FLAGS = "-std=c++11"
 
 play: $(OBJECTS) 
