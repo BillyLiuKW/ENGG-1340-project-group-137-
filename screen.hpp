@@ -37,8 +37,13 @@ class Screen{
         void insert_battelfield();
         // insert the information of the character
         void insert_information();
-        //make the edge and conern of the screen
+        //insert a line to seperate the display screen
+        void insert_speration(int row);
+        //insert dialog
+        void insert_dialog();
+
     private:
+        //make the edge and conern of the screen
         void create_edge();
         // only use in sort_list(), 
         static bool compareItems(const format &item1, const format &item2);
