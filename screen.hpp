@@ -1,5 +1,5 @@
-#ifndef SCREEEN.HPP
-#define SCREEEN.HPP
+#ifndef SCREEEN_HPP
+#define SCREEEN_HPP
 
 #include <iostream>
 #include <string>
@@ -31,10 +31,6 @@ class Screen{
         void insert_item(int start_row, int start_col, const vector<string> item, vector<string> types);
         // print screen
         void print_screen();
-        // insert the text format in the screen
-        void insert_format(format f);
-        // insert the text format in the format_position list
-        void formatting(int row, int col, string &line);
         // print all the format location
         void print_format();
         // insert the battelfield to the screen
@@ -48,6 +44,10 @@ class Screen{
         static bool compareItems(const format &item1, const format &item2);
         // sort the format_position by column position in descending order
         void sort_list();
+        // insert the text format in the screen
+        void insert_format(format f);
+        // insert the text format in the format_position list
+        void formatting(int row, int col, string &line);
 
 };
 #endif
