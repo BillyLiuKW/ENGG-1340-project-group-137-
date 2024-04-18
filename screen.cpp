@@ -165,7 +165,7 @@ void Screen::insert_battelfield(MainCharacter& m, Enemy& e){
 
     start_row += 5; //spacing
     insert_item(start_row, start_col, m.image, {});
-    insert_information(start_row, start_col, e);
+    insert_information(start_row, start_col, m);
 }
 void Screen::insert_information(int start_row, int start_col, Enemy info){
     string ATK_info = "ATK: " + to_string(info.atk);
@@ -184,8 +184,8 @@ void Screen::insert_information(int start_row, int start_col, Enemy info){
         hp_info[4+i] = '=';
     }
     insert_item(start_row + info.height + 1, start_col, {info.name}, {});
-    insert_item(start_row + info.height + 1, start_col, {ATK_info}, {"cyan"});
-    insert_item(start_row + info.height + 2, start_col, {hp_info}, {"red","bold"});
+    insert_item(start_row + info.height + 2, start_col, {ATK_info}, {"cyan"});
+    insert_item(start_row + info.height + 3, start_col, {hp_info}, {"red","bold"});
 }
 void Screen::insert_information(int start_row, int start_col, MainCharacter info){
     string ATK_info = "ATK: " + to_string(info.atk);
@@ -204,6 +204,6 @@ void Screen::insert_information(int start_row, int start_col, MainCharacter info
         hp_info[4+i] = '=';
     }
     insert_item(start_row + info.height + 1, start_col, {info.name}, {});
-    insert_item(start_row + info.height + 1, start_col, {ATK_info}, {"cyan"});
-    insert_item(start_row + info.height + 2, start_col, {hp_info}, {"red","bold"});
+    insert_item(start_row + info.height + 2, start_col, {ATK_info}, {"cyan"});
+    insert_item(start_row + info.height + 3, start_col, {hp_info}, {"red","bold"});
     }
