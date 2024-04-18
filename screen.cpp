@@ -139,3 +139,20 @@ void Screen::print_format(){
         cout << "row: " << f.start_row << " col: " << f.start_col << " length: " << f.length << endl;
     }
 }
+void Screen::insert_speration(int row){
+    if (row < height){
+        for (int col = 1; col < width-1; col++){
+            screen[row][col] = '=';}
+        screen[row][0] = '+';
+        screen[row][width-1] = '+';
+    }
+}
+void Screen::insert_dialog(){
+    
+}
+void Screen::insert_battelfield(){
+    //insert all enemy and your character
+}
+void Screen::insert_information(){
+    //insert the character information under the figure, include name, HP. SP... (use in insert_battelfield)
+}
