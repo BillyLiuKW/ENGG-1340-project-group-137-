@@ -23,6 +23,8 @@ class Dummy{
         int def;
         string name;
         vector<string> image;
+        int height;
+        int width;
 };
 class Goblin{
     public:
@@ -32,6 +34,8 @@ class Goblin{
         int def;
         string name;
         vector<string> image;
+        int height;
+        int width;
 };
 class Enemy{
     public:
@@ -41,6 +45,8 @@ class Enemy{
         int def;
         string name;
         vector<string> image;
+        int height
+        int width;
 };
 
 #endif
