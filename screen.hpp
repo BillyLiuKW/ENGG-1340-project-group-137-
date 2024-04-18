@@ -28,7 +28,7 @@ class Screen{
         };
 
         // insert the item to the screen, remove all format information and put them in the format_position list
-        void insert_item(int start_row, int start_col, const vector<string> item, vector<string> types);
+        void insert_item(int start_row, int start_col, vector<string> item, vector<string> types);
         // print screen
         void print_screen();
         // print all the format location
