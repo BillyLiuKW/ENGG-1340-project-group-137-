@@ -45,7 +45,7 @@ class Enemy{
         int def;
         string name;
         vector<string> image;
-        int height
+        int height;
         int width;
 };
 
