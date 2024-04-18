@@ -2,9 +2,11 @@
 #define GAME_HPP
 
 #include "character.hpp"
+#include "screen.hpp"
 using namespace std;
 class GAME{
     public:
+        Screen display(50, 50); // size of the display screen
         // To handle the game logic.
         void StartGame(MainCharacter& m, Enemy& e);
         // To display the gameplay screen. 
