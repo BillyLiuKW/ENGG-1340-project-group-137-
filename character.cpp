@@ -37,20 +37,20 @@ Dummy::Dummy(){
     name = "Dummy";
     image =
     {
-        "      {;   ...      "
-        "     xp|  rnczLL    "
-        "   .10//  zvZLZ|'   "
-        "  ^}xi\"   UYLZpp]   "
-        " '[zi$  {cndpbkY//  "
-        "lvXz' :tnvvzYYUOUYx,"
-        " ^~}Qt>'fYYYJLLmpr~?"
-        "   .)ZZ.rJYJLZ0wq~fC"
-        "        vCJQQmZwbhY\""
-        "        'LULOqZdwL  "
-        "         $`lC.';$   "
-        "           UUX      "
-        "           Yx'      "
-        "           Jx.      "
+        "      {;   ...      ",
+        "     xp|  rnczLL    ",
+        "   .10//  zvZLZ|'   ",
+        "  ^}xi\"   UYLZpp]   ",
+        " '[zi$  {cndpbkY//  ",
+        "lvXz' :tnvvzYYUOUYx,",
+        " ^~}Qt>'fYYYJLLmpr~?",
+        "   .)ZZ.rJYJLZ0wq~fC",
+        "        vCJQQmZwbhY\"",
+        "        'LULOqZdwL  ",
+        "         $`lC.';$   ",
+        "           UUX      ",
+        "           Yx'      ",
+        "           Jx.      ",
         "           OQ-      "
     };
 }
@@ -62,20 +62,20 @@ Goblin::Goblin(){
     name = "Goblin";
     image = 
     {
-        "        x{-  n       "
-        "      ffZx/_t(       "
-        "     LQdYhuj)n    bQL"
-        "      uOQxfbj     |M*"
-        "       Zwaj/j[-\"fkOCC"
-        "mq-[{Xzwbpxr(?[jLZC\" "
-        "QmapOdpL|10c|?fdbtr? "
-        "  kk    Oroz(t(akoZ  "
-        "        aU!_<[/ $q   "
-        "        hdmcjfz      "
-        "        kWW*aa*      "
-        "       Omb#Mokq      "
-        "       Mao  &Wb\"     "
-        "      hQk   oh*      "
+        "        x{-  n       ",
+        "      ffZx/_t(       ",
+        "     LQdYhuj)n    bQL",
+        "      uOQxfbj     |M*",
+        "       Zwaj/j[-\"fkOCC",
+        "mq-[{Xzwbpxr(?[jLZC\" ",
+        "QmapOdpL|10c|?fdbtr? ",
+        "  kk    Oroz(t(akoZ  ",
+        "        aU!_<[/ $q   ",
+        "        hdmcjfz      ",
+        "        kWW*aa*      ",
+        "       Omb#Mokq      ",
+        "       Mao  &Wb\"     ",
+        "      hQk   oh*      ",
         "      pZh   MM#ho    "
     };
 }
