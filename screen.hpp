@@ -19,6 +19,17 @@ class Screen{
         int height, width;
         vector<format> format_position = {};
         vector<vector<char> > screen;
+        vector<string> dialogs = {}; // store any action by enemy and character
+
+        /*  a sample. use display.dialogs.push_back("dialoge") to insert new dialog.    
+            {"test1",
+            "Enemy <format><|yellow|>[Golbin]<end> has used skill <format><|purple|>[SKILL]<end>",
+            "<format><|blue|>Hero<end> <format><|red|>HP<end> <format><|red|><|bold|>-50<end>", 
+            "<format><|blue|>Hero<end> has used skill <format><|purple|>[Heal]<end>", 
+            "<format><|blue|>Hero<end> <format><|red|>HP<end> <format><|green|><|bold|>+10<end>",
+            "test6",
+            }; */ 
+
         // default construction to make a screen
         Screen(int height, int width) {
             //cout << "e" << endl;
@@ -42,7 +53,7 @@ class Screen{
         //insert a line to seperate the display screen
         void insert_speration(int row);
         //insert dialog
-        void insert_dialog();
+        void insert_dialog(int start_row);
         //clear the screeen
         void clear_screen();
 
