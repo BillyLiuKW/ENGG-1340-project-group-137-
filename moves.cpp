@@ -1,4 +1,4 @@
-//Write moves
+//Write moves (for main character)
 #include <iostream>
 #include <vector>
 #include "character.hpp"
@@ -7,12 +7,15 @@
 using namespace std;
 
 
-void moves::ExecuteMove(int ID){
+void moves::ExecuteMove(int ID,MainCharacter m){
   switch(ID){
     case 1:
-      fire();
+      basic_attack(m);
       break;
     case 2:
+      fire();
+      break;
+    case 3:
       water();
       break;
     default:
@@ -34,8 +37,9 @@ void moves::select_move_to_change(MainCharacter& character, int index, int ID){
     cout << "Move changed!" << endl;
 }
 
-
-
+int moves::basic_attack(MainCharacter m){
+  return m.atk;
+}
 
 int moves::fire(){
   cout << "Fire!" << endl;
