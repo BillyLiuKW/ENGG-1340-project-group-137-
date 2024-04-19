@@ -43,6 +43,8 @@ class Screen{
         void insert_speration(int row);
         //insert dialog
         void insert_dialog();
+        //clear the screeen
+        void clear_screen();
 
     private:
         //make the edge and conern of the screen
