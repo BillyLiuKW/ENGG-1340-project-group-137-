@@ -213,4 +213,5 @@ void Screen::clear_screen(){;
             screen[row][col] = ' ';
         }
     }
+    create_edge(); // remake the edge
 }
