@@ -68,7 +68,6 @@ class Dragon{
     public:
         Dragon();
         int hp;
-        int hp;
         int atk;
         int def;
         string name;
