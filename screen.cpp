@@ -165,7 +165,7 @@ void Screen::insert_battelfield(MainCharacter& m, Enemy& e){
     insert_speration(start_row);
 
     start_row += 3; //spacing
-    start_col = (0+width-1)/2 - m.width/2
+    start_col = (0+width-1)/2 - m.width/2;
     insert_item(start_row, start_col, m.image, {});
     insert_information(start_row, m);
 }
