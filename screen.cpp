@@ -183,7 +183,7 @@ void Screen::insert_information(int start_row, int start_col, Enemy info){
     for (int i = 0; i < health_bar; i++){
         hp_info[4+i] = '=';
     }
-    insert_item(start_row + info.height + 1, start_col, {info.name}, {});
+    insert_item(start_row + info.height + 1, start_col, {"Enemy: " + info.name}, {"underline", "bold"});
     insert_item(start_row + info.height + 2, start_col, {ATK_info}, {"cyan"});
     insert_item(start_row + info.height + 3, start_col, {hp_info}, {"red","bold"});
 }
@@ -203,7 +203,7 @@ void Screen::insert_information(int start_row, int start_col, MainCharacter info
     for (int i = 0; i < health_bar; i++){
         hp_info[4+i] = '=';
     }
-    insert_item(start_row + info.height + 1, start_col, {info.name}, {});
+    insert_item(start_row + info.height + 1, start_col, {"Main character: " + info.name}, {"underline", "bold"});
     insert_item(start_row + info.height + 2, start_col, {ATK_info}, {"cyan"});
     insert_item(start_row + info.height + 3, start_col, {hp_info}, {"red","bold"});
 }
