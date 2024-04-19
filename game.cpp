@@ -14,10 +14,11 @@ void pass() {
 
 // update 1.0.0 new display is avaliable
 void GAME::StartGame(MainCharacter& m, Enemy& e) { 
-    display.insert_battelfield(m, e); // new display
-    display.print_screen();
     //Display(m.name, m.hp,  m.atk, e.name,  e.hp, e.atk);
     while (true) {
+        display.clear()
+        display.insert_battelfield(m, e); // new display
+        display.print_screen();
         // Get user input for chosen skill
         int chosen_Skill;
         cout << "Please choose the skill you want to apply : ";
