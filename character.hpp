@@ -67,7 +67,7 @@ class Robot{
 class Dragon{
     public:
         Dragon();
-        int hp
+        int hp;
         int hp;
         int atk;
         int def;
