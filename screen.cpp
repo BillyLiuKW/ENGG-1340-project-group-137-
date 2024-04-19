@@ -31,7 +31,6 @@ void Screen::create_edge(){
     screen[height-1][width-1] = corner;
 }
 void Screen::print_screen(){
-    system("clear");
     //add the format
     sort_list();
     for (format f: format_position){
@@ -220,4 +219,5 @@ void Screen::clear_screen(){;
     }
     create_edge(); // remake the edge
     format_position = {}; //delete all format
+    system("clear"); //refresh the terminal
 }
