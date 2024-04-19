@@ -147,8 +147,16 @@ void Screen::insert_speration(int row){
         screen[row][width-1] = '+';
     }
 }
-void Screen::insert_dialog(){
-    
+void Screen::insert_dialog(int start_row){
+    int dialog_length = dialogs.size(); // number of dialog to display
+    if (dialog_length > 0){
+        int max_dialog = 5;
+        if (height - (start_row+1) < max_dialog){
+            max_dialog = height - start_row;
+        }
+        vector<string> subset(dialogs.end() - max_dialog, dialogs.end());
+        insert_item(height - max_dialog - 1, 2, subset, {}); // the format should be inside the dialog
+    }
 }
 void Screen::insert_battelfield(MainCharacter& m, Enemy& e){
     //caculate the centre
@@ -167,6 +175,12 @@ void Screen::insert_battelfield(MainCharacter& m, Enemy& e){
     start_col = (0+width-1)/2 - m.width/2;
     insert_item(start_row, start_col, m.image, {});
     insert_information(start_row, m);
+
+    //insert dislogs
+    start_row += (m.height + 3 + 3);
+    start_col = 1;
+    insert_speration(start_row);
+    insert_dialog(start_row);
 }
 void Screen::insert_information(int start_row, Enemy info){
     string ATK_info = "ATK: " + to_string(info.atk);
