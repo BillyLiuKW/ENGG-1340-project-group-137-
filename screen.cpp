@@ -219,4 +219,5 @@ void Screen::clear_screen(){;
         }
     }
     create_edge(); // remake the edge
+    format_position = {}; //delete all format
 }
