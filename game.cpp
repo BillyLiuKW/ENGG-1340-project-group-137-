@@ -16,7 +16,7 @@ void pass() {
 void GAME::StartGame(MainCharacter& m, Enemy& e) { 
     //Display(m.name, m.hp,  m.atk, e.name,  e.hp, e.atk);
     while (true) {
-        display.clear()
+        display.clear();
         display.insert_battelfield(m, e); // new display
         display.print_screen();
         // Get user input for chosen skill
