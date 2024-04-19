@@ -193,7 +193,7 @@ void Screen::insert_information(int start_row, Enemy info){
 }
 void Screen::insert_information(int start_row, MainCharacter info){
     string ATK_info = "ATK: " + to_string(info.atk);
-    int max_health_bar = 10;
+    int max_health_bar = 20;
     int start_col_info = (0+width-1)/2 - (6 + max_health_bar + 4)/2; // 4 = max digit of health
     int health_bar =  info.hp * max_health_bar / info.max_hp;
     if (health_bar > max_health_bar){
