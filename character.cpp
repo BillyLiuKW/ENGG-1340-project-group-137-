@@ -218,7 +218,7 @@ Enemy::Enemy(int type){
                 }
             case 5:
             {
-                Dragon* dragonEnemy = new Mutant();
+                Dragon* dragonEnemy = new Dragon();
                 hp = dragonEnemy->hp;
                 max_hp = dragonEnemy->hp;
                 atk = dragonEnemy->atk;
