@@ -154,22 +154,26 @@ void Screen::insert_dialog(){
 void Screen::insert_battelfield(MainCharacter& m, Enemy& e){
     //caculate the centre
     int start_row = 3;
-    int start_col = (0+width-1)/2 - e.width/2;
+    int start_col;
+    start_col = (0+width-1)/2 - e.width/2;
 
     //display enemy
     insert_item(start_row, start_col, e.image, {});
-    insert_information(start_row, start_col, e);
+    insert_information(start_row, e);
     start_row += (e.height + 3 + 3); // new row = original row + enemy height + infomation height + spacing 5
     //diaplay a speration
     insert_speration(start_row);
 
     start_row += 3; //spacing
+    start_col = (0+width-1)/2 - m.width/2
     insert_item(start_row, start_col, m.image, {});
-    insert_information(start_row, start_col, m);
+    insert_information(start_row, m);
 }
-void Screen::insert_information(int start_row, int start_col, Enemy info){
+void Screen::insert_information(int start_row, Enemy info){
     string ATK_info = "ATK: " + to_string(info.atk);
-    int max_health_bar = 10;
+    int max_health_bar = 20;
+    //return starting position 
+    int start_col_info = (0+width-1)/2 - (6 + max_health_bar + 4)/2;
     int health_bar =  info.hp * max_health_bar / info.max_hp;
     if (health_bar > max_health_bar){
         health_bar = max_health_bar;
@@ -183,13 +187,14 @@ void Screen::insert_information(int start_row, int start_col, Enemy info){
     for (int i = 0; i < health_bar; i++){
         hp_info[4+i] = '=';
     }
-    insert_item(start_row + info.height + 1, start_col, {"Enemy: " + info.name}, {"underline", "bold"});
-    insert_item(start_row + info.height + 2, start_col, {ATK_info}, {"cyan"});
-    insert_item(start_row + info.height + 3, start_col, {hp_info}, {"red","bold"});
+    insert_item(start_row + info.height + 1, start_col_info, {"Enemy: " + info.name}, {"underline", "bold"});
+    insert_item(start_row + info.height + 2, start_col_info, {ATK_info}, {"cyan"});
+    insert_item(start_row + info.height + 3, start_col_info, {hp_info}, {"red","bold"});
 }
-void Screen::insert_information(int start_row, int start_col, MainCharacter info){
+void Screen::insert_information(int start_row, MainCharacter info){
     string ATK_info = "ATK: " + to_string(info.atk);
     int max_health_bar = 10;
+    int start_col_info = (0+width-1)/2 - (6 + max_health_bar + 4)/2; // 4 = max digit of health
     int health_bar =  info.hp * max_health_bar / info.max_hp;
     if (health_bar > max_health_bar){
         health_bar = max_health_bar;
@@ -203,9 +208,9 @@ void Screen::insert_information(int start_row, int start_col, MainCharacter info
     for (int i = 0; i < health_bar; i++){
         hp_info[4+i] = '=';
     }
-    insert_item(start_row + info.height + 1, start_col, {"Main character: " + info.name}, {"underline", "bold"});
-    insert_item(start_row + info.height + 2, start_col, {ATK_info}, {"cyan"});
-    insert_item(start_row + info.height + 3, start_col, {hp_info}, {"red","bold"});
+    insert_item(start_row + info.height + 1, start_col_info, {"Main character: " + info.name}, {"underline", "bold"});
+    insert_item(start_row + info.height + 2, start_col_info, {ATK_info}, {"cyan"});
+    insert_item(start_row + info.height + 3, start_col_info, {hp_info}, {"red","bold"});
 }
 void Screen::clear_screen(){;
     for (int row = 1; row < height - 1; row++){ // do not clear the edge
