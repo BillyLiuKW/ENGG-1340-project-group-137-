@@ -15,35 +15,43 @@ void pass() {
 // update 1.0.0 new display is avaliable
 void GAME::StartGame(MainCharacter& m, Enemy& e) { 
     //Display(m.name, m.hp,  m.atk, e.name,  e.hp, e.atk);
+    display.clear_screen();
+    display.insert_battelfield(m, e); // new display
+    display.print_screen();
     while (true) {
-        display.clear_screen();
-        display.insert_battelfield(m, e); // new display
-        display.print_screen();
+
         // Get user input for chosen skill
         int chosen_Skill;
         cout << "Please choose the skill you want to apply : ";
         cin >> chosen_Skill;
         // Check if the chosen skill is illegal
-        if (! invalid_skill(chosen_Skill)) {
-            // Perform the skill action
-            // ...
-            
-            // Update the health points of the main character and the enemy
-            // ...
-            
-            // Check if any character has died
-            pass();
-            if (! survive(m.hp)) {
+        if (invalid_skill(chosen_Skill)) {
+            cout << "Invalid choice! Please choose a valid skill." << endl;
+            //continue;
+            break; //temporarily
+        }
+        // below only execute when valid skill is chosen
+        // Perform the skill action
+        // ...
+        
+        // Update the health points of the main character and the enemy
+        // ...
+        
+        // Check if any character has died
+
+        // enemy's action
+        if (! survive(m.hp)) {
             //player dead and need functions to provide retry function 
             pass();
-            }
-
-            else if (! survive(e.hp)) {
-                pass();
-            }
-        } else {
-            cout << "Invalid choice! Please choose a valid skill." << endl;
         }
+
+        else if (! survive(e.hp)) {
+            // return win function
+            pass();
+        }
+
+            
+        
         break; //temporary break to avoid infinite loop
     }
 }
