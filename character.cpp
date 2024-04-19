@@ -76,21 +76,21 @@ Goblin::Goblin(){
     name = "Goblin";
     image = 
     {
-        "        x{-  n       ",
-        "      ffZx/_t(       ",
-        "     LQdYhuj)n    bQL",
-        "      uOQxfbj     |M*",
-        "       Zwaj/j[-\"fkOCC",
-        "mq-[{Xzwbpxr(?[jLZC\" ",
-        "QmapOdpL|10c|?fdbtr? ",
-        "  kk    Oroz(t(akoZ  ",
-        "        aU!_<[/ $q   ",
-        "        hdmcjfz      ",
-        "        kWW*aa*      ",
-        "       Omb#Mokq      ",
-        "       Mao  &Wb\"     ",
-        "      hQk   oh*      ",
-        "      pZh   MM#ho    "
+        "           }X){??  v(          ",
+        "          rnpvjn}?(f]          ",
+        "        YUqdQndj1}/|       0LLL",
+        "         OLQmvcxb0tc       #*hd",
+        "          mawqdxrf()]]+ xO*<UZ ",
+        "cOJ?)xn}zuJqbwqtuLj]_[tuC)LtU  ",
+        " 0wowwtOdp0Q|]jCuL0?}xkmo|J()  ",
+        "    kk     d*j/hJ/(/)| ab*q    ",
+        "           paq}!,+<?{/fwwwZ    ",
+        "           CkdpmvuffrcC        ",
+        "           Cw*##*ahbhb         ",
+        "          OQmqh**ohkdqZ        ",
+        "          **hd    W#aqQ        ",
+        "          Lma     &hJb         ",
+        "        upbwX     M***aha      "
     };
 }
 
@@ -141,9 +141,34 @@ Robot::Robot(){
         "       |dkadmk     sdadd*|      ",
         "       |las,d,     masmdl|      ",
         "       |ND*UH*     tD[3,s|      ",
-      
     };
 }
+Dragon::Dragon(){
+    hp = 880;
+    atk = 80;
+    def = 50;
+    name = "Dragon";
+    image = 
+    {
+        "               ~Y                ",
+        "                qqx              ",
+        "   `^           (Z|      `+*zi:` ",
+        "   0Zq{          OQ/    qkpZZZOf'",
+        "!Uwmmwpk?     :|qOzQ  \"LppmpqOOt ",
+        "  JOOOwdOpw!iOwOO0wdmdk0OmwO0mpc'",
+        "  CmpOOa0OOaOptC0OdbZOpO0OpqZ]^'I",
+        " lLf/mmwO0tx< qOOm?   l  ._k<    ",
+        "      c0      lLOZ{              ",
+        "      `'       :Of               ",
+        "                 O<              ",
+        "                 ]-              ",
+        "                .x'              ",
+        "                O<   :           ",
+        "                 ]0fz,           "
+    };
+}
+
+
 
 
 Enemy::Enemy(int type){
