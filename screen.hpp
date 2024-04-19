@@ -37,8 +37,8 @@ class Screen{
         // insert the battelfield to the screen
         void insert_battelfield(MainCharacter& m, Enemy& e);
         // insert the information of the enemy of character
-        void insert_information(int row, int col, Enemy info);
-        void insert_information(int row, int col, MainCharacter info);
+        void insert_information(int row, Enemy info);
+        void insert_information(int row, MainCharacter info);
         //insert a line to seperate the display screen
         void insert_speration(int row);
         //insert dialog
