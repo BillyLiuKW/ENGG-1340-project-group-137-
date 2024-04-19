@@ -216,6 +216,20 @@ Enemy::Enemy(int type){
                 delete mutantEnemy;
                 break;
                 }
+            case 5:
+            {
+                Dragon* dragonEnemy = new Mutant();
+                hp = dragonEnemy->hp;
+                max_hp = dragonEnemy->hp;
+                atk = dragonEnemy->atk;
+                def = dragonEnemy->def;
+                name = dragonEnemy->name;
+                image = dragonEnemy->image;
+                height = image.size();
+                width = image[0].size();
+                delete dragonEnemy;
+                break;
+            }
             case 6:
             {
                 Robot* robotEnemy = new Robot();
