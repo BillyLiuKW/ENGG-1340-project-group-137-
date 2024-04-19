@@ -113,6 +113,9 @@ void Screen::formatting(int row, int col, string &line){
             if (type_pos == string::npos){
                 break;
             }
+            if (type_pos > line.find("<end>", start_pos)){ // do not find anything exceed <end>
+                break;
+            }
             int stop_pos = line.find("|>", start_pos);
             string type = line.substr(type_pos+2, stop_pos-type_pos-2); //<|type|>
             line.erase(type_pos, stop_pos-type_pos+2);
