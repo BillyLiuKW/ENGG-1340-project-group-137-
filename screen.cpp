@@ -208,8 +208,8 @@ void Screen::insert_information(int start_row, int start_col, MainCharacter info
     insert_item(start_row + info.height + 3, start_col, {hp_info}, {"red","bold"});
 }
 void Screen::clear_screen(){;
-    for (row = 1; row < height - 1; row++){ // do not clear the edge
-        for (col = 1; col < width - 1; col++){
+    for (int row = 1; row < height - 1; row++){ // do not clear the edge
+        for (int col = 1; col < width - 1; col++){
             screen[row][col] = ' ';
         }
     }
