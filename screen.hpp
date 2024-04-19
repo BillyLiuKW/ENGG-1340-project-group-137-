@@ -19,7 +19,7 @@ class Screen{
         int height, width;
         vector<format> format_position = {};
         vector<vector<char> > screen;
-        vector<string> dialogs = {}; // store any action by enemy and character
+        vector<string> dialogs = {"BATTLE START"}; // store any action by enemy and character
 
         /*  a sample. use display.dialogs.push_back("dialoge") to insert new dialog.    
             {"test1",
