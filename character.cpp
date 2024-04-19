@@ -15,21 +15,21 @@ MainCharacter::MainCharacter(){
     name = "Hero";
     image =
     {
-        "aaaaaaaaaaaaaaaaaaaaa",
-        "aaaaaaaaaaaaaaaaaaaaa",
-        "aaaaaaaaaaaaaaaaaaaaa",
-        "aaaaaaaaaaaaaaaaaaaaa",
-        "aaaaaaaaaaaaaaaaaaaaa",
-        "aaaaaaaaaaaaaaaaaaaaa",
-        "aaaaaaaaaaaaaaaaaaaaa",
-        "aaaaaaaaaaaaaaaaaaaaa",
-        "aaaaaaaaaaaaaaaaaaaaa",
-        "aaaaaaaaaaaaaaaaaaaaa",
-        "aaaaaaaaaaaaaaaaaaaaa",
-        "aaaaaaaaaaaaaaaaaaaaa",
-        "aaaaaaaaaaaaaaaaaaaaa",
-        "aaaaaaaaaaaaaaaaaaaaa",
-        "aaaaaaaaaaaaaaaaaaaaa",
+        "           '(!|cZY/         ",
+        "           0i[0f[{au        ",
+        "           BhmZzi@k+'       ",
+        ">l         `bZhoXY*/        ",
+        "z-xI      {!WknfQz8hc!      ",
+        "'[Ir/.    *jZL{}_Qo&@kk[/UU^",
+        "  \",(v1   +M#qQm*+())f&0Ob[.",
+        "     ^a#MYW:dWLX-&U8Y(8Up|  ",
+        "      ^rwO,~CXJmkq0zQptpwl  ",
+        "        <|QnUqmYBCvpYtvZY(  ",
+        "       'iudh{/uvB{|m#L)x-l  ",
+        "        :qx&  ;C`  \"O?!t    ",
+        "          \"|l         @]X|  ",
+        "         IaqL         ./c1^ ",
+        "        [cvu~          ^(ZMw"
     };
     height = image.size();
     width = image[0].size();
