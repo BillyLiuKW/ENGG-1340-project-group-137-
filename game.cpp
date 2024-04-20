@@ -17,12 +17,16 @@ void pass() {
 // update 1.0.0 new display is avaliable
 void GAME::StartGame(MainCharacter& m, Enemy& e) { 
     //Display(m.name, m.hp,  m.atk, e.name,  e.hp, e.atk);
-    display.clear_screen();
-    display.insert_battelfield(m, e); // new display
-    display.print_screen();
     int round = 1;
+    display.dialogs.push_back("<format><|bold|><|red|>Level " +  to_string(current_level) + "<end>");
+    display.dialogs.push_back("<format><|bold|>BATTLE START!<end>");
     while (round < 11) {
-        cout << "This is round " << round << endl;
+        display.clear_screen();
+        display.dialogs.push_back(" ");
+        display.dialogs.push_back("<format><|cyan|>Round " + to_string(round) + "<end>");
+        display.insert_battelfield(m, e); // new display
+        display.print_screen();
+        
         // Get user input for chosen skill
         int chosen_Skill;
         cout << "Please choose the skill you want to apply : ";
@@ -48,7 +52,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
             pass();
         }
 
-        else if (! survive(e.hp)) {
+        if (! survive(e.hp)) {
             // return win function
             Victory(m,e);
         }
@@ -173,7 +177,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e) {
         // To clear all game status 
         ifstream fin("game_status.txt");
         if (fin.good()) {
-        remove("game_status.txt");
+            remove("game_status.txt");
         }
         //End the game.
         exit(0);
@@ -181,7 +185,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e) {
     //player will proceed to next level.
     cout << "Proceeding to level " << this->current_level << " ...." << endl;
 
-    Enemy e(this->current_level);
+    Enemy e(this->current_level); // this one should have bug
     StartGame(m,e);
 
 }
