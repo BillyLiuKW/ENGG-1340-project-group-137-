@@ -68,6 +68,15 @@ Dummy::Dummy(){
         "           Jx.      ",
         "           OQ-      "
     };
+    Enemy_Skill skill1 = {1, "regenerate", "Heal", vector<string>{"e_hp 100", "e_atk 01"}};
+    Enemy_Skill skill2 = {2, "attack", "Heavy Attack", vector<string>{"m_hp -100", "m_atk -10"}};
+    Enemy_Skill skill3 = {3, "defend", "Defend", vector<string>{"e_def 10"}};
+    Enemy_Skill skill4 = {4, "interfere", "Boost", vector<string>{"e_atk 1"}};
+    skill_list.push_back(skill1);
+    skill_list.push_back(skill2);
+    skill_list.push_back(skill3);
+    skill_list.push_back(skill4);
+}
 }
 
 Goblin::Goblin(){
@@ -186,6 +195,7 @@ Enemy::Enemy(int type){
                 image = dummyEnemy->image;
                 height = image.size();
                 width = image[0].size();
+                skill_list = dummyEnemy->skill_list;
                 delete dummyEnemy;
                 break;
             }

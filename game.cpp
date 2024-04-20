@@ -7,7 +7,11 @@
 #include "character.hpp"
 #include "game.hpp"
 #include "screen.hpp"
+<<<<<<< HEAD
 #include "moves.hpp"
+=======
+#include "enemymoves.hpp"
+>>>>>>> 811891794af3dcfc43bb536c4e8f0565916f13fc
 using namespace std;
 
 void pass() {
@@ -20,6 +24,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
     moves skills;
     skills.iniializeMoves();
     //Display(m.name, m.hp,  m.atk, e.name,  e.hp, e.atk);
+    EnemyMoves e_moves;
     int round = 1;
     display.dialogs.push_back("<format><|bold|><|red|>Level " +  to_string(current_level) + "<end>");
     display.dialogs.push_back("<format><|bold|>BATTLE START!<end>");
@@ -52,6 +57,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         // Check if any character has died
 
         // enemy's action
+        //e_moves.Enemy_ExecuteMove(m, e, display.dialogs);
         if (! survive(m.hp)) {
             //player dead and need functions to provide retry function 
             pass();
