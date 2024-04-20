@@ -6,6 +6,15 @@
 #include <vector>
 using namespace std;
 
+// does not include normal attack
+struct Enemy_Skill{
+    int index; // index of the skill in the skill_list (start at 1) 0 is normal attack
+    string type; // basic type of the skill: attack/ defend/ interfere (buff or debuff)/ regenerate 
+    string skill_name;
+    vector<string> effect;
+    int uses; //if the skill is used more, it will have lower chance to be used. set to 0 if all 
+};
+
 class MainCharacter{
     public:
         MainCharacter(); // Constructer
@@ -30,6 +39,7 @@ class Dummy{
         vector<string> image;
         int height;
         int width;
+        vector<Enemy_Skill> skill_list;
 };
 class Goblin{
     public:
@@ -86,6 +96,7 @@ class Enemy{
         vector<string> image;
         int height;
         int width;
+        vector<Enemy_Skill> skill_list;
 };
 
 #endif
