@@ -207,7 +207,7 @@ int EnemyMoves::chooseSkill(vector<Enemy_Skill> skills) {
     }
     // for size > 2
     vector<double> skill_uses(type_num, 0), probability(type_num, 0), standard_score = {};
-    double mean;
+    double mean = 0;
     for (auto &skill: skills){
         skill_uses.push_back(skill.uses);
         mean += skill.uses;
