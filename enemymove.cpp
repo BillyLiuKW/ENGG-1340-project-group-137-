@@ -253,5 +253,5 @@ int EnemyMoves::chooseSkill(vector<Enemy_Skill> skills) {
     mt19937 gen(seed);
     discrete_distribution<int> distribution(probability.begin(), probability.end());
     int randomNum = distribution(gen);
-    return randomNum;
+    return skills[randomNum].index;
 }
