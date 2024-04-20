@@ -1,38 +1,39 @@
 //Write moves (for main character)
 #include <iostream>
 #include <vector>
+#include <map>
+#include <functional>
+#include <string>
 #include "character.hpp"
-
 #include "moves.hpp"
-using namespace std;
 
-void moves::Maincharacter_ExecuteMove(int ID,MainCharacter m){
-  switch(ID){
-    case 1:
-      basic_attack(m);
-      break;
-    case 2:
-      fire();
-      break;
-    case 3:
-      water();
-      break;
-    case 4:
-      vampire(m);
-    case 5:
-      heal();
-    case 6:
-      freeze(m);
-    case 7:
-      anger(m);    
-    case 8:
-      weaken(m);
-    case 9:
-      defence(m);
-    default:
-      cout << "Move not found!" << endl;
-      break;
-  }
+using namespace std;
+map<int, function<void(MainCharacter&, Enemy&, Move_info)> > moves::moveFunctions;
+vector<Move_info> moves::FULL_MOVE_POOL;
+
+int calculate_damage(double power, int self_atk, int enemy_def){
+  int damage = self_atk * power / enemy_def;
+  return damage;
+}
+
+void slash(MainCharacter &m, Enemy &e,Move_info info){
+  int damage = calculate_damage(info.power, m.atk, e.def);
+  e.hp -= damage;
+
+}
+
+void moves::iniializeMoves(){
+  Move_info slashInfo = {"Slash", 0 ,10, 20, 'p'};
+  FULL_MOVE_POOL.push_back(slashInfo);
+  moveFunctions[0] = slash;
+  //Follow this format to define more moves
+}
+
+void moves::Maincharacter_ExecuteMove(int index,MainCharacter &m, Enemy &e){
+  int ID = m.moveSet[index-1];
+  Move_info move = FULL_MOVE_POOL[ID];
+  moveFunctions[move.ID](m,e,move); //Execute the move function
+  
 }
 
 void moves::addMove(MainCharacter& character, int ID){
@@ -48,50 +49,9 @@ void moves::select_move_to_change(MainCharacter& character, int index, int ID){
     cout << "Move changed!" << endl;
 }
 
-int moves::defence(MainCharacter m){
-  cout << "DEFENCE" << endl;
-  return m.def * 1.5 ;
-}
 
-int moves::weaken(MainCharacter m){ //weaken oppenent = increase atk + self defence
-  cout << "Mali-Mali-Home" <<endl;
-  return m.atk * 1.5;
-}
 
-int moves::freeze(MainCharacter m){ // atk enemy without receiving damage
-  cout << "Let it go~~~ Let it go~~~ " << endl;
-  return m.atk;
-}
 
-int moves::anger(MainCharacter m){ //1.5 damage;
-  cout << "argh!!!" << endl;
-  return m.atk * 1.5;
-}
-
-int moves::heal(){
-  cout << "Angel is coming" << endl;
-  return 20;
-}
-
-int moves::vampire(MainCharacter m){ // hp+ half maincharacter atk, atk = half of maincharacter atk
-  cout << "Hiss!" << endl;
-  return m.atk/2;
-}
-
-int moves::basic_attack(MainCharacter m){
-  cout << "Attack !!!" << endl;
-  return m.atk;
-}
-
-int moves::fire(){
-  cout << "Fire! Roar!" << endl;
-  return 50;
-}
-int moves::water(){
-  cout << "Water! Splash!" << endl;
-  return 10;
-}
-    
 
 
 

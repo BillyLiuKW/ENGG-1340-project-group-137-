@@ -13,6 +13,7 @@ class MainCharacter{
         int max_hp;
         int atk;
         int def;
+        int mp;
         vector<int> moveSet;
         string name;
         vector<string> image;

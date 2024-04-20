@@ -7,6 +7,7 @@
 #include "character.hpp"
 #include "game.hpp"
 #include "screen.hpp"
+#include "moves.hpp"
 using namespace std;
 
 void pass() {
@@ -16,6 +17,8 @@ void pass() {
 
 // update 1.0.0 new display is avaliable
 void GAME::StartGame(MainCharacter& m, Enemy& e) { 
+    moves skills;
+    skills.iniializeMoves();
     //Display(m.name, m.hp,  m.atk, e.name,  e.hp, e.atk);
     int round = 1;
     display.dialogs.push_back("<format><|bold|><|red|>Level " +  to_string(current_level) + "<end>");
@@ -37,6 +40,8 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
             //continue;
             break; //temporarily
         }
+        skills.Maincharacter_ExecuteMove(chosen_Skill, m, e);
+
         // below only execute when valid skill is chosen
         // Perform the skill action
         // ...

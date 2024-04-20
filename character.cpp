@@ -12,6 +12,7 @@ MainCharacter::MainCharacter(){
     max_hp = hp;
     atk = 25;
     def = 10;
+    mp = 100;
     name = "Hero";
     image =
     {
@@ -45,9 +46,9 @@ MainCharacter::MainCharacter(){
 
 // All image should have a height of 15 char (width can vary)
 Dummy::Dummy(){
-    hp = 50;
+    hp = 75;
     atk = 10;
-    def = 5;
+    def = 10;
     name = "Dummy";
     image =
     {

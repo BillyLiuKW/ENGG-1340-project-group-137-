@@ -3,10 +3,12 @@
 
 #include "character.hpp"
 #include "screen.hpp"
+#include "moves.hpp"
 using namespace std;
 class GAME{
     public:
         Screen display; // size of the display screen
+        moves skills;
         GAME() : display(60, 50){};
         // To handle the game logic.
         void StartGame(MainCharacter& m, Enemy& e);

@@ -48,6 +48,9 @@ void select_option(int option, GAME game) {
             
             MainCharacter m;
             Enemy e(game.current_level);
+            moves skills;
+            skills.iniializeMoves();
+            skills.addMove(m, 0);
             cout << "Proceeding to level 1...." << endl;
             sleep(1);
             game.StartGame(m,e);
@@ -97,7 +100,8 @@ void select_option(int option, GAME game) {
             }
             
             else {
-                main(); // this won't work
+                break;
+                //main(); this won't work
             }
             break;
         }
