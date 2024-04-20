@@ -185,8 +185,8 @@ void GAME::Victory(MainCharacter &m, Enemy &e) {
     //player will proceed to next level.
     cout << "Proceeding to level " << this->current_level << " ...." << endl;
 
-    Enemy e(this->current_level); // this one should have bug
-    StartGame(m,e);
+    Enemy new_e(this->current_level); 
+    StartGame(m, new_e);
 
 }
 
