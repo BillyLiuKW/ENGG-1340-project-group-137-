@@ -170,11 +170,10 @@ int EnemyMoves::chooseSkillType(Enemy &e){
     cout << endl;
     // *** end */
 
-    time_t seed = time(NULL);
-    mt19937 gen(seed);
-
+    random_device rd;
+    mt19937 generator(rd()); 
     discrete_distribution<int> distribution(probability.begin(), probability.end());
-    int randomNum = distribution(gen);
+    int randomNum = distribution(generator);
 
     int skillID;
     switch (randomNum)
@@ -218,7 +217,7 @@ int EnemyMoves::chooseSkill(vector<Enemy_Skill> skills) {
     }
     if (variance == 0){
         for (int i = 0; i < size; i++){
-            probability[i] = 1/size;
+            probability[i] = 1/static_cast<double>(size);
         }
     }
     else {
@@ -240,7 +239,7 @@ int EnemyMoves::chooseSkill(vector<Enemy_Skill> skills) {
         for (int i = 0; i < size; i++){
             probability[i] = (max - min)/(standard_score[i] - min + 1);
         }
-        int prob_sum = 0;
+        double prob_sum = 0;
         for (int i = 0; i < size; i++){
             prob_sum += probability[i];
         }
@@ -248,10 +247,29 @@ int EnemyMoves::chooseSkill(vector<Enemy_Skill> skills) {
             probability[i] /= prob_sum;
         }
     }
+    /*// test 
+    cout << endl <<"Mean(1): " << mean <<" Variance(1): " << variance ;
+    cout << endl;
+    cout << "skill_uses(1) ";
+    for (auto i: skill_uses){
+        cout << i << " ";
+    }
+    cout << endl;
+    cout << "standard_score(1) ";
+    for (auto i: standard_score){
+        cout << i << " ";
+    }
+    cout << endl;
+    cout << "Prob(1): ";
+    for (auto i: probability){
+        cout << i << " ";
+    }
+    cout << endl;
+    // test end*/
 
-    time_t seed = time(NULL);
-    mt19937 gen(seed);
+    random_device rd;
+    mt19937 generator(rd()); 
     discrete_distribution<int> distribution(probability.begin(), probability.end());
-    int randomNum = distribution(gen);
+    int randomNum = distribution(generator);
     return skills[randomNum].index;
 }
