@@ -19,9 +19,10 @@ class Screen{
         int height, width;
         vector<format> format_position = {};
         vector<vector<char> > screen;
+        int max_dialog = 8;
         vector<string> dialogs = {"BATTLE START"}; // store any action by enemy and character
 
-        /*  a sample. use display.dialogs.push_back("dialoge") to insert new dialog.    
+        /*  a sample. use display.dialogs.push_back("dialoge") to insert new dialog. 
             {"test1",
             "Enemy <format><|yellow|>[Golbin]<end> has used skill <format><|purple|>[SKILL]<end>",
             "<format><|blue|>Hero<end> <format><|red|>HP<end> <format><|red|><|bold|>-50<end>", 
@@ -35,6 +36,7 @@ class Screen{
             //cout << "e" << endl;
             this->height = height; // assign the value of the size
             this->width = width;
+            dialogs.resize(max_dialog, " ");
             screen.resize(height, vector<char>(width, ' '));
             create_edge();
         };
