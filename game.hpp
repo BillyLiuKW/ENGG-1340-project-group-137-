@@ -16,6 +16,14 @@ class GAME{
         bool survive(int hp);
         // To check whether the user choose skill out of range (e.g. there are totally 4 skills but the user chose the 5th skill)
         bool invalid_skill(int chosen);
+        //To handle the victory in each level.
+        void Victory(MainCharacter &m, Enemy &e);
+        // To retry the game.
+        void Gameretry();
+        //For levels distributing rewards for player.
+        void reward();
+        //To save to the level.
+        int current_level = 1;
 };
 
 

@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <fstream>
+#include <cstdlib>
 #include "character.hpp"
 #include "game.hpp"
 #include "screen.hpp"
@@ -18,8 +20,9 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
     display.clear_screen();
     display.insert_battelfield(m, e); // new display
     display.print_screen();
-    while (true) {
-
+    int round = 1;
+    while (round < 11) {
+        cout << "This is round " << round << endl;
         // Get user input for chosen skill
         int chosen_Skill;
         cout << "Please choose the skill you want to apply : ";
@@ -47,12 +50,12 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
 
         else if (! survive(e.hp)) {
             // return win function
-            pass();
+            Victory(m,e);
         }
 
             
         
-        break; //temporary break to avoid infinite loop
+        round++;
     }
 }
 
@@ -129,4 +132,60 @@ bool GAME::invalid_skill(int chosen) {
     // Insert code to check if the chosen skill is out of range
     pass();
     return 0;
+}
+
+void GAME::Victory(MainCharacter &m, Enemy &e) {
+    cout << "Congratulations! The " << e.name << " is defeated!" << endl;
+    this->current_level++;
+    if (this->current_level == 3 || this->current_level == 5 || this->current_level == 7) {
+        //player can get reward from these level and they are not required to beat any enemy in these levels.
+        reward();
+        //these levels are checkpoints as well.
+        this->current_level++;
+        char y_n;
+        cout << "Do you want to store your game status? [y/n] " << endl;
+        if (y_n == 'y') {
+            ofstream fout("game_status.txt");
+            if (fout.is_open()) {
+                fout << m.hp << " " << m.max_hp << " " << m.atk << " " << m.def;
+                fout << m.moveSet.size();
+                for (int k = 0; k < m.moveSet.size(); k++) {
+                    fout << m.moveSet[k] << " ";
+                }
+                fout << this->current_level;
+                fout.close();
+                cout << "Game status saved successfully! " << endl;
+            }
+
+            else{
+                cout << "Error! Not able to save your game status. " << endl;
+            }
+        }
+
+        else {
+            cout << "remarkably brave! " << endl;
+        }
+    }
+    // That means the player has win the game.
+    else if (this->current_level > 10) {
+        cout << "Congratulations! You have defeated all enemies in this game! You are a true hero!!" << endl;
+        cout << "See you next time!" << endl;
+        // To clear all game status 
+        ifstream fin("game_status.txt");
+        if (fin.good()) {
+        remove("game_status.txt");
+        }
+        //End the game.
+        exit(0);
+    }
+    //player will proceed to next level.
+    cout << "Proceeding to level " << this->current_level << " ...." << endl;
+
+    Enemy e(this->current_level);
+    StartGame(m,e);
+
+}
+
+void GAME::reward() {
+    pass();
 }

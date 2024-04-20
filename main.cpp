@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <cstdlib>
 #include <unistd.h>
 #include "game.hpp"
 #include "character.hpp"
@@ -42,7 +43,8 @@ void select_option(int option, GAME game) {
           }
 
           MainCharacter m;
-          Enemy e(1);
+          Enemy e(game.current_level);
+          cout << "Proceeding to level 1...." << endl; 
           game.StartGame(m,e);
         }
 
@@ -65,15 +67,28 @@ void select_option(int option, GAME game) {
             fin >> m.moveSet[j];
           }
           // to read the level stored.
-          int slevel;
-          fin >> slevel;
+          fin >> game.current_level;
           //close the file after reading all data.
           cout << "Game status successfully loaded" << endl;
           fin.close();
-          sleep(1); // time delay prevent the screen flush the output message
-          Enemy e(slevel);
+          Enemy e(game.current_level);
+          cout << "Proceeding to level " << game.current_level << endl;
           game.StartGame(m,e);
 
+        }
+
+        case(5):
+        {
+          char y_n;
+          cout << "Do you want to exit the game? [y/n]" << endl;
+          if (y_n == 'y') {
+            cout << "Thank you and goodbye!" << endl;
+            exit(0);
+          }
+
+          else {
+            main();
+          }
         }
 
 
