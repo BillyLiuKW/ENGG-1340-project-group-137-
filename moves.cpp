@@ -6,8 +6,7 @@
 #include "moves.hpp"
 using namespace std;
 
-
-void moves::ExecuteMove(int ID,MainCharacter m){
+void moves::Maincharacter_ExecuteMove(int ID,MainCharacter m){
   switch(ID){
     case 1:
       basic_attack(m);
@@ -18,6 +17,14 @@ void moves::ExecuteMove(int ID,MainCharacter m){
     case 3:
       water();
       break;
+    case 4:
+      vampire(m);
+    case 5:
+      heal();
+    case 6:
+      freeze(m);
+    case 7:
+      anger(m);
     default:
       cout << "Move not found!" << endl;
       break;
@@ -37,16 +44,37 @@ void moves::select_move_to_change(MainCharacter& character, int index, int ID){
     cout << "Move changed!" << endl;
 }
 
+int moves::freeze(MainCharacter m){ // atk enemy without receiving damage
+  cout << "Let it go~~~ Let it go~~~ " << endl;
+  return m.atk;
+}
+
+int moves::anger(MainCharacter m){ //1.5 damage;
+  cout << "argh!!!" << endl;
+  return m.atk * 1.5;
+}
+
+int moves::heal(){
+  cout << "Angel is coming" << endl;
+  return 20;
+}
+
+int moves::vampire(MainCharacter m){ // hp+ half maincharacter atk, atk = half of maincharacter atk
+  cout << "Hiss!" << endl;
+  return m.atk/2;
+}
+
 int moves::basic_attack(MainCharacter m){
+  cout << "Attack !!!" << endl;
   return m.atk;
 }
 
 int moves::fire(){
-  cout << "Fire!" << endl;
+  cout << "Fire! Roar!" << endl;
   return 50;
 }
 int moves::water(){
-  cout << "Water!" << endl;
+  cout << "Water! Splash!" << endl;
   return 10;
 }
     

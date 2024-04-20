@@ -5,7 +5,7 @@
 using namespace std;
 class moves{
     public:
-        void ExecuteMove(int ID, MainCharacter m);
+        void Maincharacter_ExecuteMove(int ID, MainCharacter m);
         void getMoveName(int ID);
         //Get the name of the move
         void addMove(MainCharacter& character, int ID);
@@ -17,6 +17,10 @@ class moves{
         int water();
         int fire();
         int basic_attack(MainCharacter m);
+        int vampire(MainCharacter m);
+        int heal();
+        int freeze(MainCharacter m);
+        int anger(MainCharacter m);
 };
 
 #endif
