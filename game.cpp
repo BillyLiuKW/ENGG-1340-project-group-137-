@@ -7,6 +7,7 @@
 #include "character.hpp"
 #include "game.hpp"
 #include "screen.hpp"
+#include "enemymoves.hpp"
 using namespace std;
 
 void pass() {
@@ -17,6 +18,7 @@ void pass() {
 // update 1.0.0 new display is avaliable
 void GAME::StartGame(MainCharacter& m, Enemy& e) { 
     //Display(m.name, m.hp,  m.atk, e.name,  e.hp, e.atk);
+    EnemyMoves e_moves;
     int round = 1;
     display.dialogs.push_back("<format><|bold|><|red|>Level " +  to_string(current_level) + "<end>");
     display.dialogs.push_back("<format><|bold|>BATTLE START!<end>");
@@ -47,6 +49,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         // Check if any character has died
 
         // enemy's action
+        //e_moves.Enemy_ExecuteMove(m, e, display.dialogs);
         if (! survive(m.hp)) {
             //player dead and need functions to provide retry function 
             pass();
