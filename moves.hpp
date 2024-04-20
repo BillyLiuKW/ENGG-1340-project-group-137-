@@ -21,6 +21,8 @@ class moves{
         int heal();
         int freeze(MainCharacter m);
         int anger(MainCharacter m);
+        int defence(MainCharacter m);
+        int weaken(MainCharacter m);
 };
 
 #endif

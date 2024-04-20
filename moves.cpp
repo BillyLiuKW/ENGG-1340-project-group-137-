@@ -24,7 +24,11 @@ void moves::Maincharacter_ExecuteMove(int ID,MainCharacter m){
     case 6:
       freeze(m);
     case 7:
-      anger(m);
+      anger(m);    
+    case 8:
+      weaken(m);
+    case 9:
+      defence(m);
     default:
       cout << "Move not found!" << endl;
       break;
@@ -42,6 +46,16 @@ void moves::select_move_to_change(MainCharacter& character, int index, int ID){
     //Note that the player would see {1,2,3,4} instead of {0,1,2,3}
     character.moveSet[index-1] = ID;
     cout << "Move changed!" << endl;
+}
+
+int moves::defence(MainCharacter m){
+  cout << "DEFENCE" << endl;
+  return m.def * 1.5 ;
+}
+
+int moves::weaken(MainCharacter m){ //weaken oppenent = increase atk + self defence
+  cout << "Mali-Mali-Home" <<endl;
+  return m.atk * 1.5;
 }
 
 int moves::freeze(MainCharacter m){ // atk enemy without receiving damage
