@@ -153,7 +153,6 @@ void Screen::insert_speration(int row){
 void Screen::insert_dialog(int start_row){
     int dialog_length = dialogs.size(); // number of dialog to display
     if (dialog_length > 0){
-        int max_dialog = 5;
         if (height - (start_row+1) < max_dialog){
             max_dialog = height - start_row;
         }
@@ -229,11 +228,8 @@ void Screen::insert_information(int start_row, MainCharacter info){
     insert_item(start_row + info.height + 3, start_col_info, {hp_info}, {"red","bold"});
 }
 void Screen::clear_screen(){;
-    for (int row = 1; row < height - 1; row++){ // do not clear the edge
-        for (int col = 1; col < width - 1; col++){
-            screen[row][col] = ' ';
-        }
-    }
+    screen.clear(); 
+    screen.resize(height, vector<char>(width, ' '));
     create_edge(); // remake the edge
     format_position = {}; //delete all format
     system("clear"); //refresh the terminal
