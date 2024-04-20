@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <unistd.h>
 #include "game.hpp"
 #include "character.hpp"
 #include "moves.hpp"
@@ -69,6 +70,7 @@ void select_option(int option, GAME game) {
           //close the file after reading all data.
           cout << "Game status successfully loaded" << endl;
           fin.close();
+          sleep.(1); // time delay prevent the screen flush the output message
           Enemy e(slevel);
           game.StartGame(m,e);
 
