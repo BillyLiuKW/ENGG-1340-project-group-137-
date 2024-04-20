@@ -135,7 +135,7 @@ int EnemyMoves::chooseSkillType(Enemy &e){
                 probability[i+1] = difference/(standard_score[i] - min + 1) * skill_weighting[i]/prob_sum * type_num_s;
             }
         }
-        double sum;
+        double sum = 0;
         for (int i = 0; i < type_num; i++){
             if (skill_num[i] != 0) // only calculate type that have at least 1 skill.
                 sum += probability[i+1];
