@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <vector>
+#include <utility>
 using namespace std;
 
 // does not include normal attack
@@ -22,6 +23,10 @@ class MainCharacter{
         int max_hp;
         int atk;
         int def;
+        vector<pair<int, double> > atk_boost = {}; // use {boost value, how many round remain} store the buff in attack
+        int atk_boost_sum = 0; // the total buff after each move.
+        vector<pair<int, int> > def_boost = {}; // same 
+        int def_boost_sum = 0; 
         int mp;
         int max_mp;
         vector<int> moveSet;
@@ -116,6 +121,10 @@ class Enemy{
         int max_hp;
         int atk;
         int def;
+        vector<pair<int, int> > atk_boost = {}; // use {boost value, how many round remain}
+        int atk_boost_sum = 0;
+        vector<pair<int, int> > def_boost = {};
+        int def_boost_sum = 0;
         string name;
         vector<string> image;
         int height;
