@@ -185,7 +185,7 @@ void Screen::insert_battelfield(MainCharacter& m, Enemy& e){
     insert_dialog(start_row);
 }
 void Screen::insert_information(int start_row, Enemy info){
-    string ATK_info = "ATK: " + to_string(info.atk);
+    string ATK_info = "ATK: " + to_string(info.atk) + "(" + ((info.atk_boost_sum >= 0)? "+" : "") + to_string(info.atk_boost_sum) + ")";
     int max_health_bar = 20;
     //return starting position 
     int start_col_info = (0+width-1)/2 - (6 + max_health_bar + 4)/2;
