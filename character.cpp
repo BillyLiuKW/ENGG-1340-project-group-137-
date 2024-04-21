@@ -132,7 +132,7 @@ Goblin::Goblin(){
 }
 
 Mutant::Mutant(){
-    hp = 85;
+    hp = 105;
     atk = 30;
     def = 10;
     name = "Mutant";
@@ -157,9 +157,9 @@ Mutant::Mutant(){
 }
 
 Robot::Robot(){
-    hp = 220;
+    hp = 620;
     atk = 10;
-    def = 20;
+    def = 30;
     name = "Robot";
     image = 
     {
@@ -181,7 +181,7 @@ Robot::Robot(){
     };
 }
 Dragon::Dragon(){
-    hp = 880;
+    hp = 780;
     atk = 80;
     def = 50;
     name = "Dragon";
@@ -207,7 +207,7 @@ Dragon::Dragon(){
 
 Demon::Demon(){
     hp = 500;
-    atk = 100;
+    atk = 110;
     def = 30;
     name = "Demon";
     image = 
@@ -231,8 +231,8 @@ Demon::Demon(){
 }
 
 Titan::Titan(){
-    hp = 800;
-    atk = 50;
+    hp = 850;
+    atk = 65;
     def = 60;
     name = "Titan";
     image = 

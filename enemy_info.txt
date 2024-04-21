@@ -1,0 +1,30 @@
+Dummy: An enchanted human-like creature. It is often used for practising and 
+testing. Its abilities on both ends are relatively low and easy to deal with.
+
+Goblin: A small and nimble creature. It is known to be playful and fast. 
+Goblins can be very powerful if they unite. However, in the dungeon, 
+you will only encounter one goblin.
+
+Mutant: The product of a genetic mutation that possesses grotesque, 
+non-human characteristics. Mutants have enhanced physical abilities 
+and may have unique abilities or deformities.
+
+Robot: It is a mechanical entity designed for various purposes with tough shell 
+but it has become uncontrolled. An uncontrolled robot is dangerous because 
+it will attack you persistently and it possess extremely sturdy shell with 
+high defensive traits. Engaging a battle with a robot requires targeted attack 
+and prevent time wasting.
+
+Dragon: A powerful and dignified creature. It is known for its all-around abilities 
+and impressive strength. Engaging a battle with dragon requires patience, 
+careful planning and strategy owing to its deadly attacks and tough defence. 
+
+Demon: An evil incarnate coming from the depths of darkness. 
+Demon possess dark magic and superpower, making them a big threat in attack and 
+becoming a formidable enemy. Engaging a battle with demon requires iron-walled 
+defence and targeted attack on its weakness.
+
+Titan: A giant and ancient being, towering over everything it meets. Titan possess 
+incredible strength and toughness. It often destroys objects by several punches. 
+Engaging a battle with titan requires well planning and superior skills as they are 
+versatile on both ends, especially durability.

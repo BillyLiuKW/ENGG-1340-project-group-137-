@@ -90,6 +90,23 @@ void select_option(int option, GAME game) {
             break;
         }
 
+        case 3:
+        {
+           ifstream fin("enemy_info.txt");
+           if (fin.is_open()) {
+            string line;
+            while (getline(fin,line)) {
+                cout << line << endl;
+            }
+            fin.close();
+           }
+           //whenever there is a bug:
+           else {
+            cout << "Error: unable to provide enemy handbook," << endl;
+           }
+
+        }
+
         default:
         {
             break;
@@ -124,6 +141,6 @@ int main() {
                 continue;
             }
         }
-        return 0;
     }
+     return 0;
 }
