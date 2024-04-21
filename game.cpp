@@ -3,6 +3,7 @@
 #include <string>
 #include <iomanip>
 #include <fstream>
+#include <cctype>
 #include <cstdlib>
 #include <unistd.h>
 #include "character.hpp"
@@ -156,7 +157,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e) {
     this->current_level++;
     if (this->current_level == 3 || this->current_level == 5 || this->current_level == 7) {
         //player can get reward from these level and they are not required to beat any enemy in these levels.
-        reward();
+        reward(m);
         //these levels are checkpoints as well.
         this->current_level++;
         char y_n;
@@ -260,7 +261,107 @@ void GAME::Gameretry(){
     }
 }
 
+bool isInteger(string x){
+    for (char c : x) {
+        if (!isdigit(c)) {
+            return false;
+        }
+    }
+    return 1;
+}
 
-void GAME::reward() {
-    pass();
+void GAME::reward(MainCharacter &m){
+    cout << "Choose Reward Type : 1. MainCharater Ability   2. Skills" << endl;
+    char type;
+    cout << "Please Enter 1/2 : ";
+    cin >> type ;
+    while (!isInteger(type)){
+        cout << "Invalid Input. Please enter again : " ;
+        cin >> type; }
+    char lucky_draw_no;
+    cout << "Enter a number for lucky draw : ";
+    cin >> lucky_draw_no;
+    while (!isInteger(lucky_draw_no)){
+        cout << "Invalid Input. Please enter again : " ;
+        cin >> lucky_draw_no; }
+    srand(lucky_draw_no);
+    switch(type){
+        case (1):
+            ability(m);
+        case (2):
+            skill(m);
+    }
+}
+
+void GAME::ability(MainCharacter &m){ //basic value
+    int health, attack, defence, magic;
+    bool x = 1;
+    health = rand() % 51 + 50;
+    attack = rand() % 31 + 15;
+    defence = rand() % 16 + 15;
+    magic = rand() % 31 + 20;
+    while (x){
+        if (health % 5 != 0)
+            health--;
+        if (attack % 5 != 0)
+            attack--;
+        if (defence % 5 != 0)
+            defence--;
+    }
+    cout << "hp +" << health << endl;
+    cout << "atk +" << attack << endl;
+    cout << "def +" << defence << endl;
+    cout << "mp +" << magic << endl;
+    m.hp += health;
+    m.atk += attack;
+    m.def += defence;
+    m.mp += magic;
+}
+
+void GAME::skill(MainCharacter &m){
+    //Player will see {1,2,3,4} instead of {0,1,2,3}  in the display moveSet
+    vector<Move_info> FULL_MOVE_POOL();
+    if ( m.moveSet.size() >= 4 ) 
+        { for ( int i = 0; i < 4 ; i++ )
+            { Move_info move = FULL_MOVE_POOL[m.moveSet[i]];
+            cout << i + 1 << ". " << move.name << endl; } cout << "Select Move to Change : ";
+        char change_move ;
+        cin >> change_move ;
+        while (!isdigit(change_move) || change_move > m.moveSet.size()){
+            cout << "Invalid Input. Please enter again : " ;
+            cin >> change_move; }
+        change_move--; 
+        int y = 1, z = 0;
+        while (y) //check whether the move is in the FULL_MOVE_POOL
+        {
+            int x = rand() % FULL_MOVE_POOL.size() + 1;
+            for ( int i = 0 ; i < 4 ; i++ )
+                { if ( m.moveSet[i] == FULL_MOVE_POOL[x] )
+                    z++; }
+            if ( z != 1 )
+                { m.moveSet[change_move] = x;
+                  y = 0; }
+            z = 0;
+        }
+        move = FULL_MOVE_POOL[change_move];
+        cout << "Original move : " << move.name << endl;
+        move = FULL_MOVE_POOL[x];
+        cout << "New move : " << move.name << endl;
+        }
+        else if ( m.moveSet.size() < 4 ){
+            int y = 1, z = 0; // z is for checking duplicate skills while y is a bool for while loop logic
+            while (y) //check whether the move is in the FULL_MOVE_POOL
+            {   
+                int x = rand() % FULL_MOVE_POOL.size() + 1;
+                for ( int i = 0 ; i < 4 ; i++ )
+                    { if ( m.moveSet[i] == FULL_MOVE_POOL[x] )
+                        z++; }
+                if ( z != 1 )
+                    { m.moveSet.push_back(x);
+                    y = 0; }
+                z = 0;
+            }
+            }
+        Move_info move = FULL_MOVE_POOL[x];
+        cout << "New Move Add : " << move.name << endl;
 }

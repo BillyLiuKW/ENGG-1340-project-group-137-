@@ -7,6 +7,7 @@
 #include <functional>
 #include <string>
 using namespace std;
+
 struct Move_info{ //Store the information of the move
         string name;
         int ID;
@@ -41,6 +42,8 @@ class moves{
 
         void select_move_to_change(MainCharacter& character,int index, int ID);
         //Allows user to select a move to change
+
+        vector<Move_info> FULL_MOVE_POOL;
 
     private:
         static map<int, function<void(MainCharacter&, Enemy&, Move_info)> > moveFunctions; //Create a function map for executing move functions

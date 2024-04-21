@@ -23,9 +23,11 @@ class GAME{
         // To retry the game.
         void Gameretry();
         //For levels distributing rewards for player.
-        void reward();
-        //To save to the level.
         int current_level = 1;
+        void reward(MainCharacter &m);
+        //To save to the level.
+        void ability(MainCharacter &m);
+        void skill(MainCharacter &m);
 };
 
 

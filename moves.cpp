@@ -69,6 +69,10 @@ void moves::addMove(MainCharacter& character, int ID){
     }
 }
 
+vector<Move_info> FULL_MOVE_POOL(){
+  return FULL_MOVE_POOL;
+}
+
 void moves::select_move_to_change(MainCharacter& character, int index, int ID){
     //Note that the player would see {1,2,3,4} instead of {0,1,2,3}
     character.moveSet[index-1] = ID;
