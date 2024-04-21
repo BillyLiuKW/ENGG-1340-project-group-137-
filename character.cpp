@@ -77,7 +77,7 @@ Dummy::Dummy(){
     skill_list.push_back(skill3);
     skill_list.push_back(skill4);
 }
-}
+
 
 Goblin::Goblin(){
     hp = 75;
@@ -178,7 +178,30 @@ Dragon::Dragon(){
     };
 }
 
-
+Demon::Demon(){
+    hp = 500;
+    atk = 100;
+    def = 40;
+    name = "Demon";
+    image = 
+    {
+        "     ^                 ^        ",
+        "      #U*           #U9         ",
+        "       #*SDH     DS*&K          ",
+        "           ANfdd93              ",
+        "          aijdsajda             ",
+        "            addsd               ",
+        "        <^   dsd   ^>           ",
+        "       <IN R  s  R NI>          ",
+        "      <dnj F)ld[; $J#*J>        ",
+        "     <NI#  ADMi3j9a  #&H>       ",
+        "    <df$   amskmska   %$d>      ",
+        "   <)      kdsskadm      (>     ",
+        "  <D      symkasmk        d>    ",
+        " <H                        H>   ",
+        "<                            >  ",
+    };
+}
 
 
 Enemy::Enemy(int type){
@@ -227,7 +250,7 @@ Enemy::Enemy(int type){
                 delete mutantEnemy;
                 break;
                 }
-            case 5:
+            case 6:
             {
                 Dragon* dragonEnemy = new Dragon();
                 hp = dragonEnemy->hp;
@@ -241,7 +264,7 @@ Enemy::Enemy(int type){
                 delete dragonEnemy;
                 break;
             }
-            case 6:
+            case 8:
             {
                 Robot* robotEnemy = new Robot();
                 hp = robotEnemy->hp;
@@ -253,6 +276,20 @@ Enemy::Enemy(int type){
                 height = image.size();
                 width = image[0].size();
                 delete robotEnemy;
+                break;
+                }
+            case 9:
+            {
+                Demon* demonEnemy = new Demon();
+                hp = demonEnemy->hp;
+                max_hp = demonEnemy->hp;
+                atk = demonEnemy->atk;
+                def = demonEnemy->def;
+                name = demonEnemy->name;
+                image = demonEnemy->image;
+                height = image.size();
+                width = image[0].size();
+                delete demonEnemy;
                 break;
                 }
             default:

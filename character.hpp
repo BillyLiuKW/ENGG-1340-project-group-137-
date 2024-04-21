@@ -86,6 +86,17 @@ class Dragon{
         int height;
         int width;
 };
+class Demon{
+    public:
+        Demon();
+        int hp;
+        int atk;
+        int def;
+        string name;
+        vector<string> image;
+        int height;
+        int width;
+};
 class Enemy{
     public:
         Enemy(int type);
