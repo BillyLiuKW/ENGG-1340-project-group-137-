@@ -51,6 +51,7 @@ void select_option(int option, GAME game) {
             moves skills;
             skills.iniializeMoves();
             skills.addMove(m, 0);
+            skills.addMove(m, 1);
             cout << "Proceeding to level 1...." << endl;
             sleep(1);
             game.StartGame(m,e);

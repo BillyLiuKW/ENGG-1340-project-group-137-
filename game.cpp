@@ -7,11 +7,8 @@
 #include "character.hpp"
 #include "game.hpp"
 #include "screen.hpp"
-<<<<<<< HEAD
 #include "moves.hpp"
-=======
 #include "enemymoves.hpp"
->>>>>>> 811891794af3dcfc43bb536c4e8f0565916f13fc
 using namespace std;
 
 void pass() {
@@ -46,7 +43,11 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
             //continue;
             break; //temporarily
         }
-        skills.Maincharacter_ExecuteMove(chosen_Skill, m, e);
+        if (!skills.Maincharacter_ExecuteMove(chosen_Skill, m, e)){
+            cout << "Not enough HP/MP to cast the move!" << endl;
+            //continue;
+            break; //temporarily
+        }
 
         // below only execute when valid skill is chosen
         // Perform the skill action
