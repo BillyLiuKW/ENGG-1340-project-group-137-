@@ -155,7 +155,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e) {
     this->current_level++;
     if (this->current_level == 3 || this->current_level == 5 || this->current_level == 7) {
         //player can get reward from these level and they are not required to beat any enemy in these levels.
-        reward();
+        reward(m);
         //these levels are checkpoints as well.
         this->current_level++;
         char y_n;

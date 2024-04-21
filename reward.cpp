@@ -46,6 +46,7 @@ void random_reward::ability(MainCharacter &m){ //basic value
     m.hp += health;
     m.atk += attack;
     m.def += defence;
+    m.mp += magic;
 }
 
 void random_reward::skill(MainCharacter &m){
