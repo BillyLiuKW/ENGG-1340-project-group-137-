@@ -69,14 +69,40 @@ Dummy::Dummy(){
         "           Jx.      ",
         "           OQ-      "
     };
-    Enemy_Skill skill1 = {1, "regenerate", "Heal", vector<string>{"e_hp 100", "e_atk 01"}};
-    Enemy_Skill skill2 = {2, "attack", "Heavy Attack", vector<string>{"m_hp -100", "m_atk -10"}};
-    Enemy_Skill skill3 = {3, "defend", "Defend", vector<string>{"e_def 10"}};
-    Enemy_Skill skill4 = {4, "interfere", "Boost", vector<string>{"e_atk 1"}};
+    // e_hp : enemy recover 1st argument hp
+    // m_hp : enemy deal damage to main_C: formula (e.atk+e.buff_atk)*1st argument - (m.def+m.buff_def)
+    // e_def : enemy defend change defefend of 1st arg for 2nd arg rounds (1st arg can be both +ve or -ve)
+    // m_def : same as above, but in main_c
+    // e_def : bascially same but just atk
+    // m_def : same
+    // if the skill only take 1 argument, you must put 0 in the second argument.
+    // a skill can hold multiple option above 
+    // example {skill ID, skill_ ype, skill name, {"option2 arg1 arg2", "option1 arg1 arg2"}}
+    
+    Enemy_Skill skill1 = {1, "regenerate", "Heal", vector<string>{"e_hp 100 0"}};
+    Enemy_Skill skill2 = {2, "attack", "Heavy Attack", vector<string>{"m_hp 1.5 0", "m_atk -10 3"}};
+    Enemy_Skill skill3 = {3, "defend", "Defend", vector<string>{"e_def 10 3"}};
+    Enemy_Skill skill4 = {4, "interfere", "Boost", vector<string>{"e_atk 1 3"}};
+    Enemy_Skill skill5 = {5, "regenerate", "Recover", vector<string>{"e_hp 100 0"}};
+    Enemy_Skill skill6 = {6, "attack", "Infection", vector<string>{"m_hp 1.5 0", "m_atk -10 4"}};
+    Enemy_Skill skill7 = {7, "interfere", "Weakness", vector<string>{"e_atk 1 3"}};
+    Enemy_Skill skill8 = {8, "defend", "Steel", vector<string>{"e_def 10 3"}};
+    Enemy_Skill skill9 = {9, "regenerate", "Recover2", vector<string>{"e_hp 100 0"}};
+    Enemy_Skill skill10 = {10, "attack", "Infection2", vector<string>{"m_hp 1.5 0", "m_atk -10 3"}};
+    Enemy_Skill skill11 = {11, "interfere", "Weakness2", vector<string>{"e_atk 1 3"}};
+    Enemy_Skill skill12 = {12, "defend", "Steel2", vector<string>{"e_def 10 3"}};
     skill_list.push_back(skill1);
     skill_list.push_back(skill2);
     skill_list.push_back(skill3);
     skill_list.push_back(skill4);
+    skill_list.push_back(skill5);
+    skill_list.push_back(skill6);
+    skill_list.push_back(skill7);
+    skill_list.push_back(skill8);
+    skill_list.push_back(skill9);
+    skill_list.push_back(skill10);
+    skill_list.push_back(skill11);
+    skill_list.push_back(skill12);
 }
 
 
