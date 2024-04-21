@@ -26,8 +26,8 @@ class GAME{
         int current_level = 1;
         void reward(MainCharacter &m);
         //To save to the level.
-        void ability(MainCharacter &m);
-        void skill(MainCharacter &m);
+        void ability(MainCharacter &m, int lucky_draw_no);
+        void skill(MainCharacter &m, int lucky_draw_no);
 };
 
 

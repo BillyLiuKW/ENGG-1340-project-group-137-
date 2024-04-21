@@ -267,33 +267,37 @@ bool isInteger(string x){
             return false;
         }
     }
-    return 1;
+    return true;
 }
 
 void GAME::reward(MainCharacter &m){
     cout << "Choose Reward Type : 1. MainCharater Ability   2. Skills" << endl;
-    char type;
+    int type;
     cout << "Please Enter 1/2 : ";
     cin >> type ;
-    while (!isInteger(type)){
+    while (type != 1 && type != 2){
         cout << "Invalid Input. Please enter again : " ;
         cin >> type; }
-    char lucky_draw_no;
+    string lucky_draw_no;
     cout << "Enter a number for lucky draw : ";
     cin >> lucky_draw_no;
     while (!isInteger(lucky_draw_no)){
         cout << "Invalid Input. Please enter again : " ;
         cin >> lucky_draw_no; }
-    srand(lucky_draw_no);
-    switch(type){
+    switch (type){
         case (1):
-            ability(m);
+            ability(m,stoi(lucky_draw_no));
+            break;
         case (2):
-            skill(m);
+            skill(m,stoi(lucky_draw_no));
+            break;
+        default:
+            return;
     }
 }
 
-void GAME::ability(MainCharacter &m){ //basic value
+void GAME::ability(MainCharacter &m, int lucky_draw_no){ //basic value
+    srand(lucky_draw_no);
     int health, attack, defence, magic;
     bool x = 1;
     health = rand() % 51 + 50;
@@ -318,14 +322,17 @@ void GAME::ability(MainCharacter &m){ //basic value
     m.mp += magic;
 }
 
-void GAME::skill(MainCharacter &m){
+void GAME::skill(MainCharacter &, int lucky_draw_no){
     //Player will see {1,2,3,4} instead of {0,1,2,3}  in the display moveSet
+    srand(lucky_draw_no);
     vector<Move_info> FULL_MOVE_POOL();
+    Move_info move;
     if ( m.moveSet.size() >= 4 ) 
         { for ( int i = 0; i < 4 ; i++ )
-            { Move_info move = FULL_MOVE_POOL[m.moveSet[i]];
-            cout << i + 1 << ". " << move.name << endl; } cout << "Select Move to Change : ";
+            { move = FULL_MOVE_POOL[m.moveSet[i]];
+            cout << i + 1 << ". " << move.name << endl; } 
         char change_move ;
+        cout << "Select Move to Change : ";
         cin >> change_move ;
         while (!isdigit(change_move) || change_move > m.moveSet.size()){
             cout << "Invalid Input. Please enter again : " ;
