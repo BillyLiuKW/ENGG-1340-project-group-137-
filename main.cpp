@@ -61,7 +61,6 @@ void select_option(int option, GAME game) {
         case 2:
         {
             MainCharacter m;
-            
             ifstream fin("game_status.txt");
             // check whether is game_status.txt existing.
             if (fin.fail()) {
@@ -74,7 +73,7 @@ void select_option(int option, GAME game) {
                 int size;
                 fin >> size;
                 m.moveSet.resize(size);
-                for (int j; j < size; j++) {
+                for (int j = 0; j < size; j++) {
                     fin >> m.moveSet[j];
                 }
                 // to read the level stored.

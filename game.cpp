@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <fstream>
 #include <cstdlib>
+#include <unistd.h>
 #include "character.hpp"
 #include "game.hpp"
 #include "screen.hpp"
@@ -62,7 +63,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         //e_moves.Enemy_ExecuteMove(m, e, display.dialogs);
         if (! survive(m.hp)) {
             //player dead and need functions to provide retry function 
-            pass();
+            Gameretry();
         }
 
         if (! survive(e.hp)) {
@@ -202,6 +203,64 @@ void GAME::Victory(MainCharacter &m, Enemy &e) {
     StartGame(m, new_e);
 
 }
+
+void GAME::Gameretry(){
+    char option;
+    while (true) {
+        cout << "Game over! You are defeated!" << endl;
+        cout << "Do you want to retry? [y/n]" << endl;
+        cin >> option;
+        if (option == 'y') {
+            ifstream fin("game_status.txt");
+            if (fin.is_open()) {
+                MainCharacter m;
+                // Assigning stored values to m one by one.
+                fin >> m.hp >> m.max_hp >> m.atk >> m.def;
+                // To input the size of moveSet stored.
+                int size;
+                fin >> size;
+                m.moveSet.resize(size);
+                for (int i = 0; i < size; i++) {
+                    fin >> m.moveSet[i];
+                }
+                // to read the level stored.
+                fin >> this->current_level;
+                //close the file after reading all data.
+                this->display.dialogs.insert(this->display.dialogs.begin(), "Game status successfully loaded"); // add the output message to dialog
+                fin.close();
+                cout << "Proceeding to level " << this->current_level << endl;
+                Enemy e(this->current_level);
+                sleep(1);
+                StartGame(m,e);
+                return;
+            }
+            //player should start from level 1 if they did not store any status.
+            else {
+                MainCharacter m;
+                Enemy e(this->current_level);
+                moves skills;
+                skills.iniializeMoves();
+                skills.addMove(m, 0);
+                skills.addMove(m, 1);
+                cout << "Proceeding to level 1...." << endl;
+                sleep(1);
+                StartGame(m,e);
+                return;
+            }
+        
+        }
+        else if (option == 'n'){
+            cout << "Thank you and Goodbye!" << endl;
+            exit(0);
+        }
+
+        else {
+            cout << "Error: invalid option!" << endl;
+            cout << "Please try again!" << endl;
+        }   
+    }
+}
+
 
 void GAME::reward() {
     pass();
