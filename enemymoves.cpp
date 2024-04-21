@@ -6,16 +6,35 @@
 #include <random>
 #include <cmath>
 #include <algorithm>
+#include <sstream>
 
 #include "character.hpp"
 #include "enemymoves.hpp"
 using namespace std;
 
 void EnemyMoves::Enemy_ExecuteMove(MainCharacter &m, Enemy &e, vector<string> &dialog) {
-    chooseSkillType(e);
-    if (e.hp >= e.max_hp){}
-    
-    Enemy_Skill useable_skill = {};
+    // chose a skill or normal attack
+    int skill_id = chooseSkillType();
+    //cout << "Skill: " << skill_id << endl; // test
+
+    // execute the skill
+    if (skill_id == 0){
+        normal_attack();
+    }
+    else {
+        use_skill(skill_id);
+    }
+    // minus number of rounds of all boost by 1
+    boost_count_down();
+    //calculate the boosts for the next round
+    e.atk_boost_sum = 0;
+    for (auto &pair: e.atk_boost) {
+        e.atk_boost_sum += pair.first;
+    }
+    e.def_boost_sum = 0;
+    for (auto &pair: e.def_boost) {
+        e.def_boost_sum += pair.first;
+    }
 }    
 vector<double> EnemyMoves::z_score(vector<double> &skill_uses, vector<int> &skill_num, int &type_num_s){
     vector<double> standard_score(type_num, 0);
@@ -54,7 +73,7 @@ vector<double> EnemyMoves::z_score(vector<double> &skill_uses, vector<int> &skil
     return standard_score;
 }
 int EnemyMoves::chooseSkillType(Enemy &e){
-        // calculate the probability of which type should use
+    // calculate the probability of which type should use
     int type_num_s = type_num; // number of type of skill that have at least 1 skill
     double normal_attack_prob = 0.4;
     vector<Enemy_Skill> attack_skills, defend_skills, interfence_skills, regerneration_skills;
@@ -83,10 +102,6 @@ int EnemyMoves::chooseSkillType(Enemy &e){
             skill_num[3]++;
         }
     }
-    //testing
-    skill_uses[0] = 0;
-    skill_uses[3] = 1;
-    //***
     vector<double> probability(type_num+1, 0);
     probability[0] = 1; // base attack
     vector<double> standard_score = z_score(skill_uses, skill_num, type_num_s);
@@ -152,18 +167,22 @@ int EnemyMoves::chooseSkillType(Enemy &e){
     }
     /* //output testing
     cout << endl;
+    cout << "skill_num ";
     for (auto i: skill_num){
         cout << i << " ";
     }
     cout << endl;
+    cout << "skill_uses ";
     for (auto i: skill_uses){
         cout << i << " ";
     }
     cout << endl;
+    cout << "standard_score ";
     for (auto i: standard_score){
         cout << i << " ";
     }
     cout << endl;
+    cout << "prob ";
     for (auto i: probability){
         cout << i << " ";
     }
@@ -201,20 +220,23 @@ int EnemyMoves::chooseSkillType(Enemy &e){
 }
 int EnemyMoves::chooseSkill(vector<Enemy_Skill> skills) {
     int size = skills.size();
+    //cout << "size: " << size << endl; // test
     if (size == 1){
         return skills[0].index;
     }
     // for size > 2
-    vector<double> skill_uses(type_num, 0), probability(type_num, 0), standard_score = {};
+    vector<double> skill_uses = {}, probability(size, 0), standard_score = {};
     double mean = 0;
     for (auto &skill: skills){
         skill_uses.push_back(skill.uses);
         mean += skill.uses;
     }
+    mean /= size;
     double variance = 0;
     for (auto &i: skill_uses){
         variance += (i - mean)* (i - mean);
     }
+    variance /= size;
     if (variance == 0){
         for (int i = 0; i < size; i++){
             probability[i] = 1/static_cast<double>(size);
@@ -272,4 +294,98 @@ int EnemyMoves::chooseSkill(vector<Enemy_Skill> skills) {
     discrete_distribution<int> distribution(probability.begin(), probability.end());
     int randomNum = distribution(generator);
     return skills[randomNum].index;
+}
+void EnemyMoves::normal_attack(){
+    dialogs.push_back("Enemy <format><|yellow|>[" + e.name + "]<end> has use <format><|bold|>normal attack<end>.");
+    double damage;
+    damage = (e.atk + e.atk_boost_sum) - (m.def + m.def_boost_sum);
+    (damage < 1)? damage = 1: damage = damage ; // if damage < 1, set damage to 1.
+    m.hp -= static_cast<int>(damage);
+    string int_value = to_string(static_cast<int>(damage));
+    dialogs.push_back("<format><|blue|>Hero<end> <format><|red|>HP<end> <format><|red|><|bold|>-"+ int_value + "<end>");
+}
+void EnemyMoves::use_skill(int skill_id){
+    dialogs.push_back("Enemy <format><|yellow|>[" + e.name + "]<end> has use skill <format><|purple|>[" + e.skill_list[skill_id-1].skill_name + "]<end>.");
+    for (string effect: e.skill_list[skill_id - 1].effect){
+        e.skill_list[skill_id -1].uses++;
+        istringstream iss(effect);
+        string option;
+        double value;
+        double other;
+        iss >> option >> value >> other;
+        
+        if (skill_option.find(option) == skill_option.end()){
+            cout << "skill option: " << option << " not found in skill: " << e.skill_list[skill_id-1].skill_name;
+            continue;
+        }
+        skill_option[option](*this, value, other);
+    }
+}
+void EnemyMoves::e_hp(double multiplier, double other){
+    e.hp += multiplier;
+    // Enemy [name]'s HP + value (grenn if positive, red if negative)
+    string int_value = to_string(static_cast<int>(multiplier)); // make the double have no decimal place and then string
+    string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end>'s <format><|red|>HP<end> <format>";
+    dialog += ((multiplier < 0)? ("<|red|>" + int_value): ("<|green|>+" + int_value));
+    dialog += "<end>";
+    dialogs.push_back(dialog);  
+}
+void EnemyMoves::m_hp(double multiplier, double other){
+    double damage = 0;
+    damage = (e.atk +e.atk_boost_sum) * multiplier - (m.def + m.def_boost_sum);
+    (damage < 1)? damage = 1: damage = damage;
+    m.hp -= static_cast<int>(damage);
+    string int_value = to_string(static_cast<int>(damage));
+    string dialog = "<format><|blue|>Hero<end> <format><|red|>HP<end> <format><|red|><|bold|>-"+ int_value +"<end>";
+    dialogs.push_back(dialog);
+
+}
+void EnemyMoves::e_atk(double multiplier, double other){
+    e.atk_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
+    string int_value_1 = to_string(static_cast<int>(multiplier));
+    string int_value_2 = to_string(static_cast<int>(other));
+    string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end>'s <format><|cyan|>ATK<end> <format>";
+    dialog += ((multiplier < 0)? ("<|red|>" + int_value_1): ("<|green|>+" + int_value_1));
+    dialog += "<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
+    dialogs.push_back(dialog);
+    
+}
+void EnemyMoves::m_atk(double multiplier, double other){
+    m.atk_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
+    string int_value_1 = to_string(static_cast<int>(multiplier));
+    string int_value_2 = to_string(static_cast<int>(other));
+    string dialog = "<format><|blue|>Hero<end> <format><|cyman|>ATK<end> <format>";
+    dialog += ((multiplier < 0)? ("<|red|>" + int_value_1): ("<|green|>+" + int_value_1));
+    dialog += "<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
+    dialogs.push_back(dialog);
+
+}
+void EnemyMoves::e_def(double multiplier, double other){
+    e.def_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
+    string int_value_1 = to_string(static_cast<int>(multiplier));
+    string int_value_2 = to_string(static_cast<int>(other));
+    string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end>'s <format><|cyan|>DEF<end> <format>";
+    dialog += ((multiplier < 0)? ("<|red|>" + int_value_1): ("<|green|>+" + int_value_1));
+    dialog += "<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
+    dialogs.push_back(dialog);
+}
+void EnemyMoves::m_def(double multiplier, double other){
+    m.atk_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
+    string int_value_1 = to_string(static_cast<int>(multiplier));
+    string int_value_2 = to_string(static_cast<int>(other));
+    string dialog = "<format><|blue|>Hero<end> <format><|cyan|>DEF<end> <format>";
+    dialog += ((multiplier < 0)? ("<|red|>" + int_value_1): ("<|green|>+" +int_value_1));
+    dialog += "<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
+    dialogs.push_back(dialog);
+} 
+void EnemyMoves::boost_count_down(){
+    for (auto &pair: e.atk_boost) {
+        pair.second--;
+    }
+    for (auto &pair: e.def_boost) {
+        pair.second--;
+    }
+    // remove all pair that round remains < 0 with lambda function
+    e.atk_boost.erase(remove_if(e.atk_boost.begin(), e.atk_boost.end(), [](pair<int, int> pair){return pair.second < 0;}), e.atk_boost.end());
+    e.def_boost.erase(remove_if(e.def_boost.begin(), e.def_boost.end(), [](pair<int, int> pair){return pair.second < 0;}), e.def_boost.end());
 }
