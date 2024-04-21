@@ -9,7 +9,7 @@ class GAME{
     public:
         Screen display; // size of the display screen
         moves skills;
-        GAME() : display(60, 50){};
+        GAME() : display(60, 60){};
         // To handle the game logic.
         void StartGame(MainCharacter& m, Enemy& e);
         // To display the gameplay screen. 
