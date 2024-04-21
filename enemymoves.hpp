@@ -28,7 +28,7 @@ class EnemyMoves{
         int type_num = 4; // number of type of skill
         // set a in class variable so i don't need to pass to many function arguments
         EnemyMoves(MainCharacter &main_c, Enemy &enemy, vector<string> &dialogs_list): m(main_c), e(enemy), dialogs(dialogs_list){}
-        void Enemy_ExecuteMove(MainCharacter &m, Enemy &e, vector<string> &dialogs);
+        void Enemy_ExecuteMove();
         // use normal attack
         void normal_attack();
         // use the chosen skill
@@ -36,7 +36,7 @@ class EnemyMoves{
         void boost_count_down(); 
     private:
         vector<double> z_score(vector<double> &skill_uses, vector<int> &skill_num, int& type_num_s);
-        int chooseSkillType(Enemy &e); // returm skill chosen in chooseSkill()
+        int chooseSkillType(); // returm skill chosen in chooseSkill()
         int chooseSkill(vector<Enemy_Skill> skills); // only use in chooseSkillType()
         void e_hp(double multiplier, double other);
         void m_hp(double multiplier, double other);
