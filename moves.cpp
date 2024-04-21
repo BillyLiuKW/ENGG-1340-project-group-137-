@@ -46,6 +46,8 @@ void moves::iniializeMoves(){
   moveFunctions[0] = slash;
   //Follow this format to define more moves
   Move_info fireballInfo = {"Fireball", 1, 20, 20, 'm'};
+  FULL_MOVE_POOL.push_back(fireballInfo);
+  moveFunctions[1] = fireball;
 }
 
 bool moves::Maincharacter_ExecuteMove(int index,MainCharacter &m, Enemy &e){

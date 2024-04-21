@@ -23,6 +23,7 @@ class MainCharacter{
         int atk;
         int def;
         int mp;
+        int max_mp;
         vector<int> moveSet;
         string name;
         vector<string> image;

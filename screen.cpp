@@ -209,6 +209,7 @@ void Screen::insert_information(int start_row, Enemy info){
 void Screen::insert_information(int start_row, MainCharacter info){
     string ATK_info = "ATK: " + to_string(info.atk);
     int max_health_bar = 20;
+    int max_mp_bar = 20;
     int start_col_info = (0+width-1)/2 - (6 + max_health_bar + 4)/2; // 4 = max digit of health
     int health_bar =  info.hp * max_health_bar / info.max_hp;
     if (health_bar > max_health_bar){
@@ -217,15 +218,25 @@ void Screen::insert_information(int start_row, MainCharacter info){
     if (health_bar < 0){
         health_bar = 0;
     }
+    int mp_bard = info.mp * max_mp_bar / info.max_mp;
+    if (mp_bard > max_mp_bar){
+        mp_bard = max_mp_bar;
+    }
     string spacing(max_health_bar, ' ');
     string health = to_string(info.hp);
+    string mana = to_string(info.mp);
     string hp_info = "HP [" + spacing + "] " + health;
+    string mp_info = "MP [" + spacing + "] " + mana;
     for (int i = 0; i < health_bar; i++){
         hp_info[4+i] = '=';
+    }
+    for (int i = 0; i < mp_bard; i++){
+        mp_info[4+i] = '=';
     }
     insert_item(start_row + info.height + 1, start_col_info, {"Main character: " + info.name}, {"underline", "bold"});
     insert_item(start_row + info.height + 2, start_col_info, {ATK_info}, {"cyan"});
     insert_item(start_row + info.height + 3, start_col_info, {hp_info}, {"red","bold"});
+    insert_item(start_row + info.height + 4, start_col_info, {mp_info}, {"blue","bold"});
 }
 void Screen::clear_screen(){;
     screen.clear(); 

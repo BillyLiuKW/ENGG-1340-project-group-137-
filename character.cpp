@@ -9,10 +9,11 @@ using namespace std;
 
 MainCharacter::MainCharacter(){
     hp = 100; // Numbers subject to change
-    max_hp = hp;
+    max_hp = 100;
     atk = 25;
     def = 10;
     mp = 100;
+    max_mp = 100;
     name = "Hero";
     image =
     {
