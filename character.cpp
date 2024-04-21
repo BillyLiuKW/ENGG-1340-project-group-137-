@@ -181,7 +181,7 @@ Dragon::Dragon(){
 Demon::Demon(){
     hp = 500;
     atk = 100;
-    def = 40;
+    def = 30;
     name = "Demon";
     image = 
     {
@@ -197,9 +197,34 @@ Demon::Demon(){
         "     <NI#  ADMi3j9a  #&H>       ",
         "    <df$   amskmska   %$d>      ",
         "   <)      kdsskadm      (>     ",
-        "  <D      symkasmk        d>    ",
+        "  <D       symkasmk       d>    ",
         " <H                        H>   ",
         "<                            >  ",
+    };
+}
+
+Titan::Titan(){
+    hp = 800;
+    atk = 50;
+    def = 60;
+    name = "Titan";
+    image = 
+    {
+        "        Te    $sd      eT        ",
+        "       HDSe  asddas   esdH       ",
+        "        GSDesddDS*&Kae#@G        ",
+        "         &***dANfdd9#*$          ",
+        "   ^       adsaddsaj$         ^  ",
+        "    ^       ddaddsd@         ^   ",
+        "    dsadsdssd <^ dsadsd adaddd   ",
+        "  asdasddsadasaddRdsasdsRsd NI>d ",
+        "    dd <dnjd F)ld[; $J#*J>dmsak  ",
+        "   d<NI# dADMi3j9aasdd#& sad3]   ",
+        "  d<df$  asddasdamskmska  DJE#i  ",
+        "ddssddsa kdsskadmasdsada JD#*jdi4",
+        "saddsada symkasmkaddsdds 834HDIIJ",
+        "      dsd#DSDS     DEsddasd      ",
+        "      sadsadad     dasdsads      ",
     };
 }
 
@@ -290,6 +315,20 @@ Enemy::Enemy(int type){
                 height = image.size();
                 width = image[0].size();
                 delete demonEnemy;
+                break;
+                }
+            case 10:
+            {
+                Titan* titanEnemy = new Titan();
+                hp = titanEnemy->hp;
+                max_hp = titanEnemy->hp;
+                atk = titanEnemy->atk;
+                def = titanEnemy->def;
+                name = titanEnemy->name;
+                image = titanEnemy->image;
+                height = image.size();
+                width = image[0].size();
+                delete titanEnemy;
                 break;
                 }
             default:
