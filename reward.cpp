@@ -1,3 +1,4 @@
+//random reward
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -23,9 +24,28 @@ void random_reward::reward(MainCharacter &m){
     }
 }
 
-void random_reward::ability(MainCharacter &m){
-    int health, attack, defence;
-    rand();
+void random_reward::ability(MainCharacter &m){ //basic value
+    int health, attack, defence, magic;
+    bool x = 1;
+    health = rand() % 51 + 50;
+    attack = rand() % 31 + 15;
+    defence = rand() % 16 + 15;
+    magic = rand() % 31 + 20;
+    while (x){
+        if (health % 5 != 0)
+            health--;
+        if (attack % 5 != 0)
+            attack--;
+        if (defence % 5 != 0)
+            defence--;
+    }
+    cout << "hp +" << health << endl;
+    cout << "atk +" << attack << endl;
+    cout << "def +" << defence << endl;
+    cout << "mp +" << magic << endl;
+    m.hp += health;
+    m.atk += attack;
+    m.def += defence;
 }
 
 void random_reward::skill(MainCharacter &m){
