@@ -23,7 +23,6 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
     skills.iniializeMoves();
     EnemyMoves enemy_skills;
     //Display(m.name, m.hp,  m.atk, e.name,  e.hp, e.atk);
-    EnemyMoves e_moves;
     int round = 1;
     display.dialogs.push_back("<format><|bold|><|red|>Level " +  to_string(current_level) + "<end>");
     display.dialogs.push_back("<format><|bold|>BATTLE START!<end>");
@@ -60,7 +59,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         // Check if any character has died
 
         // enemy's action
-        //e_moves.Enemy_ExecuteMove(m, e, display.dialogs);
+        enemy_skill.Enemy_ExecuteMove();
         if (! survive(m.hp)) {
             //player dead and need functions to provide retry function 
             Gameretry();
