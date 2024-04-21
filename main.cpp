@@ -90,32 +90,40 @@ void select_option(int option, GAME game) {
             break;
         }
 
-        case(5):
+        default:
         {
+            break;
+        }
+        
+      }
+}
+
+int main() {
+    GAME game;
+    int option;
+    while (true) {
+        menu();
+        cout << "Select An Option: ";
+        cin >> option;
+        select_option(option,game);
+        // if player choose option 5, he or she will escape from select_option().
+        if (option == 5) {
             char y_n;
             cout << "Do you want to exit the game? [y/n]" << endl;
+            cin >> y_n;
             if (y_n == 'y') {
                 cout << "Thank you and goodbye!" << endl;
                 exit(0);
             }
             
-            else {
-                break;
-                //main(); this won't work
+            else if (y_n == 'n'){
+                continue;;
             }
-            break;
+            else {
+                cout << "Error: invalid answer!" << endl;
+                continue;
+            }
         }
-
-
-      }
-}
-
-int main() {
-    menu();
-    GAME game;
-    int option;
-    cout << "Select An Option: ";
-    cin >> option;
-    select_option(option,game);
-    return 0;
+        return 0;
+    }
 }
