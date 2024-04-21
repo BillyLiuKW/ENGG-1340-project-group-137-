@@ -23,6 +23,7 @@ void pass() {
 void GAME::StartGame(MainCharacter& m, Enemy& e) { 
     moves skills;
     skills.iniializeMoves();
+    EnemyMoves enemy_skills;
     //Display(m.name, m.hp,  m.atk, e.name,  e.hp, e.atk);
     EnemyMoves e_moves;
     int round = 1;
