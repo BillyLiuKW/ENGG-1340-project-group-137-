@@ -304,11 +304,11 @@ void GAME::reward(MainCharacter &m){ // normal reward where player can receive r
 void GAME::ability(MainCharacter &m, int lucky_draw_no){ //basic value
     srand(lucky_draw_no);
     int health, attack, defence, magic;
-    bool x = 1;
-    health = rand() % 51 + 50;
-    attack = rand() % 31 + 15;
-    defence = rand() % 16 + 15;
-    magic = rand() % 31 + 20;
+    int x = 1;
+    health = rand() % 51 + 30;
+    attack = rand() % 31 + 10;
+    defence = rand() % 16 + 5;
+    magic = rand() % 31 + 15;
     while (x){
         if (health % 5 != 0)
             health--;
@@ -316,6 +316,10 @@ void GAME::ability(MainCharacter &m, int lucky_draw_no){ //basic value
             attack--;
         if (defence % 5 != 0)
             defence--;
+        if (magic % 5 != 0)
+            magic--;
+        if (magic % 5 == 0 && defence % 5 == 0 && attack % 5 == 0 && health % 5 == 0 )
+            x--;
     }
     cout << "hp +" << health << endl;
     cout << "atk +" << attack << endl;
