@@ -73,8 +73,8 @@ Dummy::Dummy(){
     // m_hp : enemy deal damage to main_C: formula (e.atk+e.buff_atk)*1st argument - (m.def+m.buff_def)
     // e_def : enemy defend change defefend of 1st arg for 2nd arg rounds (1st arg can be both +ve or -ve)
     // m_def : same as above, but in main_c
-    // e_def : bascially same but just atk
-    // m_def : same
+    // e_atk : bascially same but just atk
+    // m_atk : same
     // if the skill only take 1 argument, you must put 0 in the second argument.
     // a skill can hold multiple option above 
     // example {skill ID, skill_ ype, skill name, {"option2 arg1 arg2", "option1 arg1 arg2"}}
@@ -91,6 +91,9 @@ Dummy::Dummy(){
     Enemy_Skill skill10 = {10, "attack", "Infection2", vector<string>{"m_hp 1.5 0", "m_atk -10 3"}};
     Enemy_Skill skill11 = {11, "interfere", "Weakness2", vector<string>{"e_atk 1 3"}};
     Enemy_Skill skill12 = {12, "defend", "Steel2", vector<string>{"e_def 10 3"}};
+    Enemy_Skill skill13 = {13, "attack", "Vampire", vector<string>{"m_hp 1.5 0", "e_hp 50 0"}};
+    Enemy_Skill skill14 = {14, "attack", "Anger", vector<string>{"m_hp 2 0"}};
+    Enemy_Skill skill15 = {15, "defend", "Jesus", vector<string>{"e_def 30 0", "m_hp 2.5 0"}};
     skill_list.push_back(skill1);
     skill_list.push_back(skill2);
     skill_list.push_back(skill3);
@@ -103,6 +106,9 @@ Dummy::Dummy(){
     skill_list.push_back(skill10);
     skill_list.push_back(skill11);
     skill_list.push_back(skill12);
+    skill_list.push_back(skill13);
+    skill_list.push_back(skill14);
+    skill_list.push_back(skill15);
 }
 
 
