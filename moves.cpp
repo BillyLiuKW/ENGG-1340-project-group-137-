@@ -59,7 +59,8 @@ void moves::iniializeMoves(){
   FULL_MOVE_POOL.push_back(fireballInfo);
   moveFunctions[1] = fireball;
   Move_info regenInfo = {"Regen", 2, 30, 30, 'm'};
-  
+  moveFunctions[2] = regen;
+  FULL_MOVE_POOL.push_back(regenInfo);
 }
 
 bool moves::Maincharacter_ExecuteMove(int index,MainCharacter &m, Enemy &e){
