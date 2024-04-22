@@ -270,7 +270,7 @@ bool isInteger(string x){
     return true;
 }
 
-void GAME::reward(MainCharacter &m){
+void GAME::reward(MainCharacter &m){ // normal reward where player can receive reward every level
     cout << "Choose Reward Type : 1. Stat   2. Skills" << endl;
     string type;
     cout << "Please Enter 1/2 : ";
