@@ -12,7 +12,7 @@
 #include "enemymoves.hpp"
 using namespace std;
 
-void EnemyMoves::Enemy_ExecuteMove(MainCharacter &m, Enemy &e, vector<string> &dialog) {
+void EnemyMoves::Enemy_ExecuteMove() {
     // chose a skill or normal attack
     int skill_id = chooseSkillType();
     //cout << "Skill: " << skill_id << endl; // test
@@ -72,7 +72,7 @@ vector<double> EnemyMoves::z_score(vector<double> &skill_uses, vector<int> &skil
     }
     return standard_score;
 }
-int EnemyMoves::chooseSkillType(Enemy &e){
+int EnemyMoves::chooseSkillType(){
     // calculate the probability of which type should use
     int type_num_s = type_num; // number of type of skill that have at least 1 skill
     double normal_attack_prob = 0.4;
