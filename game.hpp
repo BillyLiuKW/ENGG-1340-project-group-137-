@@ -24,9 +24,9 @@ class GAME{
         void Gameretry();
         //For levels distributing rewards for player.
         int current_level = 1;
-        void reward(MainCharacter &m);
+        void reward(MainCharacter &m, int level);
         //To save to the level.
-        void stats(MainCharacter &m, int lucky_draw_no);
+        void stats(MainCharacter &m, int lucky_draw_no, int health, int attack, int defence, int magic);
         void skill(MainCharacter &m, int lucky_draw_no);
 };
 

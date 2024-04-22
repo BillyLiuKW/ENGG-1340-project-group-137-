@@ -158,7 +158,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e) {
     this->current_level++;
     if (this->current_level == 3 || this->current_level == 5 || this->current_level == 7) {
         //player can get reward from these level and they are not required to beat any enemy in these levels.
-        reward(m);
+        reward(m,this->current_level);
         //these levels are checkpoints as well.
         this->current_level++;
         char y_n;
@@ -271,32 +271,58 @@ bool isInteger(string x){
     return true;
 }
 
-void GAME::reward(MainCharacter &m){ // normal reward where player can receive reward every level
-    cout << "Choose Reward Type : 1. Stat   2. Skills" << endl;
+void GAME::reward(MainCharacter &m, int level){ // normal reward where player can receive reward every level
     string type;
-    cout << "Please Enter 1/2 : ";
-    cin >> type ;
-    int y = 1;
-    while (y){
-            if ( !isInteger(type) || stoi(type) > 2 )
-                {cout << "Invalid Input. Please enter again : " ;
-                cin >> type; }
-            else
-                y--;
-        }
+    if (level != 3 || level != 5 || level != 7){
+         cout << "Choose Reward Type : 1. Stat   2. Skills" << endl;
+        cout << "Please Enter 1/2 : ";
+        cin >> type ;
+        int y = 1;
+        while (y){
+                if ( !isInteger(type) || stoi(type) > 2 )
+                    {cout << "Invalid Input. Please enter again : " ;
+                    cin >> type; }
+                else
+                    y--;
+            }}
+    else{
+        type = 3;
+    }
     string lucky_draw_no;
     cout << "Enter a number for lucky draw : ";
     cin >> lucky_draw_no;
     while (!isInteger(lucky_draw_no)){
         cout << "Invalid Input. Please enter again : " ;
         cin >> lucky_draw_no; }
-    switch (stoi(type)){
-        case (1):
-            stats(m,stoi(lucky_draw_no));
+    int health, attack, defence, magic;
+    switch(level){
+        case 1:{
+            health = 10, attack = 5, defence = 3, magic = 5;
             break;
-        case (2):
+        }
+        case 2:{
+            health = 10, attack = 5, defence = 5, magic = 5;
+            break;
+        }
+        case 3:{
+            health = 20, attack = 15, defence = 10, magic = 10;
+        }
+        default:{
+            break;
+        }
+    }
+    switch (stoi(type)){
+        case (1):{
+            stats(m,stoi(lucky_draw_no), health, attack, defence,magic);
+            break;}
+        case (2):{
+            skill(m,stoi(lucky_draw_no));
+            break;}
+        case 3:{
+            stats(m,stoi(lucky_draw_no), health, attack, defence,magic);
             skill(m,stoi(lucky_draw_no));
             break;
+        }
         default:
             return;
     }
@@ -306,12 +332,12 @@ void round_to_five(int &x){
     x = (x/5)*5;
 }
 
-void GAME::stats(MainCharacter &m, int lucky_draw_no){
+void GAME::stats(MainCharacter &m, int lucky_draw_no, int health, int attack, int defence, int magic){
     srand(lucky_draw_no);
-    int hp_increase = rand() % 30 + 50;
-    int atk_increase = rand() % 30 + 50;
-    int def_increase = rand() % 30 + 50;
-    int mp_increase = rand() % 30 + 50;
+    int hp_increase = rand() % health + health;
+    int atk_increase = rand() % attack + attack;
+    int def_increase = rand() % defence + defence;
+    int mp_increase = rand() % magic + magic;
     round_to_five(hp_increase);
     round_to_five(atk_increase);
     round_to_five(def_increase);
