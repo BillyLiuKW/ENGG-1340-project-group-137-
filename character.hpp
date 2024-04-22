@@ -44,6 +44,8 @@ class Dummy{
         int hp;
         int atk;
         int def;
+        double critical_chance;
+        double critical_damage;
         string name;
         vector<string> image;
         int height;
@@ -56,6 +58,8 @@ class Goblin{
         int hp;
         int atk;
         int def;
+        double critical_chance;
+        double critical_damage;
         string name;
         vector<string> image;
         int height;
@@ -67,6 +71,8 @@ class Mutant{
         int hp;
         int atk;
         int def;
+        double critical_chance;
+        double critical_damage;
         string name;
         vector<string> image;
         int height;
@@ -78,6 +84,8 @@ class Robot{
         int hp;
         int atk;
         int def;
+        double critical_chance;
+        double critical_damage;
         string name;
         vector<string> image;
         int height;
@@ -89,6 +97,8 @@ class Dragon{
         int hp;
         int atk;
         int def;
+        double critical_chance;
+        double critical_damage;
         string name;
         vector<string> image;
         int height;
@@ -100,6 +110,8 @@ class Demon{
         int hp;
         int atk;
         int def;
+        double critical_chance;
+        double critical_damage;
         string name;
         vector<string> image;
         int height;
@@ -111,6 +123,8 @@ class Titan{
         int hp;
         int atk;
         int def;
+        double critical_chance;
+        double critical_damage;
         string name;
         vector<string> image;
         int height;
