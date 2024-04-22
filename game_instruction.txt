@@ -1,0 +1,19 @@
+Learn how to play :
+
+Aim:
+The aim of the game is to defeat the enemy using skills and upgrade to the next level. 
+The difficulty of the game will increase with each level.
+Try your best to reach the highest level.
+
+Rules:
+At the beginning of the game, skills will be assigned randomly to players. 
+Players can attack the enemy using their basic attack or use the acquired skills to attack. 
+Each skill corresponds to a different ability.
+
+In levels 3, 5, and 7, players are not required to fight an enemy. Instead, they will choose a type of reward:
+1. Strengthen the basic value of the character
+2. Attain new skills (maximum of 4 skills)
+
+The reward will be given randomly to players based on their choice.
+
+At the end of each level, players can save their game progress and re-enter the game from the main menu.

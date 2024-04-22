@@ -25,8 +25,9 @@ void menu() {
         "            #   1. Start A New Game                           #            ",
         "            #   2. Continue                                   #            ",
         "            #   3. Enemy Handbook                             #            ",
-        "            #   4. Game Instruction                           #            ",
-        "            #   5. Exit                                       #            ",
+        "            #   4. Skills Handbook                            #            ",
+        "            #   5. Game Instruction                           #            ",
+        "            #   6. Exit                                       #            ",
         "            #                                                 #            ",
         "           )(=================================================)(           ",  
     };
@@ -102,11 +103,22 @@ void select_option(int option, GAME game) {
            }
            //whenever there is a bug:
            else {
-            cout << "Error: unable to provide enemy handbook," << endl;
+            cout << "Error: unable to provide Enemy Handbook," << endl;
            }
 
         }
-
+        case 4:
+            ifstream fin("game_instruction.txt");
+            if (fin.is_open()) {
+                string line;
+            while (getline(fin,line)) {
+                cout << line << endl;
+            }
+            fin.close();
+           }
+           else {
+            cout << "Error: unable to provide Game Instruction," << endl;
+           }
         default:
         {
             break;
