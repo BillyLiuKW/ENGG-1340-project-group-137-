@@ -292,7 +292,7 @@ void GAME::reward(MainCharacter &m){ // normal reward where player can receive r
         cin >> lucky_draw_no; }
     switch (stoi(type)){
         case (1):
-            ability(m,stoi(lucky_draw_no));
+            stats(m,stoi(lucky_draw_no));
             break;
         case (2):
             skill(m,stoi(lucky_draw_no));
@@ -302,34 +302,28 @@ void GAME::reward(MainCharacter &m){ // normal reward where player can receive r
     }
 }
 
-void GAME::ability(MainCharacter &m, int lucky_draw_no){ //basic value
+void round_to_five(int &x){
+    x = (x/5)*5;
+}
+
+void GAME::stats(MainCharacter &m, int lucky_draw_no){
     srand(lucky_draw_no);
-    int health, attack, defence, magic;
-    int x = 1;
-    health = rand() % 51 + 30;
-    attack = rand() % 31 + 10;
-    defence = rand() % 16 + 5;
-    magic = rand() % 31 + 15;
-    while (x){
-        if (health % 5 != 0)
-            health--;
-        if (attack % 5 != 0)
-            attack--;
-        if (defence % 5 != 0)
-            defence--;
-        if (magic % 5 != 0)
-            magic--;
-        if (magic % 5 == 0 && defence % 5 == 0 && attack % 5 == 0 && health % 5 == 0 )
-            x--;
-    }
-    cout << "hp +" << health << endl;
-    cout << "atk +" << attack << endl;
-    cout << "def +" << defence << endl;
-    cout << "mp +" << magic << endl;
-    m.hp += health;
-    m.atk += attack;
-    m.def += defence;
-    m.mp += magic;
+    int hp_increase = rand() % 30 + 50;
+    int atk_increase = rand() % 30 + 50;
+    int def_increase = rand() % 30 + 50;
+    int mp_increase = rand() % 30 + 50;
+    round_to_five(hp_increase);
+    round_to_five(atk_increase);
+    round_to_five(def_increase);
+    round_to_five(mp_increase);
+    m.hp += hp_increase;
+    m.max_hp += hp_increase;
+    m.atk += atk_increase;
+    m.def += def_increase;
+    m.max_mp += mp_increase;
+    m.mp += mp_increase;
+
+    
 }
 
 
