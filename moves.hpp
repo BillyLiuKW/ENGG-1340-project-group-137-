@@ -34,8 +34,10 @@ void rage(MainCharacter &m, Enemy &e, Move_info info); //Increases atk by 20% fo
 
 class moves{
     public:
-
+        moves(vector<string> &dialogs_list): dialogs(dialogs_list) {}
         static void iniializeMoves(); // Initialize the moves for the function map
+
+        vector<string> &dialogs;
 
         bool Maincharacter_ExecuteMove(int ID, MainCharacter &m, Enemy &e);
 

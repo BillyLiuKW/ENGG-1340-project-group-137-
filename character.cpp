@@ -36,7 +36,7 @@ MainCharacter::MainCharacter(){
     height = image.size();
     width = image[0].size();
     
-    moveSet;
+    moveSet = {0,1};
     //moveSet[0-3] (int) = ID for a move in moves.cpp
 
 

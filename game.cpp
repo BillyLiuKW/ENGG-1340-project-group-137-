@@ -21,7 +21,7 @@ void pass() {
 
 // update 1.0.0 new display is avaliable
 void GAME::StartGame(MainCharacter& m, Enemy& e) { 
-    moves skills;
+    moves skills(display.dialogs);
     skills.iniializeMoves();
     EnemyMoves enemy_skills(m, e, display.dialogs);
     //Display(m.name, m.hp,  m.atk, e.name,  e.hp, e.atk);
@@ -239,10 +239,6 @@ void GAME::Gameretry(){
             else {
                 MainCharacter m;
                 Enemy e(this->current_level);
-                moves skills;
-                skills.iniializeMoves();
-                skills.addMove(m, 0);
-                skills.addMove(m, 1);
                 cout << "Proceeding to level 1...." << endl;
                 sleep(1);
                 StartGame(m,e);

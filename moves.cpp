@@ -78,7 +78,7 @@ bool moves::Maincharacter_ExecuteMove(int index,MainCharacter &m, Enemy &e){
   if (!check_cost(m, move)){
     return false; //Unable to cast the move
   }
-  cout << "Used " << move.name << " !" << endl;
+  dialogs.push_back("<format><|blue|>" + m.name + " used "  + move.name + "!<end>");
   moveFunctions[move.ID](m,e,move); //Execute the move function
   return true;
   
