@@ -23,12 +23,11 @@ class MainCharacter{
         int max_hp;
         int atk;
         int def;
-        vector<pair<int, double> > atk_boost = {}; // use {boost value, how many round remain} store the buff in attack
+        vector<pair<int, int> > atk_boost = {}; // use {boost value, how many round remain} store the buff in attack
         int atk_boost_sum = 0; // the total buff after each move.
         vector<pair<int, int> > def_boost = {}; // same 
         int def_boost_sum = 0; 
-        vector<pair<int, double> > hp_boost = {}; // continue damage or regeneration
-        int hp_boost_sum = 0;
+        vector<pair<int, int> > hp_boost = {}; // continue damage or regeneration
         int mp;
         int max_mp;
         vector<int> moveSet;
@@ -143,10 +142,11 @@ class Enemy{
         int atk_boost_sum = 0;
         vector<pair<int, int> > def_boost = {};
         int def_boost_sum = 0;
-        vector<pair<int, double> > hp_boost = {}; // continue damage or regeneration
-        int hp_boost_sum;
-        vector<pair<int, double> > max_hp_boost = {}; // tem max_hp increase
-        int max_hp_boost_sum = 0;
+        vector<pair<int, int> > hp_boost = {}; // continue damage or regeneration
+        vector<pair<double, int> > crit_chance_boost = {};
+        double crit_chance_boost_sum = 0;
+        vector<pair<double, int> > crit_damage_boost = {};
+        double crit_damage_boost_sum = 0;
         string name;
         vector<string> image;
         int height;

@@ -50,6 +50,8 @@ Dummy::Dummy(){
     hp = 75;
     atk = 10;
     def = 10;
+    critical_chance = 0.05;
+    critical_damage = 0.5;
     name = "Dummy";
     image =
     {
@@ -69,12 +71,28 @@ Dummy::Dummy(){
         "           Jx.      ",
         "           OQ-      "
     };
-    // e_hp : enemy recover 1st argument hp
+    // ***** remerber to read what can be input *****
+    // int: int_value, double: double_value, (+ve/-ve) any number, (+ve) positive onky, (-ve) negative only
+    // e_hp : enemy recover 1st argument hp 
+    //              format: "e_hp int_change(+ve/-ve) 0"
     // m_hp : enemy deal damage to main_C: formula (e.atk+e.buff_atk)*1st argument - (m.def+m.buff_def)
+    //              format: "m_hp double_mutipiler(+ve) 0"
     // e_def : enemy defend change defefend of 1st arg for 2nd arg rounds (1st arg can be both +ve or -ve)
+    //              format: "e_def int_change(+ve/-ve) int_rounds"
     // m_def : same as above, but in main_c
+    //              format: "m_def int_change(+ve/-ve) int_rounds"
     // e_atk : bascially same but just atk
+    //              format: "e_atk int_change(+ve/-ve) int_rounds"
     // m_atk : same
+     //             format: "m_atk int_change(+ve/-ve) int_rounds"
+    // e_cont_hp : enemy hp damage/ decrease for each round, // 
+    //              format: "e_cont_hp double_mutiplier(+ve/-ve) int_rounds"
+    // m_cont_hp : main_c hp damage/ decrease for each round,
+    //              format: "m_cont_hp double_mutiplier(-ve) int_rounds"
+    // e_crit_chance : enemy critical chance increase temporialy,
+    //              format: "e_crit_chance double_increase(+ve)(between 0-1) int_rounds"  0.2 = +20% crit chance
+    // e_crit_damage : enemy critical damage increase temporialy,
+    //              format: "e_crit_chance double_increase(+ve) int_rounds" 0.2 = +20% crit dmg
     // if the skill only take 1 argument, you must put 0 in the second argument.
     // a skill can hold multiple option above 
     // example {skill ID, skill_ ype, skill name, {"option2 arg1 arg2", "option1 arg1 arg2"}}
@@ -83,17 +101,14 @@ Dummy::Dummy(){
     Enemy_Skill skill2 = {2, "attack", "Heavy Attack", vector<string>{"m_hp 1.5 0", "m_atk -10 3"}};
     Enemy_Skill skill3 = {3, "defend", "Defend", vector<string>{"e_def 10 3"}};
     Enemy_Skill skill4 = {4, "interfere", "Boost", vector<string>{"e_atk 1 3"}};
-    Enemy_Skill skill5 = {5, "regenerate", "Recover", vector<string>{"e_hp 100 0"}};
-    Enemy_Skill skill6 = {6, "attack", "Infection", vector<string>{"m_hp 1.5 0", "m_atk -10 4"}};
-    Enemy_Skill skill7 = {7, "interfere", "Weakness", vector<string>{"e_atk 1 3"}};
-    Enemy_Skill skill8 = {8, "defend", "Steel", vector<string>{"e_def 10 3"}};
-    Enemy_Skill skill9 = {9, "regenerate", "Recover2", vector<string>{"e_hp 100 0"}};
-    Enemy_Skill skill10 = {10, "attack", "Infection2", vector<string>{"m_hp 1.5 0", "m_atk -10 3"}};
-    Enemy_Skill skill11 = {11, "interfere", "Weakness2", vector<string>{"e_atk 1 3"}};
-    Enemy_Skill skill12 = {12, "defend", "Steel2", vector<string>{"e_def 10 3"}};
-    Enemy_Skill skill13 = {13, "attack", "Vampire", vector<string>{"m_hp 1.5 0", "e_hp 50 0"}};
-    Enemy_Skill skill14 = {14, "attack", "Anger", vector<string>{"m_hp 2 0"}};
-    Enemy_Skill skill15 = {15, "defend", "Jesus", vector<string>{"e_def 30 0", "m_hp 2.5 0"}};
+    Enemy_Skill skill5 = {5, "regenerate", "Recover", vector<string>{"e_cont_hp 10 3"}};
+    Enemy_Skill skill6 = {6, "attack", "M_Cont_Dmg", vector<string>{"m_hp 1.5 0", "m_cont_hp -0.2 4"}};
+    Enemy_Skill skill7 = {7, "interfere", "crit_chance", vector<string>{"e_crit_chance 0.5 3"}};
+    Enemy_Skill skill8 = {8, "interfere", "crit_dmg", vector<string>{"e_crit_damage 1 3"}};
+    Enemy_Skill skill9 = {9, "interfere", "crit_both", vector<string>{"e_crit_chance 0.5 3", "e_crit_damage 1 3"}};
+    Enemy_Skill skill10 = {10, "attack", "Vampire", vector<string>{"m_hp 1.5 0", "e_hp 50 0"}};
+    Enemy_Skill skill11 = {11, "attack", "Anger", vector<string>{"m_hp 2 0"}};
+    Enemy_Skill skill12 = {12, "defend", "Jesus", vector<string>{"e_def 30 0", "m_hp 2.5 0"}};
     skill_list.push_back(skill1);
     skill_list.push_back(skill2);
     skill_list.push_back(skill3);
@@ -106,9 +121,6 @@ Dummy::Dummy(){
     skill_list.push_back(skill10);
     skill_list.push_back(skill11);
     skill_list.push_back(skill12);
-    skill_list.push_back(skill13);
-    skill_list.push_back(skill14);
-    skill_list.push_back(skill15);
 }
 
 
@@ -116,6 +128,8 @@ Goblin::Goblin(){
     hp = 75;
     atk = 15;
     def = 7;
+    critical_chance = 0.05;
+    critical_damage = 0.5;
     name = "Goblin";
     image = 
     {
@@ -141,6 +155,8 @@ Mutant::Mutant(){
     hp = 105;
     atk = 30;
     def = 10;
+    critical_chance = 0.05;
+    critical_damage = 0.5;
     name = "Mutant";
     image = 
     {
@@ -166,6 +182,8 @@ Robot::Robot(){
     hp = 620;
     atk = 10;
     def = 30;
+    critical_chance = 0.05;
+    critical_damage = 0.5;
     name = "Robot";
     image = 
     {
@@ -190,6 +208,8 @@ Dragon::Dragon(){
     hp = 780;
     atk = 80;
     def = 50;
+    critical_chance = 0.05;
+    critical_damage = 0.5;
     name = "Dragon";
     image = 
     {
@@ -215,6 +235,8 @@ Demon::Demon(){
     hp = 500;
     atk = 110;
     def = 30;
+    critical_chance = 0.05;
+    critical_damage = 0.5;
     name = "Demon";
     image = 
     {
@@ -240,6 +262,8 @@ Titan::Titan(){
     hp = 850;
     atk = 65;
     def = 60;
+    critical_chance = 0.05;
+    critical_damage = 0.5;
     name = "Titan";
     image = 
     {
@@ -272,6 +296,8 @@ Enemy::Enemy(int type){
                 max_hp = dummyEnemy->hp;
                 atk = dummyEnemy->atk;
                 def = dummyEnemy->def;
+                critical_chance = dummyEnemy->critical_chance;
+                critical_damage = dummyEnemy->critical_damage;
                 name = dummyEnemy->name;
                 image = dummyEnemy->image;
                 height = image.size();
@@ -287,6 +313,8 @@ Enemy::Enemy(int type){
                 max_hp = goblinEnemy->hp;
                 atk = goblinEnemy->atk;
                 def = goblinEnemy->def;
+                critical_chance = goblinEnemy->critical_chance;
+                critical_damage = goblinEnemy->critical_damage;
                 name = goblinEnemy->name;
                 image = goblinEnemy->image;
                 height = image.size();
@@ -301,6 +329,8 @@ Enemy::Enemy(int type){
                 max_hp = mutantEnemy->hp;
                 atk = mutantEnemy->atk;
                 def = mutantEnemy->def;
+                critical_chance = mutantEnemy->critical_chance;
+                critical_damage = mutantEnemy->critical_damage;
                 name = mutantEnemy->name;
                 image = mutantEnemy->image;
                 height = image.size();
@@ -315,6 +345,8 @@ Enemy::Enemy(int type){
                 max_hp = dragonEnemy->hp;
                 atk = dragonEnemy->atk;
                 def = dragonEnemy->def;
+                critical_chance = dragonEnemy->critical_chance;
+                critical_damage = dragonEnemy->critical_damage;
                 name = dragonEnemy->name;
                 image = dragonEnemy->image;
                 height = image.size();
@@ -329,6 +361,8 @@ Enemy::Enemy(int type){
                 max_hp = robotEnemy->hp;
                 atk = robotEnemy->atk;
                 def = robotEnemy->def;
+                critical_chance = robotEnemy->critical_chance;
+                critical_damage = robotEnemy->critical_damage;
                 name = robotEnemy->name;
                 image = robotEnemy->image;
                 height = image.size();
@@ -343,6 +377,8 @@ Enemy::Enemy(int type){
                 max_hp = demonEnemy->hp;
                 atk = demonEnemy->atk;
                 def = demonEnemy->def;
+                critical_chance = demonEnemy->critical_chance;
+                critical_damage = demonEnemy->critical_damage;
                 name = demonEnemy->name;
                 image = demonEnemy->image;
                 height = image.size();
@@ -357,6 +393,8 @@ Enemy::Enemy(int type){
                 max_hp = titanEnemy->hp;
                 atk = titanEnemy->atk;
                 def = titanEnemy->def;
+                critical_chance = titanEnemy->critical_chance;
+                critical_damage = titanEnemy->critical_damage;
                 name = titanEnemy->name;
                 image = titanEnemy->image;
                 height = image.size();

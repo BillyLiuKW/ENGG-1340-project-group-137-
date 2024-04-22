@@ -34,7 +34,12 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         display.dialogs.push_back("<format><|cyan|>Round " + to_string(round) + "<end>");
         display.insert_battelfield(m, e); // new display
         display.print_screen();
-        
+        /*//test
+        cout << "crit chance: " << e.critical_chance << endl;
+        cout << "boost: " <<e.crit_chance_boost_sum << endl;
+        cout << "crit dmg: " << e.critical_damage << endl;
+        cout << "coost: " <<e.crit_damage_boost_sum << endl;
+        // end*/
         // Get user input for chosen skill
         int chosen_Skill;
         cout << "Please choose the skill you want to apply : ";
@@ -61,6 +66,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         // Check if any character has died
 
         // enemy's action
+        
         enemy_skills.Enemy_ExecuteMove();
         if (! survive(m.hp)) {
             //player dead and need functions to provide retry function 
@@ -72,9 +78,8 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
             Victory(m,e);
         }
 
-            
-        
         round++;
+        sleep(1);
     }
 }
 

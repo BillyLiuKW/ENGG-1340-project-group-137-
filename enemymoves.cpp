@@ -24,8 +24,7 @@ void EnemyMoves::Enemy_ExecuteMove() {
     else {
         use_skill(skill_id);
     }
-    // minus number of rounds of all boost by 1
-    boost_count_down();
+    hp_change();
     //calculate the boosts for the next round
     e.atk_boost_sum = 0;
     for (auto &pair: e.atk_boost) {
@@ -35,6 +34,17 @@ void EnemyMoves::Enemy_ExecuteMove() {
     for (auto &pair: e.def_boost) {
         e.def_boost_sum += pair.first;
     }
+    e.crit_chance_boost_sum = 0;
+    for (auto &pair: e.crit_chance_boost) {
+        e.crit_chance_boost_sum += pair.first;
+    }
+    e.crit_damage_boost_sum = 0;
+    for (auto &pair: e.crit_damage_boost) {
+        e.crit_damage_boost_sum += pair.first;
+    }
+    e.crit_chance_boost_sum = min(1.0 - e.critical_chance,  e.crit_chance_boost_sum); // set the max of total critical chance be 1
+    // minus number of rounds of all boost by 1
+    boost_count_down();
 }    
 vector<double> EnemyMoves::z_score(vector<double> &skill_uses, vector<int> &skill_num, int &type_num_s){
     vector<double> standard_score(type_num, 0);
@@ -78,7 +88,13 @@ int EnemyMoves::chooseSkillType(){
     double normal_attack_prob = 0.4;
     vector<Enemy_Skill> attack_skills, defend_skills, interfence_skills, regerneration_skills;
     vector<int> skill_num(type_num, 0);
-    vector<double> skill_uses(type_num, 0), skill_weighting = {0.3, 0.3, 0.2, 0.2}; // with the same order
+    vector<double> skill_uses(type_num, 0), skill_weighting = {0.4, 0.2, 0.2, 0.2}; // with the same order
+    if (e.hp > e.max_hp * 0.8){
+        skill_weighting = {0.4, 0.3, 0.2, 0.1};
+    }
+    if (e.hp <= e.max_hp * 0.5){
+        skill_weighting = {0.3, 0.2, 0.1, 0.4};
+    }
     for (auto &skill: e.skill_list){
         string type = skill.type;
         if (type == "attack"){
@@ -322,6 +338,8 @@ void EnemyMoves::use_skill(int skill_id){
     }
 }
 void EnemyMoves::e_hp(double multiplier, double other){
+    double max_regeneration = e.max_hp - e.hp;
+    multiplier = min(max_regeneration, multiplier); // prevent recover over max_hp
     e.hp += multiplier;
     // Enemy [name]'s HP + value (grenn if positive, red if negative)
     string int_value = to_string(static_cast<int>(multiplier)); // make the double have no decimal place and then string
@@ -332,13 +350,16 @@ void EnemyMoves::e_hp(double multiplier, double other){
 }
 void EnemyMoves::m_hp(double multiplier, double other){
     double damage = 0;
-    damage = (e.atk +e.atk_boost_sum) * multiplier - (m.def + m.def_boost_sum);
-    (damage < 1)? damage = 1: damage = damage;
+    int critical = is_critical(e.critical_chance + e.crit_chance_boost_sum);
+    damage = (e.atk +e.atk_boost_sum) * multiplier * (1 + critical * (e.critical_damage + e.crit_damage_boost_sum)) - (m.def + m.def_boost_sum);
+    damage = max(1.0, damage);
     m.hp -= static_cast<int>(damage);
     string int_value = to_string(static_cast<int>(damage));
-    string dialog = "<format><|blue|>Hero<end> <format><|red|>HP<end> <format><|red|><|bold|>-"+ int_value +"<end>";
+    string dialog = "<format><|blue|>Hero<end> <format><|red|>HP<end> <format><|red|><|bold|>-"+ int_value + "<end>";
+    if (critical) {
+        dialog += "<format><|yellow|> CRIT!!<end>";
+    }
     dialogs.push_back(dialog);
-
 }
 void EnemyMoves::e_atk(double multiplier, double other){
     e.atk_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
@@ -378,6 +399,42 @@ void EnemyMoves::m_def(double multiplier, double other){
     dialog += "<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
     dialogs.push_back(dialog);
 } 
+void EnemyMoves::e_cont_hp(double multiplier, double other){
+    double change = multiplier * (e.atk + e.atk_boost_sum);
+    e.hp_boost.push_back(make_pair(static_cast<int> (change), static_cast<int>(other)));
+    string int_value_1 = to_string(static_cast<int>(change));
+    string int_value_2 = to_string(static_cast<int>(other));
+    string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end> <format><|red|>HP<end> <format>";
+    dialog += ((multiplier < 0)? ("<|red|><|bold|>" + int_value_1 + "<end> "): ("<|green|>regernate " + int_value_1 + "<end>"));
+    dialog += " for <format><|yellow|>" + int_value_2 + "<end> rounds.";
+    dialogs.push_back(dialog);
+}
+void EnemyMoves::m_cont_hp(double multiplier, double other){
+    double change = multiplier * (e.atk + e.atk_boost_sum);
+    m.hp_boost.push_back(make_pair(static_cast<int> (change), static_cast<int>(other)));
+    string int_value_1 = to_string(static_cast<int>(change));
+    string int_value_2 = to_string(static_cast<int>(other));
+    string dialog = "<format><|blue|>Hero<end> <format><|red|>HP<end> <format><|red|><|bold|>"+ int_value_1 +"<end>";
+    dialog += " for <format><|yellow|>" + int_value_2 + "<end> rounds.";
+    dialogs.push_back(dialog);
+
+}
+void EnemyMoves::e_crit_chance(double multiplier, double other){
+    e.crit_chance_boost.push_back(make_pair(multiplier, static_cast<int>(other)));
+    string int_value_1 = to_string(static_cast<int>(multiplier * 100));
+    string int_value_2 = to_string(static_cast<int>(other));
+    string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end> <format><|yellow|>critical chance<end>";
+    dialog += " <format><|green|><|bold|>+" + int_value_1 + "%<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
+    dialogs.push_back(dialog);
+}
+void EnemyMoves::e_crit_damage(double multiplier, double other){
+    e.crit_damage_boost.push_back(make_pair(multiplier, static_cast<int>(other)));
+    string int_value_1 = to_string(static_cast<int>(multiplier * 100));
+    string int_value_2 = to_string(static_cast<int>(other));
+    string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end> <format><|purple|>critical damage<end>";
+    dialog += " <format><|green|><|bold|>+" + int_value_1 + "%<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
+    dialogs.push_back(dialog);
+}
 void EnemyMoves::boost_count_down(){
     for (auto &pair: e.atk_boost) {
         pair.second--;
@@ -385,7 +442,39 @@ void EnemyMoves::boost_count_down(){
     for (auto &pair: e.def_boost) {
         pair.second--;
     }
+    for (auto &pair: e.crit_chance_boost) {
+        pair.second--;
+    }
+    for (auto &pair: e.crit_damage_boost) {
+        pair.second--;
+    }
     // remove all pair that round remains < 0 with lambda function
     e.atk_boost.erase(remove_if(e.atk_boost.begin(), e.atk_boost.end(), [](pair<int, int> pair){return pair.second < 0;}), e.atk_boost.end());
     e.def_boost.erase(remove_if(e.def_boost.begin(), e.def_boost.end(), [](pair<int, int> pair){return pair.second < 0;}), e.def_boost.end());
+    e.crit_chance_boost.erase(remove_if(e.crit_chance_boost.begin(), e.crit_chance_boost.end(), [](pair<double, int> pair){return pair.second < 0;}), e.crit_chance_boost.end());
+    e.crit_damage_boost.erase(remove_if(e.crit_damage_boost.begin(), e.crit_damage_boost.end(), [](pair<double, int> pair){return pair.second < 0;}), e.crit_damage_boost.end());
+}
+int EnemyMoves::is_critical(double probability){
+    probability = min(1.0, probability); // prevent any unexpected error that prob > 1
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::bernoulli_distribution dist(probability);
+    return dist(gen);
+}
+void EnemyMoves::hp_change(){
+    for (auto &pair: e.hp_boost){
+        int value = pair.first;
+        int max_regeneration = e.max_hp - e.hp;
+        value = min(max_regeneration, pair.first);
+        e.hp += value;
+        string int_value = to_string(value);
+        string round = to_string(pair.second - 1);
+        string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end>'s <format><|red|>HP<end> <format>";
+        dialog += ((value < 0)? ("<|red|>" + int_value): ("<|green|>+" + int_value));
+        dialog += "<end>";
+        dialog += " (remain <format><|yellow|><|bold|>" + round + "<end> rounds.)";
+        dialogs.push_back(dialog);  
+        pair.second--;
+    }
+    e.hp_boost.erase(remove_if(e.hp_boost.begin(), e.hp_boost.end(), [](pair<int, int> pair){return pair.second < 0;}), e.hp_boost.end());
 }

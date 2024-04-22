@@ -22,6 +22,11 @@ class EnemyMoves{
             {"m_def", &EnemyMoves::m_def},
             {"e_hp", &EnemyMoves::e_hp},
             {"m_hp", &EnemyMoves::m_hp},
+            {"e_cont_hp", &EnemyMoves::e_cont_hp},
+            {"m_cont_hp", &EnemyMoves::m_cont_hp},
+            {"e_crit_chance", &EnemyMoves::e_crit_chance},
+            {"e_crit_damage", &EnemyMoves::e_crit_damage},
+            
         };
         MainCharacter &m;
         Enemy &e;
@@ -35,6 +40,7 @@ class EnemyMoves{
         // use the chosen skill
         void use_skill(int skill_id);
         void boost_count_down(); 
+        void hp_change(); // apply the conyinue damage or regeneration
     private:
         vector<double> z_score(vector<double> &skill_uses, vector<int> &skill_num, int& type_num_s);
         int chooseSkillType(); // returm skill chosen in chooseSkill()
@@ -45,6 +51,11 @@ class EnemyMoves{
         void m_atk(double multiplier, double other);
         void e_def(double multiplier, double other);
         void m_def(double multiplier, double other);
+        void e_cont_hp(double multiplier, double other);
+        void m_cont_hp(double multiplier, double other);
+        void e_crit_chance(double multiplier, double other);
+        void e_crit_damage(double multiplier, double other);
+        int is_critical(double probability);
 };
 
 #endif
