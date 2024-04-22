@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <fstream>
 #include <cctype>
+#include <algorithm>
 #include <cstdlib>
 #include <unistd.h>
 #include "character.hpp"
@@ -331,93 +332,18 @@ void GAME::ability(MainCharacter &m, int lucky_draw_no){ //basic value
     m.mp += magic;
 }
 
-struct FULL_MOVE_POOL{
-    string name;
-    int ID;
-};
 
 void GAME::skill(MainCharacter &m, int lucky_draw_no){
     //Player will see {1,2,3,4} instead of {0,1,2,3}  in the display moveSet
     srand(lucky_draw_no);
-    Move_info move; 
-    vector <FULL_MOVE_POOL> move_info;
-    FULL_MOVE_POOL Slash = {"Slash", 0 };
-    move_info.push_back(Slash);
-    FULL_MOVE_POOL Fire = {"Fireball", 1 };
-    move_info.push_back(Fire);
-    FULL_MOVE_POOL Regen = {"Regen", 2};
-    move_info.push_back(Regen);
-    FULL_MOVE_POOL check;
-    int size_of_full_move_pool = 4; //no of skills
-    if ( m.moveSet.size() >= 4 ) 
-        { for ( int i = 0; i < 4 ; i++ )
-            { check = move_info[m.moveSet[i]];
-            cout << i + 1 << ". " << check.name ; 
-            if ( i < 3 )
-                { cout << "    ";}
-            else
-                {cout << endl;}} 
-        string change_move ;
-        cout << "Select Move to Change : ";
-        cin >> change_move ;
-        int y = 1;
-        while (y){
-            if ( !isInteger(change_move) || stoi(change_move) > 4 )
-                {cout << "Invalid Input. Please enter again : " ;
-                cin >> change_move; }
-            else
-                y--;
-        }
-        int no = stoi(change_move) - 1; 
-        y =1;
-        int y = 1, z = 0;
-        while (y) //check whether the move is in the FULL_MOVE_POOL
-        {
-            int x = rand() % move_info.size();
-            check = move_info[x];
-            for ( int i = 0 ; i < 4 ; i++ )
-                { if ( m.moveSet[i] == check.ID )
-                    z++; }
-            if ( z == 0 )
-                { m.moveSet[no] = x;
-                  y--; }
-            z = 0;
-        }
-        cout << endl;
-        cout << "New Skills attain : " << check.name << endl;
-        cout << "New move : " << endl;
-        for ( int i = 0; i < 4 ; i++ )
-            { check = move_info[m.moveSet[i]];
-            cout << i + 1 << ". " << check.name ; 
-            if ( i < 3 )
-                { cout << "    ";}
-            else
-                {cout << endl;}}         }
-        else if ( m.moveSet.size() < 4 ){
-            int y = 1, z = 0; // z is for checking duplicate skills while y is a bool for while loop logic
-            while (y) //check whether the move is in the FULL_MOVE_POOL
-            {   
-                int x = rand() % size_of_full_move_pool + 1;
-                check = move_info[x];
-                for ( int i = 0 ; i < m.moveSet.size() ; i++ )
-                    { if ( m.moveSet[i] == check.ID )
-                        z++; }
-                if ( z == 1 )
-                    { m.moveSet.push_back(x);
-                    y--; }
-                z = 0;
-            }
-            }
-        cout << endl;
-        cout << "New Move Add : " << check.name << endl;
-        cout << "New Move : " << endl;
-        for ( int i = 0; i < m.moveSet.size() ; i++ )
-            { check = move_info[m.moveSet[i]];
-            cout << i + 1 << ". " << check.name ; 
-            if ( i < (m.moveSet.size() - 1) )
-                { cout << "    ";}
-            else
-                {cout << endl;}} 
+    int random = rand() % moves::FULL_MOVE_POOL.size();
+    while (find(m.moveSet.begin(), m.moveSet.end(), moves::FULL_MOVE_POOL[random].ID) != m.moveSet.end()) {
+        // Generate a new random number
+        random = rand() % moves::FULL_MOVE_POOL.size(); // Avoid duplicate moves
+    }
+    moves::addMove(m, moves::FULL_MOVE_POOL[random].ID);
+    
+    
+
+
 }
-
-

@@ -4,6 +4,7 @@
 #include "character.hpp"
 #include <vector>
 #include <map>
+#include <string>
 #include <functional>
 #include <string>
 using namespace std;
@@ -13,7 +14,7 @@ struct Move_info{ //Store the information of the move
         int ID;
         int power; //The power of the move 
         int cost;
-        char type;
+        string type;
         //Physical moves cost HP to cast
         //Magical moves cost MP to cast
         //Damage formula is self_atk * power / enemy_def, so 25 atk * 50 power / 50 def = 25 damage
@@ -27,7 +28,7 @@ void slash(MainCharacter &m, Enemy &e, Move_info info); //deals phys dmg to enem
 
 void fireball(MainCharacter &m, Enemy &e, Move_info info); //deals magic dmg to enemy, base moves
 
-void regen(MainCharacter &m, Enemy &e, Move_info info); //Heals
+void regen(MainCharacter &m, Enemy &e, Move_info info); //Restores 30% of max hp
 
 class moves{
     public:
@@ -39,24 +40,19 @@ class moves{
         string getMoveName(int ID);
         //Get the name of the move
 
-        void addMove(MainCharacter& character, int ID);
+        static void addMove(MainCharacter& character, int ID);
         //Add moves to character's moveSet
+        static vector<Move_info> FULL_MOVE_POOL;
 
-        void select_move_to_change(MainCharacter& character,int index, int ID);
-        //Allows user to select a move to change
 
     private:
         static map<int, function<void(MainCharacter&, Enemy&, Move_info)> > moveFunctions; //Create a function map for executing move functions
 
-        static vector<Move_info> FULL_MOVE_POOL;
-
         bool check_cost(MainCharacter &m, Move_info move); // Check if the character has enough HP/MP to cast the move
-
-
-
-
-        
+    
 
 };
+
+
 
 #endif

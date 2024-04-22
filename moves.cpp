@@ -40,7 +40,7 @@ void fireball(MainCharacter &m, Enemy &e, Move_info info){
   e.hp -= damage;
 }
 
-void regen(MainCharacter &m, Enemy &e, Move_info info){
+void regen(MainCharacter &m, Enemy &e, Move_info info){ //30% max hp
   if (m.hp + info.power > m.max_hp){
     m.hp = m.max_hp;
   }
@@ -51,14 +51,14 @@ void regen(MainCharacter &m, Enemy &e, Move_info info){
 }
 
 void moves::iniializeMoves(){
-  Move_info slashInfo = {"Slash", 0 ,10, 10, 'p'};
+  Move_info slashInfo = {"Slash", 0 ,10, 10, "physical"};
   FULL_MOVE_POOL.push_back(slashInfo);
   moveFunctions[0] = slash;
   //Follow this format to define more moves
-  Move_info fireballInfo = {"Fireball", 1, 20, 20, 'm'};
+  Move_info fireballInfo = {"Fireball", 1, 20, 20, "magical"};
   FULL_MOVE_POOL.push_back(fireballInfo);
   moveFunctions[1] = fireball;
-  Move_info regenInfo = {"Regen", 2, 30, 30, 'm'};
+  Move_info regenInfo = {"Regen", 2, 30, 30, "magical"};
   moveFunctions[2] = regen;
   FULL_MOVE_POOL.push_back(regenInfo);
 }
@@ -76,33 +76,35 @@ bool moves::Maincharacter_ExecuteMove(int index,MainCharacter &m, Enemy &e){
 }
 
 void moves::addMove(MainCharacter& character, int ID){
+  //Note that the player would see {1,2,3,4} instead of {0,1,2,3}
+    int index;
     if (character.moveSet.size() <= 4){
       character.moveSet.push_back(ID);
       cout << "Move added!" << endl;
     }
+    else{
+      cout << "Select a move to change (1-4): ";
+      cin >> index;
+      character.moveSet[index-1] = ID;
+      cout << "Move changed!" << endl;
+    }
 }
 
-void moves::select_move_to_change(MainCharacter& character, int index, int ID){
-    //Note that the player would see {1,2,3,4} instead of {0,1,2,3}
-    character.moveSet[index-1] = ID;
-    cout << "Move changed!" << endl;
-}
 
 string moves::getMoveName(int ID){
   return FULL_MOVE_POOL[ID].name;
 }
 
 bool moves::check_cost(MainCharacter &m, Move_info move){
-  if (move.type == 'p' && m.hp < move.cost){
+  if (move.type == "physical" && m.hp < move.cost){
     return false;
   }
   else{
-    if (m.mp < move.cost && move.type == 'm'){
+    if (m.mp < move.cost && move.type == "magical"){
       return false;
     }
   }
   return true; // enough HP/MP
-
 }
 
 
