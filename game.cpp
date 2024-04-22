@@ -271,7 +271,7 @@ bool isInteger(string x){
 }
 
 void GAME::reward(MainCharacter &m){
-    cout << "Choose Reward Type : 1. MainCharater Ability   2. Skills" << endl;
+    cout << "Choose Reward Type : 1. Stat   2. Skills" << endl;
     int type;
     cout << "Please Enter 1/2 : ";
     cin >> type ;
