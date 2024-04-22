@@ -27,6 +27,7 @@ void slash(MainCharacter &m, Enemy &e, Move_info info); //deals phys dmg to enem
 
 void fireball(MainCharacter &m, Enemy &e, Move_info info); //deals magic dmg to enemy, base moves
 
+void regen(MainCharacter &m, Enemy &e, Move_info info); //Heals
 vector<Move_info> FULL_MOVE_POOL;
 
 class moves{

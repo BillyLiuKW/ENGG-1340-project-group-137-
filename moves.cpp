@@ -40,6 +40,16 @@ void fireball(MainCharacter &m, Enemy &e, Move_info info){
   e.hp -= damage;
 }
 
+void regen(MainCharacter &m, Enemy &e, Move_info info){
+  if (m.hp + info.power > m.max_hp){
+    m.hp = m.max_hp;
+  }
+  else{
+    m.hp += info.power;
+  }
+  m.mp -= info.cost;
+}
+
 void moves::iniializeMoves(){
   Move_info slashInfo = {"Slash", 0 ,10, 10, 'p'};
   FULL_MOVE_POOL.push_back(slashInfo);
@@ -48,6 +58,8 @@ void moves::iniializeMoves(){
   Move_info fireballInfo = {"Fireball", 1, 20, 20, 'm'};
   FULL_MOVE_POOL.push_back(fireballInfo);
   moveFunctions[1] = fireball;
+  Move_info regenInfo = {"Regen", 2, 30, 30, 'm'};
+  
 }
 
 bool moves::Maincharacter_ExecuteMove(int index,MainCharacter &m, Enemy &e){
