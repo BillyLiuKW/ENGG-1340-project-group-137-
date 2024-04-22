@@ -22,7 +22,7 @@ void pass() {
 void GAME::StartGame(MainCharacter& m, Enemy& e) { 
     moves skills;
     skills.iniializeMoves();
-    EnemyMoves enemy_skills;
+    EnemyMoves enemy_skills(m, e, display.dialogs);
     //Display(m.name, m.hp,  m.atk, e.name,  e.hp, e.atk);
     int round = 1;
     display.dialogs.push_back("<format><|bold|><|red|>Level " +  to_string(current_level) + "<end>");
@@ -60,7 +60,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         // Check if any character has died
 
         // enemy's action
-        enemy_skill.Enemy_ExecuteMove();
+        enemy_skills.Enemy_ExecuteMove();
         if (! survive(m.hp)) {
             //player dead and need functions to provide retry function 
             Gameretry();
