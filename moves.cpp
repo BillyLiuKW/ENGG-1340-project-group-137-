@@ -41,29 +41,38 @@ void fireball(MainCharacter &m, Enemy &e, Move_info info){
 }
 
 void regen(MainCharacter &m, Enemy &e, Move_info info){ //30% max hp
-  if (m.hp + info.power > m.max_hp){
+  if (m.hp + info.power * m.max_hp > m.max_hp){
     m.hp = m.max_hp;
   }
   else{
-    m.hp += info.power;
+    m.hp + info.power * m.max_hp;
   }
   m.mp -= info.cost;
 }
 
+void rage(MainCharacter &m, Enemy &e, Move_info info){ //20% atk for 3 turns
+  m.atk *= 1.2; //temp code
+  m.mp -= info.cost;
+}
+
 void moves::iniializeMoves(){
-  Move_info slashInfo = {"Slash", 0 ,10, 10, "physical"};
+  Move_info slashInfo = {"Slash", 0 ,20, 10, "Physical"};
   FULL_MOVE_POOL.push_back(slashInfo);
   moveFunctions[0] = slash;
   //Follow this format to define more moves
-  Move_info fireballInfo = {"Fireball", 1, 20, 20, "magical"};
+  Move_info fireballInfo = {"Fireball", 1, 20, 20, "Magical"};
   FULL_MOVE_POOL.push_back(fireballInfo);
   moveFunctions[1] = fireball;
-  Move_info regenInfo = {"Regen", 2, 30, 30, "magical"};
+  Move_info regenInfo = {"Regen", 2, 30, 30, "Magical"};
   moveFunctions[2] = regen;
   FULL_MOVE_POOL.push_back(regenInfo);
+  Move_info rageInfo = {"Rage", 3, 20, 30, "Magical"};
 }
 
 bool moves::Maincharacter_ExecuteMove(int index,MainCharacter &m, Enemy &e){
+  if (index > m.moveSet.size() || index < 1){
+    return false; //Invalid move
+  }
   int ID = m.moveSet[index-1];
   Move_info move = FULL_MOVE_POOL[ID];
   if (!check_cost(m, move)){
@@ -96,11 +105,11 @@ string moves::getMoveName(int ID){
 }
 
 bool moves::check_cost(MainCharacter &m, Move_info move){
-  if (move.type == "physical" && m.hp < move.cost){
+  if (move.type == "Physical" && m.hp < move.cost){
     return false;
   }
   else{
-    if (m.mp < move.cost && move.type == "magical"){
+    if (m.mp < move.cost && move.type == "Magical"){
       return false;
     }
   }

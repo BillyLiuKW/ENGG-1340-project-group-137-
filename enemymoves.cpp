@@ -7,7 +7,7 @@
 #include <cmath>
 #include <algorithm>
 #include <sstream>
-
+#include <functional>
 #include "character.hpp"
 #include "enemymoves.hpp"
 using namespace std;

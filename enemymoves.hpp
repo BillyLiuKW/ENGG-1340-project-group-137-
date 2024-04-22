@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 #include <utility>
+#include <functional>
 
 #include "character.hpp"
 using namespace std;

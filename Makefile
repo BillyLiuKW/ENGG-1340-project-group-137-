@@ -1,4 +1,4 @@
-OBJECTS = character.o game.o moves.o main.o screen.o reward.o enemymoves.o
+OBJECTS = character.o game.o moves.o main.o screen.o enemymoves.o
 FLAGS = "-std=c++11"
 
 play: $(OBJECTS) 
@@ -22,8 +22,6 @@ character.o: character.cpp character.hpp
 screen.o: screen.cpp screen.hpp textformat.hpp character.cpp character.hpp
 	g++ $(FLAGS) -c screen.cpp -o screen.o
 
-reward.o: character.hpp reward.hpp reward.cpp
-	g++ $(FLAGS) -c reward.cpp -o reward.o
 
 test: 
 	./play

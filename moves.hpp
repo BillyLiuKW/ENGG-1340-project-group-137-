@@ -30,6 +30,8 @@ void fireball(MainCharacter &m, Enemy &e, Move_info info); //deals magic dmg to 
 
 void regen(MainCharacter &m, Enemy &e, Move_info info); //Restores 30% of max hp
 
+void rage(MainCharacter &m, Enemy &e, Move_info info); //Increases atk by 20% for 3 turns  
+
 class moves{
     public:
 
