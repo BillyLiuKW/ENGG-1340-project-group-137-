@@ -108,6 +108,7 @@ void select_option(int option, GAME game) {
 
         }
         case 4:
+        {
             ifstream fin("game_instruction.txt");
             if (fin.is_open()) {
                 string line;
@@ -119,6 +120,7 @@ void select_option(int option, GAME game) {
            else {
             cout << "Error: unable to provide Game Instruction," << endl;
            }
+        }
         default:
         {
             break;
