@@ -338,39 +338,39 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
     int health, attack, defence, magic;
     switch(level){ // basic value of random reward
         case 2:{
-            health = 10, attack = 5, defence = 5, magic = 5;
+            health = 20, attack = 5, defence = 5, magic = 20;
             break;
         }
         case 3:{
-            health = 20, attack = 10, defence = 10, magic = 10;
+            health = 40, attack = 15, defence = 10, magic = 40;
             break;
         }
         case 4:{
-            health = 25, attack = 15, defence = 10, magic = 10;
+            health = 50, attack = 20, defence = 10, magic = 50;
             break;
         }
         case 5:{
-            health = 20, attack = 15, defence = 10, magic = 10;
+            health = 60, attack = 20, defence = 15, magic = 50;
             break;
         }
         case 6:{
-            health = 20, attack = 15, defence = 10, magic = 10;
+            health = 90, attack = 35, defence = 25, magic = 60;
             break;
         }
         case 7:{
-            health = 20, attack = 15, defence = 10, magic = 10;
+            health = 100, attack = 40, defence = 25, magic = 80;
             break;
         }
         case 8:{
-            health = 20, attack = 15, defence = 10, magic = 10;
+            health = 110, attack = 40, defence = 30, magic = 80;
             break;
         }
         case 9:{
-            health = 20, attack = 15, defence = 10, magic = 10;
+            health = 120, attack = 45, defence = 30, magic = 90;
             break;
         }
         case 10:{
-            health = 20, attack = 15, defence = 10, magic = 10;
+            health = 160, attack = 65, defence = 40, magic = 120;
             break;
         }
         default:{
