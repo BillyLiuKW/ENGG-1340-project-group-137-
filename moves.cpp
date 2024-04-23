@@ -71,11 +71,15 @@ void moves::iniializeMoves(){
 
 bool moves::Maincharacter_ExecuteMove(int index,MainCharacter &m, Enemy &e){
   if (index > m.moveSet.size() || index < 1){
+    cout << "Error: Invalid move index!" << endl;
+    cout << "Please try again!" << endl;
     return false; //Invalid move
   }
   int ID = m.moveSet[index-1];
   Move_info move = FULL_MOVE_POOL[ID];
   if (!check_cost(m, move)){
+    cout << "Error! Not enough HP/MP!" << endl;
+    cout << "Please try again!" << endl;
     return false; //Unable to cast the move
   }
   dialogs.push_back("<format><|blue|>" + m.name + " used "  + move.name + "!<end>");

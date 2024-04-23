@@ -46,16 +46,10 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         int chosen_Skill;
         cout << "Please choose the skill you want to apply : ";
         cin >> chosen_Skill;
-        // Check if the chosen skill is illegal
-        if (invalid_skill(chosen_Skill)) {
-            cout << "Invalid choice! Please choose a valid skill." << endl;
-            //continue;
-            break; //temporarily
-        }
-        if (!skills.Maincharacter_ExecuteMove(chosen_Skill, m, e)){
-            cout << "Not enough HP/MP to cast the move!" << endl;
-            //continue;
-            break; //temporarily
+        
+        while (!skills.Maincharacter_ExecuteMove(chosen_Skill, m, e)){
+           cout << "Please choose the skill you want to apply : ";
+           cin >> chosen_Skill;
         }
 
         // below only execute when valid skill is chosen
@@ -74,7 +68,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
             //player dead and need functions to provide retry function 
             Gameretry();
         }
-
+        //check whether enemy is dead
         if (! survive(e.hp)) {
             // return win function
             Victory(m,e);
@@ -153,12 +147,6 @@ bool GAME::survive(int hp) {
     else {
         return true; 
     }
-}
-
-bool GAME::invalid_skill(int chosen) {
-    // Insert code to check if the chosen skill is out of range
-    pass();
-    return 0;
 }
 
 void GAME::Victory(MainCharacter &m, Enemy &e) {
