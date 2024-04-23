@@ -29,6 +29,10 @@ void lethal_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &d
 void weapon_master(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //Passive move, increases power of phys move by 50%
 //cannot be used
 
+void mastery_of_magic(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //Passive move, increases power of magic move by 50%
+
+void efficient_tactics(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //Passive move, reduces cost of all moves by 30%
+
 class moves{
     public:
         moves(vector<string> &dialogs_list): dialogs(dialogs_list) {}

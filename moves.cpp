@@ -43,7 +43,6 @@ void slash(MainCharacter &m, Enemy &e,Move_info info, vector<string> &dialogs){
     e.hp -= damage;
     string int_value = to_string(damage);
     string dialog = display_damage(e, damage);
-    dialog += "Power: "+ to_string(info.power);
     dialogs.push_back(dialog);
 }
 
@@ -100,8 +99,23 @@ void weapon_master(MainCharacter &m, Enemy &e, Move_info info, vector<string> &d
     }
 }
 
+void mastery_of_magic(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){ //passive
+    for (int i = 0; i < m.moveSet.size(); i++){
+        if (moves::FULL_MOVE_POOL[m.moveSet[i]].type == "Magical"){
+            m.boosted_moves.push_back(moves::FULL_MOVE_POOL[m.moveSet[i]]); //Store the unboosted moves info
+            moves::FULL_MOVE_POOL[m.moveSet[i]].power *= 1.5; //Boost the power of the move
+        }
+    }
+}
 
-
+void efficient_tactics(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){ //passive
+    for (int i = 0; i < m.moveSet.size(); i++){
+        if (moves::FULL_MOVE_POOL[m.moveSet[i]].type != "Passive"){
+            m.boosted_moves.push_back(moves::FULL_MOVE_POOL[m.moveSet[i]]); //Store the unboosted moves info
+            moves::FULL_MOVE_POOL[m.moveSet[i]].cost *= 0.7; //Reduce the cost of the move by 30% (round down
+        }
+    }
+}
 
 void moves::iniializeMoves(){
     Move_info slashInfo = {"Slash", 0 ,20, 10, "Physical"};
@@ -123,6 +137,13 @@ void moves::iniializeMoves(){
     Move_info weapon_masterInfo = {"Weapon Master", 5, 0, 0, "Passive"};
     moveFunctions[5] = weapon_master;
     FULL_MOVE_POOL.push_back(weapon_masterInfo);
+    Move_info mastery_of_magicInfo = {"Mastery of Magic", 6, 0, 0, "Passive"};
+    moveFunctions[6] = mastery_of_magic;
+    FULL_MOVE_POOL.push_back(mastery_of_magicInfo);
+    Move_info efficient_tacticsInfo = {"Efficient Tactics", 7, 0, 0, "Passive"};
+    moveFunctions[7] = efficient_tactics;
+    FULL_MOVE_POOL.push_back(efficient_tacticsInfo);
+    
 
 }
 
