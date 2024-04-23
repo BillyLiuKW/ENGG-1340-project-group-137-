@@ -110,7 +110,7 @@ In each turn, you can choose a move to use.
          }
 
      * File output (To save player's game status in checkpoints) 
-      ```cpp
+         ```cpp
         void GAME::Victory(MainCharacter &m, Enemy &e) {
                 cout << "Congratulations! The " << e.name << " is defeated!" << endl;
                 this->current_level++;
