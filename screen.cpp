@@ -11,6 +11,24 @@
 
 using namespace std;
 
+const vector<string> grave = {
+    "       fWvuvXB       ",
+    "     -Y(_(}}z>jk^    ",
+    "    J?[<ll;:l X>u    ",
+    "    ra,llllllllnrn   ",
+    " `~+<`lllllllll+Z+ & ",
+    " ^&]lllllllllll>llbz ",
+    "  d|ll        l>l\"Z\" ",
+    "  d(ll  Dead  l>llZ\" ",
+    "  b(ll        l>^lZ^ ",
+    "  d(lllllllllll>llZ\" ",
+    "  d|lllllllllll>llZ\" ",
+    "  d(iIlllllllll>`IZ\" ",
+    "  bxi!llllllll[~>lZ^ ",
+    "Ua^   |JJJJJJJZmar}o[",
+    "*Bzj1}}}}}}}}}}1}zXn8",
+};
+
 void Screen::create_edge(){
     const char horizontal_edge = '-';
     const char vertical_edge = '|';
@@ -164,18 +182,30 @@ void Screen::insert_battelfield(MainCharacter& m, Enemy& e){
     //caculate the centre
     int start_row = 2;
     int start_col;
-    start_col = (0+width-1)/2 - e.width/2;
-
-    //display enemy
-    insert_item(start_row, start_col, e.image, {});
+    //display enemy (display a grave if enemy hp <= 0)
+    if (e.hp > 0){
+        start_col = (0+width-1)/2 - e.width/2;
+        insert_item(start_row, start_col, e.image, {});
+    }
+    else{
+        start_col = (0+width-1)/2 - grave[0].size()/2;
+        insert_item(start_row, start_col, grave, {});       
+    }
     insert_information(start_row, e);
     start_row += (e.height + 3 + 2); // new row = original row + enemy height + infomation height + spacing 2
     //diaplay a speration
     insert_speration(start_row);
 
     start_row += 2; //spacing
-    start_col = (0+width-1)/2 - m.width/2;
-    insert_item(start_row, start_col, m.image, {});
+    //display main character
+    if (m.hp > 0){
+        start_col = (0+width-1)/2 - m.width/2;
+        insert_item(start_row, start_col, m.image, {});
+    }
+    else{
+        start_col = (0+width-1)/2 - grave[0].size()/2;
+        insert_item(start_row, start_col, grave, {});       
+    }
     insert_information(start_row, m);
 
     //insert dislogs
@@ -186,6 +216,7 @@ void Screen::insert_battelfield(MainCharacter& m, Enemy& e){
 }
 void Screen::insert_information(int start_row, Enemy info){
     string ATK_info = "ATK: " + to_string(info.atk) + "(" + ((info.atk_boost_sum >= 0)? "+" : "") + to_string(info.atk_boost_sum) + ")";
+    string DEF_info = "DEF: " + to_string(info.def) + "(" + ((info.def_boost_sum >= 0)? "+" : "") + to_string(info.def_boost_sum) + ")";
     int max_health_bar = 20;
     //return starting position 
     int start_col_info = (0+width-1)/2 - (6 + max_health_bar + 4)/2;
@@ -204,10 +235,12 @@ void Screen::insert_information(int start_row, Enemy info){
     }
     insert_item(start_row + info.height + 1, start_col_info, {"Enemy: " + info.name}, {"underline", "bold"});
     insert_item(start_row + info.height + 2, start_col_info, {ATK_info}, {"cyan"});
+    insert_item(start_row + info.height + 2, start_col_info + 15, {DEF_info}, {"green"});
     insert_item(start_row + info.height + 3, start_col_info, {hp_info}, {"red","bold"});
 }
 void Screen::insert_information(int start_row, MainCharacter info){
-    string ATK_info = "ATK: " + to_string(info.atk);
+    string ATK_info = "ATK: " + to_string(info.atk) + "(" + ((info.atk_boost_sum >= 0)? "+" : "") + to_string(info.atk_boost_sum) + ")";
+    string DEF_info = "DEF: " + to_string(info.def) + "(" + ((info.def_boost_sum >= 0)? "+" : "") + to_string(info.def_boost_sum) + ")";
     int max_health_bar = 20;
     int max_mp_bar = 20;
     int start_col_info = (0+width-1)/2 - (6 + max_health_bar + 4)/2; // 4 = max digit of health
@@ -236,6 +269,7 @@ void Screen::insert_information(int start_row, MainCharacter info){
     }
     insert_item(start_row + info.height + 1, start_col_info, {"Main character: " + info.name}, {"underline", "bold"});
     insert_item(start_row + info.height + 2, start_col_info, {ATK_info}, {"cyan"});
+    insert_item(start_row + info.height + 2, start_col_info + 15, {DEF_info}, {"green"});
     insert_item(start_row + info.height + 3, start_col_info, {hp_info}, {"red","bold"});
     insert_item(start_row + info.height + 4, start_col_info, {mp_info}, {"blue","bold"});
 }
