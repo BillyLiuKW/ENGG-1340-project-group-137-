@@ -20,6 +20,7 @@ struct Move_info{ //Store the information of the move
         //Damage formula is self_atk * power / enemy_def, so 25 atk * 50 power / 50 def = 25 damage
     };
 
+
 void Critical_hit(int &dmg, int chance); //Physical moves have a 10% chance to deal 50% more damage, depending on move
 
 int calculate_damage(double power, int self_atk, int enemy_def); //Apply the damage formula
@@ -31,6 +32,11 @@ void fireball(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialog
 void regen(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //Restores 30% of max hp
 
 void rage(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //Increases atk by 20% for 3 turns  
+
+void lethal_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals phys dmg to enemy, 50% chance to crit
+
+void weapon_master(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //Passive move, increases power of phys move by 50%
+//cannot be used
 
 class moves{
     public:

@@ -18,23 +18,31 @@ int calculate_damage(int power, int self_atk, int enemy_def){
     return damage;
 }
 
-void Critical_hit(int &dmg, int chance = 10){
+void Critical_hit(int &dmg, vector<string> &dialogs, int chance = 10){
     srand(time(0));
     int random = rand() % 100;
     if (random < chance){
-        cout << "Critical hit!" << endl;
+        string dialog = "<format><|bold|><|red|>Critical hit!<end>";
+        dialogs.push_back(dialog);
         dmg *= 1.5;
     }
 }
 
-void slash(MainCharacter &m, Enemy &e,Move_info info, vector<string> &dialogs){
-    int damage = calculate_damage(info.power, m.atk, e.def);
-    m.hp -= info.cost;
-    Critical_hit(damage);
-    e.hp -= damage;
+string display_damage(Enemy &e, int damage){
     string int_value = to_string(damage);
     string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end>'s <format><|red|>HP<end>";
     dialog += " <format><|red|><|bold|>-" + int_value + "<end>";
+    return dialog;
+}
+
+
+void slash(MainCharacter &m, Enemy &e,Move_info info, vector<string> &dialogs){
+    int damage = calculate_damage(info.power, m.atk, e.def);
+    m.hp -= info.cost;
+    Critical_hit(damage, dialogs);
+    e.hp -= damage;
+    string int_value = to_string(damage);
+    string dialog = display_damage(e, damage);
     dialogs.push_back(dialog);
 }
 
@@ -43,8 +51,7 @@ void fireball(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialog
     m.mp -= info.cost;
     e.hp -= damage;
     string int_value = to_string(damage);
-    string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end>'s <format><|red|>HP<end>";
-    dialog += " <format><|red|><|bold|>-" + int_value + "<end>";
+    string dialog = display_damage(e, damage);
     dialogs.push_back(dialog);
 }
 
@@ -75,6 +82,20 @@ void rage(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){ 
     dialogs.push_back(dialog);
 }
 
+void lethal_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
+  int damage = calculate_damage(info.power, m.atk, e.def);
+  m.hp -= info.cost;
+  Critical_hit(damage, dialogs,50);
+  e.hp -= damage;
+  string dialog = display_damage(e, damage);
+  dialogs.push_back(dialog);
+}
+
+
+
+
+
+
 void moves::iniializeMoves(){
     Move_info slashInfo = {"Slash", 0 ,20, 10, "Physical"};
     FULL_MOVE_POOL.push_back(slashInfo);
@@ -87,6 +108,15 @@ void moves::iniializeMoves(){
     moveFunctions[2] = regen;
     FULL_MOVE_POOL.push_back(regenInfo);
     Move_info rageInfo = {"Rage", 3, 20, 30, "Magical"};
+    moveFunctions[3] = rage;
+    FULL_MOVE_POOL.push_back(rageInfo);
+    Move_info lethal_strikeInfo = {"Lethal Strike", 4, 30, 30, "Physical"};
+    moveFunctions[4] = lethal_strike;
+    FULL_MOVE_POOL.push_back(lethal_strikeInfo);
+    Move_info weapon_masterInfo = {"Weapon Master", 5, 0, 0, "Passive"};
+    moveFunctions[5] = weapon_master;
+    FULL_MOVE_POOL.push_back(weapon_masterInfo);
+
 }
 
 bool moves::Maincharacter_ExecuteMove(int index,MainCharacter &m, Enemy &e){
@@ -101,6 +131,11 @@ bool moves::Maincharacter_ExecuteMove(int index,MainCharacter &m, Enemy &e){
         cout << "Error! Not enough HP/MP!" << endl;
         cout << "Please try again!" << endl;
         return false; //Unable to cast the move
+    }
+    if (move.type == "Passive"){
+        cout << "Error! Passive Moves Cannot be Used!" << endl;
+        cout << "Please try again!" << endl;
+        return false; //Passive moves cannot be used
     }
     string dialog = "<format><|blue|>" + m.name + "<end> used <format><|purple|>["  + move.name + "]<end>!";
     //dialog += (move.cost > 0)? ("<format><|blue|>MP<end> <format><|blue|><|bold>-" + to_string(move.cost) + "<end>") : "" ;
@@ -141,8 +176,6 @@ bool moves::check_cost(MainCharacter &m, Move_info move){
     }
     return true; // enough HP/MP
 }
-
-
 
 
 
