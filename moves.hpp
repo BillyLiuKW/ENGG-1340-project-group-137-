@@ -15,7 +15,7 @@ using namespace std;
 
 void Critical_hit(int &dmg, vector<string> &dialogs,int chance); //Physical moves have a 10% chance to deal 50% more damage, depending on move
 
-void miss(int &dmg, ,vector<string> &dialogs,int chance); //Use this for moves that have a chance to miss
+void miss(int &dmg, vector<string> &dialogs,int chance); //Use this for moves that have a chance to miss
 
 int calculate_damage(double power, int self_atk, int enemy_def); //Apply the damage formula
 //Define moves outside moves class

@@ -93,7 +93,7 @@ void rage(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){ 
 }
 
 void lethal_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
-  int damage = calculate_damage(info.power, m.atk, e.def);
+  int damage = calculate_damage(info.power, m.atk + m.atk_boost_sum, e.def + e.def_boost_sum);
   m.hp -= info.cost;
   Critical_hit(damage, dialogs,50);
   e.hp -= damage;
@@ -129,7 +129,7 @@ void efficient_tactics(MainCharacter &m, Enemy &e, Move_info info, vector<string
 }
 
 void life_siphon(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
-    int damage = calculate_damage(info.power, m.atk, e.def);
+    int damage = calculate_damage(info.power, m.atk + m.atk_boost_sum, e.def + e.def_boost_sum);
     m.mp -= info.cost;
     e.hp -= damage;
     int heal = damage * 0.5;
@@ -147,6 +147,18 @@ void life_siphon(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dia
     dialogs.push_back(dialog);
 }
 
+
+void sluggish_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
+    int damage = calculate_damage(info.power, m.atk + m.atk_boost_sum, e.def + e.def_boost_sum);
+    miss(damage, dialogs, 30);
+    if (damage == 0){
+        return;
+    }
+    Critical_hit(damage, dialogs);
+    e.hp -= damage;
+    string dialog = display_damage(e, damage);
+    dialogs.push_back(dialog);
+}
 
 void moves::iniializeMoves(){
     Move_info slashInfo = {"Slash", 0 ,20, 10, "Physical"};
