@@ -23,17 +23,20 @@ void pass() {
 void GAME::StartGame(MainCharacter& m, Enemy& e) { 
     moves skills(display.dialogs);
     skills.iniializeMoves();
-    EnemyMoves enemy_skills(m, e, display.dialogs);
-    //Display(m.name, m.hp,  m.atk, e.name,  e.hp, e.atk);
+    EnemyMoves enemy_skills(m, e, display.dialogs); // initiallize
     int round = 1;
-    display.dialogs.push_back("<format><|bold|><|red|>Level " +  to_string(current_level) + "<end>");
+    display.dialogs.push_back(" "); // line break
+    display.dialogs.push_back("<format><|bold|><|red|>Level " +  to_string(current_level) + "<end>"); // show current level
     display.dialogs.push_back("<format><|bold|>BATTLE START!<end>");
     while (round < 11) {
+        // show thw screen once before any action
+        display.dialogs.push_back(" "); // line break for the next round.
+        display.dialogs.push_back("<format><|cyan|>Round " + to_string(round) + "<end>"); // show the current round.
         display.clear_screen();
-        display.dialogs.push_back(" ");
-        display.dialogs.push_back("<format><|cyan|>Round " + to_string(round) + "<end>");
-        display.insert_battelfield(m, e); // new display
+        display.insert_battelfield(m, e); // input main character and enemy information to the screen
         display.print_screen();
+
+        //
         /*//test
         cout << "crit chance: " << e.critical_chance << endl;
         cout << "boost: " <<e.crit_chance_boost_sum << endl;
@@ -52,26 +55,46 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
            cin >> chosen_Skill;
         }
 
-        // below only execute when valid skill is chosen
-        // Perform the skill action
-        // ...
-        
-        // Update the health points of the main character and the enemy
-        // ...
+        // execute continue damage/ regeneration for main character
+        // calculate all the buff/ debuff for the next round
+        // count down all buff/ debuff rounds by 1, remove
+        // Player move End
         
         // Check if any character has died
+        if (! survive(m.hp)) {
+            //player dead and need functions to provide retry function 
+            Gameretry();
+            break;
+        }
+
+        if (! survive(e.hp)) {
+            // return win function
+            Victory(m,e);
+            break;
+        }
 
         // enemy's action
-        
+        display.dialogs.push_back(" "); // add a line to saperate use move and enemy move
+        enemy_skills.Enemy_ExecuteMove(); // do all the thing for enemy
+        // enemy's action End
+
+        // show battelfield
+        display.clear_screen();
+        display.insert_battelfield(m, e);
+        display.print_screen();
+
+        //  Check if any character has died
         enemy_skills.Enemy_ExecuteMove();
         if (! survive(m.hp)) {
             //player dead and need functions to provide retry function 
             Gameretry();
+            break;
         }
         //check whether enemy is dead
         if (! survive(e.hp)) {
             // return win function
             Victory(m,e);
+            break;
         }
 
         round++;

@@ -343,7 +343,7 @@ void EnemyMoves::e_hp(double multiplier, double other){
     e.hp += multiplier;
     // Enemy [name]'s HP + value (grenn if positive, red if negative)
     string int_value = to_string(static_cast<int>(multiplier)); // make the double have no decimal place and then string
-    string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end>'s <format><|red|>HP<end> <format>";
+    string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end> <format><|red|>HP<end> <format>";
     dialog += ((multiplier < 0)? ("<|red|>" + int_value): ("<|green|>+" + int_value));
     dialog += "<end>";
     dialogs.push_back(dialog);  
@@ -365,7 +365,7 @@ void EnemyMoves::e_atk(double multiplier, double other){
     e.atk_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
     string int_value_1 = to_string(static_cast<int>(multiplier));
     string int_value_2 = to_string(static_cast<int>(other));
-    string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end>'s <format><|cyan|>ATK<end> <format>";
+    string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end> <format><|cyan|>ATK<end> <format>";
     dialog += ((multiplier < 0)? ("<|red|>" + int_value_1): ("<|green|>+" + int_value_1));
     dialog += "<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
     dialogs.push_back(dialog);
@@ -375,7 +375,7 @@ void EnemyMoves::m_atk(double multiplier, double other){
     m.atk_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
     string int_value_1 = to_string(static_cast<int>(multiplier));
     string int_value_2 = to_string(static_cast<int>(other));
-    string dialog = "<format><|blue|>Hero<end> <format><|cyman|>ATK<end> <format>";
+    string dialog = "<format><|blue|>Hero<end> <format><|cyan|>ATK<end> <format>";
     dialog += ((multiplier < 0)? ("<|red|>" + int_value_1): ("<|green|>+" + int_value_1));
     dialog += "<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
     dialogs.push_back(dialog);
@@ -385,7 +385,7 @@ void EnemyMoves::e_def(double multiplier, double other){
     e.def_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
     string int_value_1 = to_string(static_cast<int>(multiplier));
     string int_value_2 = to_string(static_cast<int>(other));
-    string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end>'s <format><|cyan|>DEF<end> <format>";
+    string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end> <format><|cyan|>DEF<end> <format>";
     dialog += ((multiplier < 0)? ("<|red|>" + int_value_1): ("<|green|>+" + int_value_1));
     dialog += "<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
     dialogs.push_back(dialog);

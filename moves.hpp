@@ -24,13 +24,13 @@ void Critical_hit(int &dmg, int chance); //Physical moves have a 10% chance to d
 
 int calculate_damage(double power, int self_atk, int enemy_def); //Apply the damage formula
 //Define moves outside moves class
-void slash(MainCharacter &m, Enemy &e, Move_info info); //deals phys dmg to enemy, base moves
+void slash(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals phys dmg to enemy, base moves
 
-void fireball(MainCharacter &m, Enemy &e, Move_info info); //deals magic dmg to enemy, base moves
+void fireball(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals magic dmg to enemy, base moves
 
-void regen(MainCharacter &m, Enemy &e, Move_info info); //Restores 30% of max hp
+void regen(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //Restores 30% of max hp
 
-void rage(MainCharacter &m, Enemy &e, Move_info info); //Increases atk by 20% for 3 turns  
+void rage(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //Increases atk by 20% for 3 turns  
 
 class moves{
     public:
@@ -50,7 +50,7 @@ class moves{
 
 
     private:
-        static map<int, function<void(MainCharacter&, Enemy&, Move_info)> > moveFunctions; //Create a function map for executing move functions
+        static map<int, function<void(MainCharacter&, Enemy&, Move_info, vector<string> &dialogs)> > moveFunctions; //Create a function map for executing move functions
 
         bool check_cost(MainCharacter &m, Move_info move); // Check if the character has enough HP/MP to cast the move
     

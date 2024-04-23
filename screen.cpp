@@ -162,27 +162,27 @@ void Screen::insert_dialog(int start_row){
 }
 void Screen::insert_battelfield(MainCharacter& m, Enemy& e){
     //caculate the centre
-    int start_row = 3;
+    int start_row = 2;
     int start_col;
     start_col = (0+width-1)/2 - e.width/2;
 
     //display enemy
     insert_item(start_row, start_col, e.image, {});
     insert_information(start_row, e);
-    start_row += (e.height + 3 + 3); // new row = original row + enemy height + infomation height + spacing 5
+    start_row += (e.height + 3 + 2); // new row = original row + enemy height + infomation height + spacing 2
     //diaplay a speration
     insert_speration(start_row);
 
-    start_row += 3; //spacing
+    start_row += 2; //spacing
     start_col = (0+width-1)/2 - m.width/2;
     insert_item(start_row, start_col, m.image, {});
     insert_information(start_row, m);
 
     //insert dislogs
-    start_row += (m.height + 3 + 3);
+    start_row += (m.height + 4 + 2); // 4 = information height, 2 = spacing
     start_col = 1;
-    insert_speration(start_row);
-    insert_dialog(start_row);
+    insert_speration(start_row); // add a line of ======
+    insert_dialog(start_row); // add the battle information
 }
 void Screen::insert_information(int start_row, Enemy info){
     string ATK_info = "ATK: " + to_string(info.atk) + "(" + ((info.atk_boost_sum >= 0)? "+" : "") + to_string(info.atk_boost_sum) + ")";
@@ -222,11 +222,12 @@ void Screen::insert_information(int start_row, MainCharacter info){
     if (mp_bard > max_mp_bar){
         mp_bard = max_mp_bar;
     }
-    string spacing(max_health_bar, ' ');
+    string hp_spacing(max_health_bar, ' ');
+    string mp_spacing(max_mp_bar, ' ');
     string health = to_string(info.hp);
     string mana = to_string(info.mp);
-    string hp_info = "HP [" + spacing + "] " + health;
-    string mp_info = "MP [" + spacing + "] " + mana;
+    string hp_info = "HP [" + hp_spacing + "] " + health;
+    string mp_info = "MP [" + mp_spacing + "] " + mana;
     for (int i = 0; i < health_bar; i++){
         hp_info[4+i] = '=';
     }
