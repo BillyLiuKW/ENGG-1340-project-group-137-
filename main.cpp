@@ -97,13 +97,19 @@ void select_option(int option, GAME game) {
             }
             fin.close();
            }
+            cout << "Enter e to exit : ";
+            string e;
+            while ( e != "e" ){
+                cout << "Invalid Input ! Please enter (e) : ";
+                cin >> e;
+            }
            //whenever there is a bug:
            else {
             cout << "Error: unable to provide Enemy Handbook," << endl;
            }
         break;
         }
-        case 4:
+        case 5:
         {
             ifstream fin("game_instruction.txt");
             if (fin.is_open()) {
@@ -112,10 +118,17 @@ void select_option(int option, GAME game) {
                 cout << line << endl;
             }
             fin.close();
+            cout << "Enter e to exit : ";
+            string e;
+            while ( e != "e" ){
+                cout << "Invalid Input ! Please enter (e) : ";
+                cin >> e;
+            }
            }
            else {
             cout << "Error: unable to provide Game Instruction," << endl;
            }
+
         break;
         }
         default:
@@ -135,7 +148,7 @@ int main() {
         cin >> option;
         select_option(option,game);
         // if player choose option 5, he or she will escape from select_option().
-        if (option == 5) {
+        if (option == 6) {
             char y_n;
             cout << "Do you want to exit the game? [y/n]" << endl;
             cin >> y_n;
