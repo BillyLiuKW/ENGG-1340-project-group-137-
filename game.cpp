@@ -46,7 +46,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         // Get user input for chosen skill
         //reward(m,2);
         //break;
-        
+        skills.display_moves(m);
         int chosen_Skill;
         cout << "Please choose the skill you want to apply : ";
         cin >> chosen_Skill;
@@ -259,7 +259,7 @@ void GAME::Gameretry(){
             if (fin.is_open()) {
                 MainCharacter m;
                 // Assigning stored values to m one by one.
-                fin >> m.hp >> m.max_hp >> m.atk >> m.def;
+                fin >> m.name >> m.hp >> m.max_hp >> m.atk >> m.def;
                 // To input the size of moveSet stored.
                 int size;
                 fin >> size;
@@ -427,16 +427,18 @@ void reward_screen(MainCharacter m){
 void GAME::skill(MainCharacter &m, int lucky_draw_no){
     //Player will see {1,2,3,4} instead of {0,1,2,3}  in the display moveSet
     srand(lucky_draw_no);
-    cout << "Original : " << endl;
+    cout << "Your current moves : " << endl;
     reward_screen(m);
     int random = rand() % moves::FULL_MOVE_POOL.size();
     while (find(m.moveSet.begin(), m.moveSet.end(), moves::FULL_MOVE_POOL[random].ID) != m.moveSet.end()) {
         // Generate a new random number
         random = rand() % moves::FULL_MOVE_POOL.size(); // Avoid duplicate moves
     }
+    cout << "New Skill : " << moves::FULL_MOVE_POOL[random].name << endl;
     moves::addMove(m, moves::FULL_MOVE_POOL[random].ID);
     cout << "After : " << endl;
     reward_screen(m);
+    sleep(4);
     
     
 

@@ -276,15 +276,16 @@ bool moves::Maincharacter_ExecuteMove(int index, MainCharacter &m, Enemy &e){
 void moves::addMove(MainCharacter& character, int ID){
     //Note that the player would see {1,2,3,4} instead of {0,1,2,3}
     int index;
-    if (character.moveSet.size() <= 4){
+    if (character.moveSet.size() < 4){
       character.moveSet.push_back(ID);
       cout << "Move added!" << endl;
     }
     else{
-      cout << "Select a move to change (1-4): ";
+      cout << "Select a move to change (1-4) or input 'd' to discard the move: ";
       cin >> index;
+      string old_name = FULL_MOVE_POOL[character.moveSet[index-1]].name;
+      cout << "Replaced" << old_name << " with " << FULL_MOVE_POOL[ID].name << endl;
       character.moveSet[index-1] = ID;
-      cout << "Move changed!" << endl;
     }
 }
 
@@ -361,4 +362,17 @@ void moves::hp_change(MainCharacter &m){
         dialogs.push_back(dialog);      
     }
     m.hp_boost.erase(remove_if(m.hp_boost.begin(), m.hp_boost.end(), [](pair<int, int> pair){return pair.second <= 0;}), m.hp_boost.end());
+}
+
+void moves::display_moves(MainCharacter &m){
+  vector<Move_info> moves;
+  for (int i = 0; i < m.moveSet.size(); i++){
+    moves.push_back(FULL_MOVE_POOL[m.moveSet[i]]);
+  }
+  cout << "-------------------------------------------------------------------------" << endl;
+  for (int i = 0; i < moves.size(); i++){
+    cout << i+1 <<". " << moves[i].name << " Cost: " << moves[i].cost << " Power: " << moves[i].power << " Type: " << moves[i].type<< endl;
+  }
+  cout << "-------------------------------------------------------------------------" << endl;
+    
 }

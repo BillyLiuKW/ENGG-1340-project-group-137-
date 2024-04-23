@@ -29,6 +29,7 @@ creds.js
 *.tsv.gz
 *.xlsx
 *.exe
+*.o
  
  
 # Mac/OSX
@@ -173,3 +174,4 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+

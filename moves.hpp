@@ -67,6 +67,7 @@ class moves{
         // calculate the boosts
         void calculate_boost(MainCharacter &m);
         // decrease all boost by 1 every half round
+        void display_moves(MainCharacter &m);
 
 
     private:
