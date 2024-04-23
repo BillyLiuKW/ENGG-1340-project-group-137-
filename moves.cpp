@@ -219,7 +219,7 @@ bool moves::Maincharacter_ExecuteMove(int index, MainCharacter &m, Enemy &e){
 
 
     string dialog = "<format><|blue|>" + m.name + "<end> used <format><|purple|>["  + move.name + "]<end>!";
-    dialog += (move.cost > 0)? ("<format><|blue|>MP<end> <format><|blue|><|bold>-" + to_string(move.cost) + "<end>") : "" ;
+    dialog += (move.cost > 0)? ("<format><|blue|>MP<end> <format><|blue|><|bold|>-" + to_string(move.cost) + "<end>") : "" ;
     dialogs.push_back(dialog);
     moveFunctions[move.ID](m,e,move, dialogs); //Execute the move function
     restore_passive(m); //Restore effects of passive moves after executing the move
