@@ -41,6 +41,8 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         cout << "coost: " <<e.crit_damage_boost_sum << endl;
         // end*/
         // Get user input for chosen skill
+        //reward(m,2);
+        //break;
         int chosen_Skill;
         cout << "Please choose the skill you want to apply : ";
         cin >> chosen_Skill;
@@ -81,6 +83,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         round++;
         sleep(1);
     }
+
 }
 
 
@@ -322,6 +325,7 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
         case 3:{
             stats(m,stoi(lucky_draw_no), health, attack, defence,magic);
             skill(m,stoi(lucky_draw_no));
+        
             break;
         }
         default:
@@ -353,16 +357,26 @@ void GAME::stats(MainCharacter &m, int lucky_draw_no, int health, int attack, in
     
 }
 
+void reward_screen(MainCharacter m){
+    for (int i = 0 ; i < m.moveSet.size() ; i++){
+        cout << i+1 << ". ";
+        cout << moves::FULL_MOVE_POOL[m.moveSet[i]].name; 
+        cout << "   ";}
+    cout << endl;}
 
 void GAME::skill(MainCharacter &m, int lucky_draw_no){
     //Player will see {1,2,3,4} instead of {0,1,2,3}  in the display moveSet
     srand(lucky_draw_no);
+    cout << "Original : " << endl;
+    reward_screen(m);
     int random = rand() % moves::FULL_MOVE_POOL.size();
     while (find(m.moveSet.begin(), m.moveSet.end(), moves::FULL_MOVE_POOL[random].ID) != m.moveSet.end()) {
         // Generate a new random number
         random = rand() % moves::FULL_MOVE_POOL.size(); // Avoid duplicate moves
     }
     moves::addMove(m, moves::FULL_MOVE_POOL[random].ID);
+    cout << "After : " << endl;
+    reward_screen(m);
     
     
 
