@@ -211,8 +211,8 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
         if (y_n == 'y') {
             ofstream fout("game_status.txt");
             if (fout.is_open()) {
-                fout << m.name << " " << m.hp << " " << m.max_hp << " " << m.atk << " " << m.def;
-                fout << m.moveSet.size();
+                fout << m.name << " " << m.hp << " " << m.max_hp << " " << m.atk << " " << m.def << " ";
+                fout << m.moveSet.size() << " ";
                 for (int k = 0; k < m.moveSet.size(); k++) {
                     fout << m.moveSet[k] << " ";
                 }
