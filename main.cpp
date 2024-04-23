@@ -101,7 +101,7 @@ void select_option(int option, GAME game) {
            else {
             cout << "Error: unable to provide Enemy Handbook," << endl;
            }
-
+        break;
         }
         case 4:
         {
@@ -116,6 +116,7 @@ void select_option(int option, GAME game) {
            else {
             cout << "Error: unable to provide Game Instruction," << endl;
            }
+        break;
         }
         default:
         {
