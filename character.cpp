@@ -15,7 +15,6 @@ MainCharacter::MainCharacter(){
     def = 10;
     mp = 100;
     max_mp = 100;
-    max_mp = 100;
     name = "Hero";
     image =
     {
