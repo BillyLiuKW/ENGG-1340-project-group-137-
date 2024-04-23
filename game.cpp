@@ -206,8 +206,8 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
         //these levels are checkpoints as well.
         this->current_level++;
         char y_n;
-        cin >> y_n;
         cout << "Do you want to store your game status? [y/n] " << endl;
+        cin >> y_n;
         if (y_n == 'y') {
             ofstream fout("game_status.txt");
             if (fout.is_open()) {
@@ -228,6 +228,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
 
         else {
             cout << "remarkably brave! " << endl;
+            sleep(2);
         }
     }
     // That means the player has win the game.
