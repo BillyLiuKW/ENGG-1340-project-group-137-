@@ -467,11 +467,11 @@ void EnemyMoves::hp_change(){
         e.hp += value;
         pair.second--;
         string int_value = to_string(value);
-        string round = to_string(pair.second);
+        string rounds = to_string(pair.second);
         string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end> <format><|red|>HP<end> <format>";
         dialog += ((value < 0)? ("<|red|>" + int_value): ("<|green|>+" + int_value));
         dialog += "<end>";
-        dialog += " (remain <format><|yellow|><|bold|>" + round + "<end> rounds.)";
+        dialog += " (remain <format><|yellow|><|bold|>" + rounds + "<end> rounds.)";
         dialogs.push_back(dialog);  
 
     }
