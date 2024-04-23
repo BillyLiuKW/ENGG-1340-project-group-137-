@@ -47,7 +47,7 @@ MainCharacter::MainCharacter(){
 
 // All image should have a height of 15 char (width can vary)
 Dummy::Dummy(){
-    hp = 75;
+    hp = 80;
     atk = 10;
     def = 10;
     critical_chance = 0.05;
@@ -125,9 +125,9 @@ Dummy::Dummy(){
 
 
 Goblin::Goblin(){
-    hp = 75;
-    atk = 15;
-    def = 7;
+    hp = 90;
+    atk = 20;
+    def = 10;
     critical_chance = 0.05;
     critical_damage = 0.5;
     name = "Goblin";
@@ -152,9 +152,9 @@ Goblin::Goblin(){
 }
 
 Mutant::Mutant(){
-    hp = 105;
-    atk = 30;
-    def = 10;
+    hp = 170;
+    atk = 35;
+    def = 20;
     critical_chance = 0.05;
     critical_damage = 0.5;
     name = "Mutant";
@@ -179,9 +179,9 @@ Mutant::Mutant(){
 }
 
 Robot::Robot(){
-    hp = 620;
-    atk = 10;
-    def = 30;
+    hp = 300;
+    atk = 15;
+    def = 40;
     critical_chance = 0.05;
     critical_damage = 0.5;
     name = "Robot";
