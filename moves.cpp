@@ -77,7 +77,7 @@ void regen(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
     }
     m.mp -= info.cost;
     string int_value = to_string(regeneration);
-    string dialog = "<format><|blue|>Hero<end> <format><|red|>HP<end> <format><|green|><|bold|>+"+ int_value + "<end>";
+    string dialog = "<format><|blue|>" + m.name + "<end> <format><|red|>HP<end> <format><|green|><|bold|>+"+ int_value + "<end>";
     dialogs.push_back(dialog);
 }
 
@@ -86,7 +86,7 @@ void rage(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){ 
     m.atk_boost.push_back(make_pair(increase, 3*2)); // every rounds will minus 2;
     m.mp -= info.cost;
     string int_value_1 = to_string(increase*100);
-    string dialog = "<format><|blue|>Hero<end> <format><|cyan|>ATK<end> increases ";
+    string dialog = "<format><|blue|>" + m.name + "<end> <format><|cyan|>ATK<end> increases ";
     dialog += " <format><|bold|><green>" + int_value_1 + "%<end>";
     dialog += "<end> for <format><|yellow|>3<end> rounds.";
     dialogs.push_back(dialog);
@@ -143,7 +143,7 @@ void life_siphon(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dia
     string dialog = display_damage(e, damage);
     dialogs.push_back(dialog);
     string int_value_1 = to_string(heal);
-    dialog = "<format><|blue|>Hero<end> <format><|red|>HP<end> <format><|green|><|bold|>+"+ int_value_1 + "<end>";
+    dialog = "<format><|blue|>" + m.name + "<end> <format><|red|>HP<end> <format><|green|><|bold|>+"+ int_value_1 + "<end>";
     dialogs.push_back(dialog);
 }
 
@@ -168,6 +168,18 @@ void shield_blast(MainCharacter &m, Enemy &e, Move_info info, vector<string> &di
     string dialog = display_damage(e, damage);
     dialogs.push_back(dialog);
 }
+
+void iron_wall(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){ //20% def for 3 turns
+    int increase = m.def * (info.power - 1); // calculate how many def increase
+    m.atk_boost.push_back(make_pair(increase, 3*2)); // every rounds will minus 2;
+    m.mp -= info.cost;
+    string int_value_1 = to_string(increase*100);
+    string dialog = "<format><|blue|>" + m.name + "<end> <format><|green|>DEF<end> increases ";
+    dialog += " <format><|bold|><green>" + int_value_1 + "%<end>";
+    dialog += "<end> for <format><|yellow|>3<end> rounds.";
+    dialogs.push_back(dialog);
+}
+
 void moves::iniializeMoves(){
     Move_info slashInfo = {"Slash", 0 ,20, 10, "Physical"};
     FULL_MOVE_POOL.push_back(slashInfo);
@@ -181,7 +193,7 @@ void moves::iniializeMoves(){
     moveFunctions[2] = regen;
     FULL_MOVE_POOL.push_back(regenInfo);
 
-    Move_info rageInfo = {"Rage", 3, 20, 30, "Magical"};
+    Move_info rageInfo = {"Rage", 3, 20, 30, "Buff"};
     moveFunctions[3] = rage;
     FULL_MOVE_POOL.push_back(rageInfo);
 
@@ -213,7 +225,9 @@ void moves::iniializeMoves(){
     moveFunctions[10] = shield_blast;
     FULL_MOVE_POOL.push_back(shield_blastInfo);
 
-
+    Move_info iron_wallInfo = {"Iron Wall", 11, 20, 30, "Buff"};
+    moveFunctions[11] = iron_wall;
+    FULL_MOVE_POOL.push_back(iron_wallInfo);
 }
 
 bool moves::Maincharacter_ExecuteMove(int index, MainCharacter &m, Enemy &e){
@@ -275,8 +289,10 @@ bool moves::check_cost(MainCharacter &m, Move_info move){
         return false;
     }
     else{
-        if (m.mp < move.cost && move.type == "Magical"){
-        return false;
+        if (move.type == "Magical" || move.type == "Buff"){
+            if (m.mp < move.cost){
+                return false;
+            }
         }
     }
     return true; // enough HP/MP

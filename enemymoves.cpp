@@ -304,7 +304,7 @@ void EnemyMoves::normal_attack(){
     (damage < 1)? damage = 1: damage = damage ; // if damage < 1, set damage to 1.
     m.hp -= static_cast<int>(damage);
     string int_value = to_string(static_cast<int>(damage));
-    dialogs.push_back("<format><|blue|>Hero<end> <format><|red|>HP<end> <format><|red|><|bold|>-"+ int_value + "<end>");
+    dialogs.push_back("<format><|blue|>" + m.name + "<end> <format><|red|>HP<end> <format><|red|><|bold|>-"+ int_value + "<end>");
 }
 void EnemyMoves::use_skill(int skill_id){
     dialogs.push_back("Enemy <format><|yellow|>[" + e.name + "]<end> has use skill <format><|purple|>[" + e.skill_list[skill_id-1].skill_name + "]<end>.");
@@ -341,7 +341,7 @@ void EnemyMoves::m_hp(double multiplier, double other){
     damage = max(1.0, damage);
     m.hp -= static_cast<int>(damage);
     string int_value = to_string(static_cast<int>(damage));
-    string dialog = "<format><|blue|>Hero<end> <format><|red|>HP<end> <format><|red|><|bold|>-"+ int_value + "<end>";
+    string dialog = "<format><|blue|>" + m.name + "<end> <format><|red|>HP<end> <format><|red|><|bold|>-"+ int_value + "<end>";
     if (critical) {
         dialog += "<format><|yellow|> CRIT!!<end>";
     }
@@ -361,7 +361,7 @@ void EnemyMoves::m_atk(double multiplier, double other){
     m.atk_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
     string int_value_1 = to_string(static_cast<int>(multiplier));
     string int_value_2 = to_string(static_cast<int>(other/2));
-    string dialog = "<format><|blue|>Hero<end> <format><|cyan|>ATK<end> <format>";
+    string dialog = "<format><|blue|>" + m.name + "<end> <format><|cyan|>ATK<end> <format>";
     dialog += ((multiplier < 0)? ("<|red|>" + int_value_1): ("<|green|>+" + int_value_1));
     dialog += "<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
     dialogs.push_back(dialog);
@@ -380,7 +380,7 @@ void EnemyMoves::m_def(double multiplier, double other){
     m.def_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
     string int_value_1 = to_string(static_cast<int>(multiplier));
     string int_value_2 = to_string(static_cast<int>(other/2));
-    string dialog = "<format><|blue|>Hero<end> <format><|cyan|>DEF<end> <format>";
+    string dialog = "<format><|blue|>" + m.name + "<end> <format><|cyan|>DEF<end> <format>";
     dialog += ((multiplier < 0)? ("<|red|>" + int_value_1): ("<|green|>+" +int_value_1));
     dialog += "<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
     dialogs.push_back(dialog);
@@ -400,7 +400,7 @@ void EnemyMoves::m_cont_hp(double multiplier, double other){
     m.hp_boost.push_back(make_pair(static_cast<int> (change), static_cast<int>(other)));
     string int_value_1 = to_string(static_cast<int>(change));
     string int_value_2 = to_string(static_cast<int>(other));
-    string dialog = "<format><|blue|>Hero<end> <format><|red|>HP<end> <format><|red|><|bold|>"+ int_value_1 +"<end>";
+    string dialog = "<format><|blue|>" + m.name + "<end> <format><|red|>HP<end> <format><|red|><|bold|>"+ int_value_1 +"<end>";
     dialog += " for <format><|yellow|>" + int_value_2 + "<end> rounds.";
     dialogs.push_back(dialog);
 

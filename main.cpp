@@ -3,6 +3,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <unistd.h>
+#include <string>
 #include "game.hpp"
 #include "character.hpp"
 #include "moves.hpp"
@@ -48,6 +49,19 @@ void select_option(int option, GAME game) {
             }
             
             MainCharacter m;
+            string name = "Hero";
+            while (true) {
+                cout << "What is your name? (Less than 20 characters)" << endl;
+                cin >> name;
+                if (name.length() > 20) {
+                    cout << "Name is too long! Please enter a name less than 20 characters." << endl;
+                    continue;
+                }
+                else {
+                    break;
+                }
+            }
+            m.name = name;
             Enemy e(game.current_level);
             cout << "Proceeding to level 1...." << endl;
             sleep(1);
@@ -65,7 +79,7 @@ void select_option(int option, GAME game) {
             }
             else {
                 // Assigning stored values to m one by one.
-                fin >> m.hp >> m.max_hp >> m.atk >> m.def;
+                fin >> m.name >> m.hp >> m.max_hp >> m.atk >> m.def;
                 // To input the size of moveSet stored.
                 int size;
                 fin >> size;

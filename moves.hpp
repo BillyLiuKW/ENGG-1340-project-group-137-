@@ -42,6 +42,8 @@ void sluggish_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> 
 
 void shield_blast(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals magical dmg to enemy, scales off def
 
+void iron_wall(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //Increases def by 20% for 3 turns
+
 class moves{
     public:
         moves(vector<string> &dialogs_list): dialogs(dialogs_list) {}
