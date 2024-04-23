@@ -79,21 +79,21 @@ Dummy::Dummy(){
     // m_hp : enemy deal damage to main_C: formula (e.atk+e.buff_atk)*1st argument - (m.def+m.buff_def)
     //              format: "m_hp double_mutipiler(+ve) 0"
     // e_def : enemy defend change defefend of 1st arg for 2nd arg rounds (1st arg can be both +ve or -ve)
-    //              format: "e_def int_change(+ve/-ve) int_rounds"
+    //              format: "e_def int_change(+ve/-ve) int_rounds * 2"
     // m_def : same as above, but in main_c
-    //              format: "m_def int_change(+ve/-ve) int_rounds"
+    //              format: "m_def int_change(+ve/-ve) int_rounds * 2"
     // e_atk : bascially same but just atk
-    //              format: "e_atk int_change(+ve/-ve) int_rounds"
+    //              format: "e_atk int_change(+ve/-ve) int_rounds * 2"
     // m_atk : same
-     //             format: "m_atk int_change(+ve/-ve) int_rounds"
+     //             format: "m_atk int_change(+ve/-ve) int_rounds * 2"
     // e_cont_hp : enemy hp damage/ decrease for each round, // 
-    //              format: "e_cont_hp double_mutiplier(+ve/-ve) int_rounds"
+    //              format: "e_cont_hp double_mutiplier(+ve/-ve) int_rounds" don't need to * 2
     // m_cont_hp : main_c hp damage/ decrease for each round,
-    //              format: "m_cont_hp double_mutiplier(-ve) int_rounds"
+    //              format: "m_cont_hp double_mutiplier(-ve) int_rounds" don't need to * 2
     // e_crit_chance : enemy critical chance increase temporialy,
-    //              format: "e_crit_chance double_increase(+ve)(between 0-1) int_rounds"  0.2 = +20% crit chance
+    //              format: "e_crit_chance double_increase(+ve)(between 0-1) int_rounds * 2"  0.2 = +20% crit chance
     // e_crit_damage : enemy critical damage increase temporialy,
-    //              format: "e_crit_chance double_increase(+ve) int_rounds" 0.2 = +20% crit dmg
+    //              format: "e_crit_chance double_increase(+ve) int_rounds * 2" 0.2 = +20% crit dmg
     // if the skill only take 1 argument, you must put 0 in the second argument.
     // a skill can hold multiple option above 
     // example {skill ID, skill_ ype, skill name, {"option2 arg1 arg2", "option1 arg1 arg2"}}
