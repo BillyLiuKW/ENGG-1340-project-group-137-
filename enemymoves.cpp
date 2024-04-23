@@ -24,27 +24,6 @@ void EnemyMoves::Enemy_ExecuteMove() {
     else {
         use_skill(skill_id);
     }
-    hp_change();
-    //calculate the boosts for the next round
-    e.atk_boost_sum = 0;
-    for (auto &pair: e.atk_boost) {
-        e.atk_boost_sum += pair.first;
-    }
-    e.def_boost_sum = 0;
-    for (auto &pair: e.def_boost) {
-        e.def_boost_sum += pair.first;
-    }
-    e.crit_chance_boost_sum = 0;
-    for (auto &pair: e.crit_chance_boost) {
-        e.crit_chance_boost_sum += pair.first;
-    }
-    e.crit_damage_boost_sum = 0;
-    for (auto &pair: e.crit_damage_boost) {
-        e.crit_damage_boost_sum += pair.first;
-    }
-    e.crit_chance_boost_sum = min(1.0 - e.critical_chance,  e.crit_chance_boost_sum); // set the max of total critical chance be 1
-    // minus number of rounds of all boost by 1
-    boost_count_down();
 }    
 vector<double> EnemyMoves::z_score(vector<double> &skill_uses, vector<int> &skill_num, int &type_num_s){
     vector<double> standard_score(type_num, 0);
@@ -94,6 +73,12 @@ int EnemyMoves::chooseSkillType(){
     }
     if (e.hp <= e.max_hp * 0.5){
         skill_weighting = {0.3, 0.2, 0.1, 0.4};
+    }
+    if (e.hp <= e.max_hp * 0.25 && m.hp > m.max_hp * 0.25){
+        skill_weighting = {0.2, 0.25, 0.1, 0.45};
+    }
+    else if (e.hp <= e.max_hp * 0.25 && m.hp < m.max_hp * 0.25){
+        skill_weighting = {0.3, 0.2, 0.05, 0.45};
     }
     for (auto &skill: e.skill_list){
         string type = skill.type;
@@ -313,8 +298,9 @@ int EnemyMoves::chooseSkill(vector<Enemy_Skill> skills) {
 }
 void EnemyMoves::normal_attack(){
     dialogs.push_back("Enemy <format><|yellow|>[" + e.name + "]<end> has use <format><|bold|>normal attack<end>.");
-    double damage;
-    damage = (e.atk + e.atk_boost_sum) - (m.def + m.def_boost_sum);
+    double damage = 0;
+    int critical = is_critical(e.critical_chance + e.crit_chance_boost_sum);
+    damage = (e.atk + e.atk_boost_sum) * (1 + critical * (e.critical_damage + e.crit_damage_boost_sum)) - (m.def + m.def_boost_sum);
     (damage < 1)? damage = 1: damage = damage ; // if damage < 1, set damage to 1.
     m.hp -= static_cast<int>(damage);
     string int_value = to_string(static_cast<int>(damage));
@@ -364,7 +350,7 @@ void EnemyMoves::m_hp(double multiplier, double other){
 void EnemyMoves::e_atk(double multiplier, double other){
     e.atk_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
     string int_value_1 = to_string(static_cast<int>(multiplier));
-    string int_value_2 = to_string(static_cast<int>(other));
+    string int_value_2 = to_string(static_cast<int>(other/2));
     string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end> <format><|cyan|>ATK<end> <format>";
     dialog += ((multiplier < 0)? ("<|red|>" + int_value_1): ("<|green|>+" + int_value_1));
     dialog += "<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
@@ -374,7 +360,7 @@ void EnemyMoves::e_atk(double multiplier, double other){
 void EnemyMoves::m_atk(double multiplier, double other){
     m.atk_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
     string int_value_1 = to_string(static_cast<int>(multiplier));
-    string int_value_2 = to_string(static_cast<int>(other));
+    string int_value_2 = to_string(static_cast<int>(other/2));
     string dialog = "<format><|blue|>Hero<end> <format><|cyan|>ATK<end> <format>";
     dialog += ((multiplier < 0)? ("<|red|>" + int_value_1): ("<|green|>+" + int_value_1));
     dialog += "<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
@@ -384,16 +370,16 @@ void EnemyMoves::m_atk(double multiplier, double other){
 void EnemyMoves::e_def(double multiplier, double other){
     e.def_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
     string int_value_1 = to_string(static_cast<int>(multiplier));
-    string int_value_2 = to_string(static_cast<int>(other));
+    string int_value_2 = to_string(static_cast<int>(other/2));
     string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end> <format><|cyan|>DEF<end> <format>";
     dialog += ((multiplier < 0)? ("<|red|>" + int_value_1): ("<|green|>+" + int_value_1));
     dialog += "<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
     dialogs.push_back(dialog);
 }
 void EnemyMoves::m_def(double multiplier, double other){
-    m.atk_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
+    m.def_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
     string int_value_1 = to_string(static_cast<int>(multiplier));
-    string int_value_2 = to_string(static_cast<int>(other));
+    string int_value_2 = to_string(static_cast<int>(other/2));
     string dialog = "<format><|blue|>Hero<end> <format><|cyan|>DEF<end> <format>";
     dialog += ((multiplier < 0)? ("<|red|>" + int_value_1): ("<|green|>+" +int_value_1));
     dialog += "<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
@@ -422,7 +408,7 @@ void EnemyMoves::m_cont_hp(double multiplier, double other){
 void EnemyMoves::e_crit_chance(double multiplier, double other){
     e.crit_chance_boost.push_back(make_pair(multiplier, static_cast<int>(other)));
     string int_value_1 = to_string(static_cast<int>(multiplier * 100));
-    string int_value_2 = to_string(static_cast<int>(other));
+    string int_value_2 = to_string(static_cast<int>(other/2));
     string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end> <format><|yellow|>critical chance<end>";
     dialog += " <format><|green|><|bold|>+" + int_value_1 + "%<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
     dialogs.push_back(dialog);
@@ -430,29 +416,41 @@ void EnemyMoves::e_crit_chance(double multiplier, double other){
 void EnemyMoves::e_crit_damage(double multiplier, double other){
     e.crit_damage_boost.push_back(make_pair(multiplier, static_cast<int>(other)));
     string int_value_1 = to_string(static_cast<int>(multiplier * 100));
-    string int_value_2 = to_string(static_cast<int>(other));
+    string int_value_2 = to_string(static_cast<int>(other/2));
     string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end> <format><|purple|>critical damage<end>";
     dialog += " <format><|green|><|bold|>+" + int_value_1 + "%<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
     dialogs.push_back(dialog);
 }
-void EnemyMoves::boost_count_down(){
+void EnemyMoves::calculate_boost(){
+    // calculate the boosts for the next round 
+    // minus 1 round after the boost is use
+    e.atk_boost_sum = 0;
     for (auto &pair: e.atk_boost) {
+        e.atk_boost_sum += pair.first;
         pair.second--;
     }
+    e.def_boost_sum = 0;
     for (auto &pair: e.def_boost) {
+        e.def_boost_sum += pair.first;
         pair.second--;
     }
+    e.crit_chance_boost_sum = 0;
     for (auto &pair: e.crit_chance_boost) {
+        e.crit_chance_boost_sum += pair.first;
         pair.second--;
     }
+    e.crit_damage_boost_sum = 0;
     for (auto &pair: e.crit_damage_boost) {
+        e.crit_damage_boost_sum += pair.first;
         pair.second--;
     }
-    // remove all pair that round remains < 0 with lambda function
-    e.atk_boost.erase(remove_if(e.atk_boost.begin(), e.atk_boost.end(), [](pair<int, int> pair){return pair.second < 0;}), e.atk_boost.end());
-    e.def_boost.erase(remove_if(e.def_boost.begin(), e.def_boost.end(), [](pair<int, int> pair){return pair.second < 0;}), e.def_boost.end());
-    e.crit_chance_boost.erase(remove_if(e.crit_chance_boost.begin(), e.crit_chance_boost.end(), [](pair<double, int> pair){return pair.second < 0;}), e.crit_chance_boost.end());
-    e.crit_damage_boost.erase(remove_if(e.crit_damage_boost.begin(), e.crit_damage_boost.end(), [](pair<double, int> pair){return pair.second < 0;}), e.crit_damage_boost.end());
+    e.crit_chance_boost_sum = min(1.0 - e.critical_chance,  e.crit_chance_boost_sum); // set the max of total critical chance be 1
+
+    // remove all pair that round remains <= 0 with lambda function
+    e.atk_boost.erase(remove_if(e.atk_boost.begin(), e.atk_boost.end(), [](pair<int, int> pair){return pair.second <= 0;}), e.atk_boost.end());
+    e.def_boost.erase(remove_if(e.def_boost.begin(), e.def_boost.end(), [](pair<int, int> pair){return pair.second <= 0;}), e.def_boost.end());
+    e.crit_chance_boost.erase(remove_if(e.crit_chance_boost.begin(), e.crit_chance_boost.end(), [](pair<double, int> pair){return pair.second <= 0;}), e.crit_chance_boost.end());
+    e.crit_damage_boost.erase(remove_if(e.crit_damage_boost.begin(), e.crit_damage_boost.end(), [](pair<double, int> pair){return pair.second <= 0;}), e.crit_damage_boost.end());
 }
 int EnemyMoves::is_critical(double probability){
     probability = min(1.0, probability); // prevent any unexpected error that prob > 1
@@ -467,14 +465,15 @@ void EnemyMoves::hp_change(){
         int max_regeneration = e.max_hp - e.hp;
         value = min(max_regeneration, pair.first);
         e.hp += value;
+        pair.second--;
         string int_value = to_string(value);
-        string round = to_string(pair.second - 1);
-        string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end>'s <format><|red|>HP<end> <format>";
+        string round = to_string(pair.second);
+        string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end> <format><|red|>HP<end> <format>";
         dialog += ((value < 0)? ("<|red|>" + int_value): ("<|green|>+" + int_value));
         dialog += "<end>";
         dialog += " (remain <format><|yellow|><|bold|>" + round + "<end> rounds.)";
         dialogs.push_back(dialog);  
-        pair.second--;
+
     }
-    e.hp_boost.erase(remove_if(e.hp_boost.begin(), e.hp_boost.end(), [](pair<int, int> pair){return pair.second < 0;}), e.hp_boost.end());
+    e.hp_boost.erase(remove_if(e.hp_boost.begin(), e.hp_boost.end(), [](pair<int, int> pair){return pair.second <= 0;}), e.hp_boost.end());
 }
