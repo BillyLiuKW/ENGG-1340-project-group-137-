@@ -196,8 +196,6 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
     display.clear_screen();
     display.insert_battelfield(m, e); // input main character and enemy information to the screen
     display.print_screen();
-    m.hp = m.max_hp;//refresh hp
-    m.mp = m.max_mp;//refresh mp
     this->current_level++;
     reward(m,this->current_level);// player can receive reward after every boss and checkpt
     // checkpoint reward are tackle in same function
