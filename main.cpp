@@ -96,13 +96,13 @@ void select_option(int option, GAME game) {
                 cout << line << endl;
             }
             fin.close();
-           }
+           
             cout << "Enter e to exit : ";
             string e;
             while ( e != "e" ){
                 cout << "Invalid Input ! Please enter (e) : ";
                 cin >> e;
-            }
+            }}
            //whenever there is a bug:
            else {
             cout << "Error: unable to provide Enemy Handbook," << endl;

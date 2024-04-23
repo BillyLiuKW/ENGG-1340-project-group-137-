@@ -45,7 +45,7 @@ void regen(MainCharacter &m, Enemy &e, Move_info info){ //30% max hp
     m.hp = m.max_hp;
   }
   else{
-    m.hp + info.power * m.max_hp;
+    m.hp += info.power * m.max_hp;
   }
   m.mp -= info.cost;
 }
