@@ -439,8 +439,9 @@ void GAME::skill(MainCharacter &m, int lucky_draw_no){
     moves::addMove(m, moves::FULL_MOVE_POOL[random].ID);
     cout << "After : " << endl;
     reward_screen(m);
-    sleep(4);
-    
+    string s;
+    cout << "Input something to continue" << endl;
+    cin >> s;
     
 
 
