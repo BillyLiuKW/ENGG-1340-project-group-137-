@@ -76,6 +76,7 @@ void select_option(int option, GAME game) {
             // check whether is game_status.txt existing.
             if (fin.fail()) {
                 cout << "You haven't stored any game status!Start a new game instead." << endl;
+                break;
             }
             else {
                 // Assigning stored values to m one by one.
