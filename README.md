@@ -15,7 +15,7 @@ In each turn, you can choose a move to use.
 
 - [@YAM MAN NOK (3036223294)](https://github.com/Flybug234)
 - [@LIU KONG WA (3036227446)](https://github.com/BillyLiuKW)
-
+- [@CHAN WA HONG(3036227226)](https://github.com/cwhong05)
 
 ## Features
 
@@ -33,7 +33,26 @@ In each turn, you can choose a move to use.
         ```
 
     * Rewards 
+    ```cpp
+        void GAME::stats(MainCharacter &m, int lucky_draw_no, int health, int attack, int defence, int magic){
+                srand(lucky_draw_no);
+                int hp_increase = rand() % health + health;
+                int atk_increase = rand() % attack + attack;
+                int def_increase = rand() % defence + defence;
+                int mp_increase = rand() % magic + magic;
+                round_to_five(hp_increase);
+                round_to_five(atk_increase);
+                round_to_five(def_increase);
+                round_to_five(mp_increase);
+                m.hp += hp_increase;
+                m.max_hp += hp_increase;
+                m.atk += atk_increase;
+                m.def += def_increase;
+                m.max_mp += mp_increase;
+                m.mp += mp_increase;
 
+                
+        }
 * File input/output
      * File Input (when player was defeated and chose to retry the game, their stored game status will be loaded)
         ```cpp
