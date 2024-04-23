@@ -93,7 +93,7 @@ void select_option(int option, GAME game) {
                 //close the file after reading all data.
                 game.display.dialogs.insert(game.display.dialogs.begin(), "Game status successfully loaded"); // add the output message to dialog
                 fin.close();
-                cout << "Proceeding to level " << game.current_level << endl;
+                cout << "Proceeding to level " << game.current_level << " ...." << endl;
             }
             // Both case will do the below code
             Enemy e(game.current_level);
