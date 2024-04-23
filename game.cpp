@@ -199,6 +199,18 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
     display.insert_battelfield(m, e); // input main character and enemy information to the screen
     display.print_screen();
     this->current_level++;
+    // That means the player has win the game.
+    if (this->current_level > 10) {
+        cout << "Congratulations! You have defeated all enemies in this game! You are a true hero!!" << endl;
+        cout << "See you next time!" << endl;
+        // To clear all game status 
+        ifstream fin("game_status.txt");
+        if (fin.good()) {
+            remove("game_status.txt");
+        }
+        //End the game.
+        exit(0);
+    }
     reward(m,this->current_level);// player can receive reward after every boss and checkpt
     // checkpoint reward are tackle in same function
     if (this->current_level == 3 || this->current_level == 5 || this->current_level == 7) {
@@ -208,6 +220,11 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
         char y_n;
         cout << "Do you want to store your game status? [y/n] " << endl;
         cin >> y_n;
+        while (y_n != 'y' && y_n != 'n') {
+            cout << "Invalid input! Please enter again! " << endl;
+            cout << "Do you want to store your game status? [y/n] " << endl;
+            cin >> y_n;
+        }
         if (y_n == 'y') {
             ofstream fout("game_status.txt");
             if (fout.is_open()) {
@@ -219,6 +236,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
                 fout << this->current_level;
                 fout.close();
                 cout << "Game status saved successfully! " << endl;
+                sleep(2);
             }
 
             else{
@@ -231,21 +249,9 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
             sleep(2);
         }
     }
-    // That means the player has win the game.
-    else if (this->current_level > 10) {
-        cout << "Congratulations! You have defeated all enemies in this game! You are a true hero!!" << endl;
-        cout << "See you next time!" << endl;
-        // To clear all game status 
-        ifstream fin("game_status.txt");
-        if (fin.good()) {
-            remove("game_status.txt");
-        }
-        //End the game.
-        exit(0);
-    }
     //player will proceed to next level.
     cout << "Proceeding to level " << this->current_level << " ...." << endl;
-
+    sleep(1);
     Enemy new_e(this->current_level); 
     StartGame(m, new_e);
 
