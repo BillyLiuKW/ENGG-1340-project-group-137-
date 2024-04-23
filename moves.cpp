@@ -160,6 +160,14 @@ void sluggish_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> 
     dialogs.push_back(dialog);
 }
 
+void shield_blast(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
+    int def_int = (m.def + m.def_boost_sum)*1.5; //compensate for lower def values
+    int damage = calculate_damage(info.power, def_int ,  e.def + e.def_boost_sum);
+    m.mp -= info.cost;
+    e.hp -= damage;
+    string dialog = display_damage(e, damage);
+    dialogs.push_back(dialog);
+}
 void moves::iniializeMoves(){
     Move_info slashInfo = {"Slash", 0 ,20, 10, "Physical"};
     FULL_MOVE_POOL.push_back(slashInfo);
@@ -168,7 +176,7 @@ void moves::iniializeMoves(){
     Move_info fireballInfo = {"Fireball", 1, 20, 20, "Magical"};
     FULL_MOVE_POOL.push_back(fireballInfo);
     moveFunctions[1] = fireball;
-    
+
     Move_info regenInfo = {"Regen", 2, 30, 30, "Magical"};
     moveFunctions[2] = regen;
     FULL_MOVE_POOL.push_back(regenInfo);
@@ -200,6 +208,10 @@ void moves::iniializeMoves(){
     Move_info sluggish_strikeInfo = {"Sluggish Strike", 9, 50, 0, "Physical"};
     moveFunctions[9] = sluggish_strike;
     FULL_MOVE_POOL.push_back(sluggish_strikeInfo);
+
+    Move_info shield_blastInfo = {"Shield Blast", 10, 30, 30, "Magical"};
+    moveFunctions[10] = shield_blast;
+    FULL_MOVE_POOL.push_back(shield_blastInfo);
 
 
 }

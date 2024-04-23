@@ -40,6 +40,8 @@ void life_siphon(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dia
 
 void sluggish_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals phys dmg to enemy, but 50% chance to miss/ cost 0 hp
 
+void shield_blast(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals magical dmg to enemy, scales off def
+
 class moves{
     public:
         moves(vector<string> &dialogs_list): dialogs(dialogs_list) {}
