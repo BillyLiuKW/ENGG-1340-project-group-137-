@@ -76,6 +76,7 @@ class Goblin{
         vector<string> image;
         int height;
         int width;
+        vector<Enemy_Skill> skill_list;
 };
 class Mutant{
     public:
@@ -89,6 +90,7 @@ class Mutant{
         vector<string> image;
         int height;
         int width;
+        vector<Enemy_Skill> skill_list;
 };
 class Robot{
     public:
@@ -102,6 +104,7 @@ class Robot{
         vector<string> image;
         int height;
         int width;
+        vector<Enemy_Skill> skill_list;
 };
 class Dragon{
     public:
@@ -115,6 +118,7 @@ class Dragon{
         vector<string> image;
         int height;
         int width;
+        vector<Enemy_Skill> skill_list;
 };
 class Demon{
     public:
@@ -128,6 +132,7 @@ class Demon{
         vector<string> image;
         int height;
         int width;
+        vector<Enemy_Skill> skill_list;
 };
 class Titan{
     public:
@@ -141,6 +146,7 @@ class Titan{
         vector<string> image;
         int height;
         int width;
+        vector<Enemy_Skill> skill_list;
 };
 class Enemy{
     public:

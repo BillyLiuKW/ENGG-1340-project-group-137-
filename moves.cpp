@@ -87,8 +87,8 @@ void rage(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){ 
     m.mp -= info.cost;
     string int_value_1 = to_string(increase*100);
     string dialog = "<format><|blue|>" + m.name + "<end> <format><|cyan|>ATK<end> increases ";
-    dialog += " <format><|bold|><green>" + int_value_1 + "%<end>";
-    dialog += "<end> for <format><|yellow|>3<end> rounds.";
+    dialog += " <format><|bold|><|green|>" + int_value_1 + "%<end>";
+    dialog += " for <format><|yellow|>3<end> rounds.";
     dialogs.push_back(dialog);
 }
 
@@ -175,8 +175,8 @@ void iron_wall(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialo
     m.mp -= info.cost;
     string int_value_1 = to_string(increase*100);
     string dialog = "<format><|blue|>" + m.name + "<end> <format><|green|>DEF<end> increases ";
-    dialog += " <format><|bold|><green>" + int_value_1 + "%<end>";
-    dialog += "<end> for <format><|yellow|>3<end> rounds.";
+    dialog += " <format><|bold|><|green|>" + int_value_1 + "%<end>";
+    dialog += " for <format><|yellow|>3<end> rounds.";
     dialogs.push_back(dialog);
 }
 
@@ -238,7 +238,7 @@ bool moves::Maincharacter_ExecuteMove(int index, MainCharacter &m, Enemy &e){
     }
     for (auto& moveID : m.moveSet){
       if (FULL_MOVE_POOL[moveID].type == "Passive"){
-        moveFunctions[moveID](m,e,FULL_MOVE_POOL[moveID], dialogs); //Execute the passive move function
+        moveFunctions[moveID](m,e,FULL_MOVE_POOL[moveID], dialogs); //Execute the passive move functions
       }
     }
     int ID = m.moveSet[index-1];
@@ -256,7 +256,16 @@ bool moves::Maincharacter_ExecuteMove(int index, MainCharacter &m, Enemy &e){
 
 
     string dialog = "<format><|blue|>" + m.name + "<end> used <format><|purple|>["  + move.name + "]<end>!";
-    dialog += (move.cost > 0)? ("<format><|blue|>MP<end> <format><|blue|><|bold|>-" + to_string(move.cost) + "<end>") : "" ;
+    if (move.cost == 0){
+      //don't display cost if it's 0
+    }
+    else if (move.type == "Physical"){
+      dialog += (" <format><|red|>HP<end> <format><|red|><|bold|>-" + to_string(move.cost) + "<end>");
+    }
+    else if (move.type == "Magical" || move.type == "Buff"){
+      dialog += (move.cost > 0)? (" <format><|blue|>MP<end> <format><|blue|><|bold|>-" + to_string(move.cost) + "<end>") : "" ;
+    }
+
     dialogs.push_back(dialog);
     moveFunctions[move.ID](m,e,move, dialogs); //Execute the move function
     restore_passive(m); //Restore effects of passive moves after executing the move
@@ -345,7 +354,7 @@ void moves::hp_change(MainCharacter &m){
         pair.second--;
         string int_value = to_string(value);
         string rounds = to_string(pair.second);
-        string dialog = "<format><|blue|>Hero<end> <format><|red|>HP<end> <format>";
+        string dialog = "<format><|blue|>" + m.name + "<end> <format><|red|>HP<end> <format>";
         dialog += ((value < 0)? ("<|red|>" + int_value): ("<|green|>+" + int_value));
         dialog += "<end>";
         dialog += " (remain <format><|yellow|><|bold|>" + rounds + "<end> rounds.)";
