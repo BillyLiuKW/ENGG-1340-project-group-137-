@@ -81,6 +81,8 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         }
         if (! survive(e.hp)) {
             // return win function
+            m.hp = m.max_hp;
+            m.mp = m.max_mp;
             Victory(m, e, display);
             break;
         }
