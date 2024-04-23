@@ -24,6 +24,7 @@ class EnemyMoves{
             {"m_cont_hp", &EnemyMoves::m_cont_hp},
             {"e_crit_chance", &EnemyMoves::e_crit_chance},
             {"e_crit_damage", &EnemyMoves::e_crit_damage},
+            {"m_mp", &EnemyMoves::m_mp},
             
         };
         MainCharacter &m;
@@ -55,6 +56,7 @@ class EnemyMoves{
         void m_cont_hp(double multiplier, double other);
         void e_crit_chance(double multiplier, double other);
         void e_crit_damage(double multiplier, double other);
+        void m_mp(double multiplier, double other);
         int is_critical(double probability);
 };
 

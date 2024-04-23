@@ -81,6 +81,8 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         }
         if (! survive(e.hp)) {
             // return win function
+            m.hp = m.max_hp;
+            m.mp = m.max_mp;
             Victory(m, e, display);
             break;
         }
@@ -104,7 +106,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         display.print_screen();
         
         //  Check if any character has died
-        if (! survive(m.hp)) {
+        if (! survive(m.hp) || !survive(m.mp)) {
             //player dead and need functions to provide retry function 
             Gameretry();
             break;
@@ -196,8 +198,6 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
     display.clear_screen();
     display.insert_battelfield(m, e); // input main character and enemy information to the screen
     display.print_screen();
-    m.hp = m.max_hp;//refresh hp
-    m.mp = m.max_mp;//refresh mp
     this->current_level++;
     reward(m,this->current_level);// player can receive reward after every boss and checkpt
     // checkpoint reward are tackle in same function
@@ -206,6 +206,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
         //these levels are checkpoints as well.
         this->current_level++;
         char y_n;
+        cin >> y_n;
         cout << "Do you want to store your game status? [y/n] " << endl;
         if (y_n == 'y') {
             ofstream fout("game_status.txt");
@@ -326,6 +327,7 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
                     y--;
             }}
     else{
+        cout << "Welcome to checkpoint" << endl;
         type = "3";
     }
     string lucky_draw_no;
@@ -337,39 +339,39 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
     int health, attack, defence, magic;
     switch(level){ // basic value of random reward
         case 2:{
-            health = 10, attack = 5, defence = 5, magic = 5;
+            health = 20, attack = 5, defence = 5, magic = 20;
             break;
         }
         case 3:{
-            health = 20, attack = 10, defence = 10, magic = 10;
+            health = 40, attack = 15, defence = 10, magic = 40;
             break;
         }
         case 4:{
-            health = 25, attack = 15, defence = 10, magic = 10;
+            health = 50, attack = 20, defence = 10, magic = 50;
             break;
         }
         case 5:{
-            health = 20, attack = 15, defence = 10, magic = 10;
+            health = 60, attack = 20, defence = 15, magic = 50;
             break;
         }
         case 6:{
-            health = 20, attack = 15, defence = 10, magic = 10;
+            health = 90, attack = 35, defence = 25, magic = 60;
             break;
         }
         case 7:{
-            health = 20, attack = 15, defence = 10, magic = 10;
+            health = 100, attack = 40, defence = 25, magic = 80;
             break;
         }
         case 8:{
-            health = 20, attack = 15, defence = 10, magic = 10;
+            health = 110, attack = 40, defence = 30, magic = 80;
             break;
         }
         case 9:{
-            health = 20, attack = 15, defence = 10, magic = 10;
+            health = 120, attack = 45, defence = 30, magic = 90;
             break;
         }
         case 10:{
-            health = 20, attack = 15, defence = 10, magic = 10;
+            health = 160, attack = 65, defence = 40, magic = 120;
             break;
         }
         default:{

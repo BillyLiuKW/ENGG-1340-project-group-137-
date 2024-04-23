@@ -421,6 +421,12 @@ void EnemyMoves::e_crit_damage(double multiplier, double other){
     dialog += " <format><|green|><|bold|>+" + int_value_1 + "%<end> for <format><|yellow|>" + int_value_2 + "<end> rounds.";
     dialogs.push_back(dialog);
 }
+void EnemyMoves::m_mp(double multiplier, double other){
+    m.mp -= static_cast<int>(multiplier);
+    string int_value = to_string(static_cast<int>(multiplier));
+    string dialog = "<format><|blue|>" + m.name + "<end> <format><|blue|>MP<end> <format><|red|><|bold|>-"+ int_value + "<end>";
+    dialogs.push_back(dialog);
+}
 void EnemyMoves::calculate_boost(){
     // calculate the boosts for the next round 
     // minus 1 round after the boost is use
