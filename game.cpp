@@ -206,6 +206,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
         //these levels are checkpoints as well.
         this->current_level++;
         char y_n;
+        cin >> y_n;
         cout << "Do you want to store your game status? [y/n] " << endl;
         if (y_n == 'y') {
             ofstream fout("game_status.txt");
