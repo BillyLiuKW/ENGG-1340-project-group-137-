@@ -7,6 +7,7 @@
 #include <string>
 #include <functional>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 
@@ -50,6 +51,12 @@ class moves{
         static vector<Move_info> FULL_MOVE_POOL;
 
         void deleteMove(MainCharacter& character, int ID); // For testing purposes
+
+        // calculate continue hp change for main character
+        void hp_change(MainCharacter &m);
+        // calculate the boosts
+        void calculate_boost(MainCharacter &m);
+        // decrease all boost by 1 every half round
 
 
     private:
