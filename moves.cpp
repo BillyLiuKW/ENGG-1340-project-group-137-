@@ -6,6 +6,7 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <algorithm>
 #include "character.hpp"
 #include "moves.hpp"
 
@@ -37,7 +38,7 @@ string display_damage(Enemy &e, int damage){
 
 
 void slash(MainCharacter &m, Enemy &e,Move_info info, vector<string> &dialogs){
-    int damage = calculate_damage(info.power, m.atk, e.def);
+    int damage = calculate_damage(info.power, m.atk + m.atk_boost_sum, e.def + e.def_boost_sum);
     m.hp -= info.cost;
     Critical_hit(damage, dialogs);
     e.hp -= damage;
@@ -47,7 +48,7 @@ void slash(MainCharacter &m, Enemy &e,Move_info info, vector<string> &dialogs){
 }
 
 void fireball(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
-    int damage = calculate_damage(info.power, m.atk, e.def);
+    int damage = calculate_damage(info.power, m.atk + m.atk_boost_sum, e.def + e.def_boost_sum);
     m.mp -= info.cost;
     e.hp -= damage;
     string int_value = to_string(damage);
@@ -72,7 +73,7 @@ void regen(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
 
 void rage(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){ //20% atk for 3 turns
     int increase = m.atk * (info.power - 1); // calculate how many atk increase
-    m.atk_boost.push_back(make_pair(increase, 3));
+    m.atk_boost.push_back(make_pair(increase, 3*2)); // every rounds will minus 2;
     m.mp -= info.cost;
     string int_value_1 = to_string(increase*100);
     string dialog = "<format><|blue|>Hero<end> <format><|cyan|>ATK<end> increases ";
@@ -147,7 +148,7 @@ void moves::iniializeMoves(){
 
 }
 
-bool moves::Maincharacter_ExecuteMove(int index,MainCharacter &m, Enemy &e){
+bool moves::Maincharacter_ExecuteMove(int index, MainCharacter &m, Enemy &e){
     if (index > m.moveSet.size() || index < 1){
         cout << "Error: Invalid move index!" << endl;
         cout << "Please try again!" << endl;
@@ -173,7 +174,7 @@ bool moves::Maincharacter_ExecuteMove(int index,MainCharacter &m, Enemy &e){
 
 
     string dialog = "<format><|blue|>" + m.name + "<end> used <format><|purple|>["  + move.name + "]<end>!";
-    //dialog += (move.cost > 0)? ("<format><|blue|>MP<end> <format><|blue|><|bold>-" + to_string(move.cost) + "<end>") : "" ;
+    dialog += (move.cost > 0)? ("<format><|blue|>MP<end> <format><|blue|><|bold>-" + to_string(move.cost) + "<end>") : "" ;
     dialogs.push_back(dialog);
     moveFunctions[move.ID](m,e,move, dialogs); //Execute the move function
     restore_passive(m); //Restore effects of passive moves after executing the move
@@ -230,4 +231,41 @@ void moves::deleteMove(MainCharacter& character, int ID){
         }
     }
     cout << "Move not found!" << endl;
+}
+
+void moves::calculate_boost(MainCharacter &m){
+    // calculate the boosts
+    // minus 1 round after the boost at the end of every half round round
+    m.atk_boost_sum = 0;
+    for (auto &pair: m.atk_boost) {
+        m.atk_boost_sum += pair.first;
+        pair.second--;
+    }
+    m.def_boost_sum = 0;
+    for (auto &pair: m.def_boost) {
+        m.def_boost_sum += pair.first;
+        pair.second--;
+    }
+
+    // remove all pair that round remains <= 0 with lambda function
+    m.atk_boost.erase(remove_if(m.atk_boost.begin(), m.atk_boost.end(), [](pair<int, int> pair){return pair.second <= 0;}), m.atk_boost.end());
+    m.def_boost.erase(remove_if(m.def_boost.begin(), m.def_boost.end(), [](pair<int, int> pair){return pair.second <= 0;}), m.def_boost.end());
+}
+
+void moves::hp_change(MainCharacter &m){
+    for (auto &pair: m.hp_boost){
+        int value = pair.first;
+        int max_regeneration = m.max_hp - m.hp;
+        value = min(max_regeneration, pair.first);
+        m.hp += value;
+        pair.second--;
+        string int_value = to_string(value);
+        string round = to_string(pair.second);
+        string dialog = "<format><|blue|>Hero<end> <format><|red|>HP<end> <format>";
+        dialog += ((value < 0)? ("<|red|>" + int_value): ("<|green|>+" + int_value));
+        dialog += "<end>";
+        dialog += " (remain <format><|yellow|><|bold|>" + round + "<end> rounds.)";
+        dialogs.push_back(dialog);      
+    }
+    m.hp_boost.erase(remove_if(m.hp_boost.begin(), m.hp_boost.end(), [](pair<int, int> pair){return pair.second <= 0;}), m.hp_boost.end());
 }
