@@ -12,7 +12,9 @@ using namespace std;
 
 
 
-void Critical_hit(int &dmg, int chance); //Physical moves have a 10% chance to deal 50% more damage, depending on move
+void Critical_hit(int &dmg, vector<string> &dialogs,int chance); //Physical moves have a 10% chance to deal 50% more damage, depending on move
+
+void miss(int &dmg, ,vector<string> &dialogs,int chance); //Use this for moves that have a chance to miss
 
 int calculate_damage(double power, int self_atk, int enemy_def); //Apply the damage formula
 //Define moves outside moves class
@@ -32,6 +34,10 @@ void weapon_master(MainCharacter &m, Enemy &e, Move_info info, vector<string> &d
 void mastery_of_magic(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //Passive move, increases power of magic move by 50%
 
 void efficient_tactics(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //Passive move, reduces cost of all moves by 30%
+
+void life_siphon(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals phys dmg to enemy, heals 50% of dmg dealt
+
+void sluggish_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals phys dmg to enemy, but chance to miss/ cost 0 hp
 
 class moves{
     public:

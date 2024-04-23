@@ -28,6 +28,16 @@ void Critical_hit(int &dmg, vector<string> &dialogs, int chance = 10){
     }
 }
 
+void miss(int &dmg, vector<string> &dialogs, int chance){
+    srand(time(0));
+    int random = rand() % 100;
+    if (random < chance){
+        string dialog = "<format><|bold|><|red|>The Attack missed!<end>";
+        dialogs.push_back(dialog);
+        dmg = 0;
+    }
+}
+
 string display_damage(Enemy &e, int damage){
     string int_value = to_string(damage);
     string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end>'s <format><|red|>HP<end>";
@@ -112,10 +122,30 @@ void efficient_tactics(MainCharacter &m, Enemy &e, Move_info info, vector<string
     for (int i = 0; i < m.moveSet.size(); i++){
         if (moves::FULL_MOVE_POOL[m.moveSet[i]].type != "Passive"){
             m.boosted_moves.push_back(moves::FULL_MOVE_POOL[m.moveSet[i]]); //Store the unboosted moves info
-            moves::FULL_MOVE_POOL[m.moveSet[i]].cost *= 0.7; //Reduce the cost of the move by 30% (round down
+            moves::FULL_MOVE_POOL[m.moveSet[i]].cost *= 0.7; //Reduce the cost of the move by 30% 
         }
     }
 }
+
+void life_siphon(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
+    int damage = calculate_damage(info.power, m.atk, e.def);
+    m.mp -= info.cost;
+    e.hp -= damage;
+    int heal = damage * 0.5;
+    if (m.hp + heal > m.max_hp){
+        m.hp = m.max_hp;
+    }
+    else{
+        m.hp += heal;
+    }
+    string int_value = to_string(damage);
+    string dialog = display_damage(e, damage);
+    dialogs.push_back(dialog);
+    string int_value_1 = to_string(heal);
+    dialog = "<format><|blue|>Hero<end> <format><|red|>HP<end> <format><|green|><|bold|>+"+ int_value_1 + "<end>";
+    dialogs.push_back(dialog);
+}
+
 
 void moves::iniializeMoves(){
     Move_info slashInfo = {"Slash", 0 ,20, 10, "Physical"};
@@ -143,7 +173,10 @@ void moves::iniializeMoves(){
     Move_info efficient_tacticsInfo = {"Efficient Tactics", 7, 0, 0, "Passive"};
     moveFunctions[7] = efficient_tactics;
     FULL_MOVE_POOL.push_back(efficient_tacticsInfo);
-    
+    Move_info life_siphonInfo = {"Life Siphon", 8, 30, 40, "Magical"};
+    moveFunctions[8] = life_siphon;
+
+
 
 }
 
