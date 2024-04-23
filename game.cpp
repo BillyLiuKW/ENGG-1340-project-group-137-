@@ -82,9 +82,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         display.clear_screen();
         display.insert_battelfield(m, e);
         display.print_screen();
-
         //  Check if any character has died
-        enemy_skills.Enemy_ExecuteMove();
         if (! survive(m.hp)) {
             //player dead and need functions to provide retry function 
             Gameretry();
@@ -98,7 +96,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         }
 
         round++;
-        sleep(1);
+        sleep(5);
     }
 
 }

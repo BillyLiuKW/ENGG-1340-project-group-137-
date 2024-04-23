@@ -9,16 +9,7 @@
 #include <string>
 using namespace std;
 
-struct Move_info{ //Store the information of the move
-        string name;
-        int ID;
-        int power; //The power of the move 
-        int cost;
-        string type;
-        //Physical moves cost HP to cast
-        //Magical moves cost MP to cast
-        //Damage formula is self_atk * power / enemy_def, so 25 atk * 50 power / 50 def = 25 damage
-    };
+
 
 
 void Critical_hit(int &dmg, int chance); //Physical moves have a 10% chance to deal 50% more damage, depending on move
@@ -54,13 +45,15 @@ class moves{
         //Add moves to character's moveSet
         static vector<Move_info> FULL_MOVE_POOL;
 
+        void deleteMove(MainCharacter& character, int ID); // For testing purposes
+
 
     private:
         static map<int, function<void(MainCharacter&, Enemy&, Move_info, vector<string> &dialogs)> > moveFunctions; //Create a function map for executing move functions
 
         bool check_cost(MainCharacter &m, Move_info move); // Check if the character has enough HP/MP to cast the move
     
-
+        void restore_passive(MainCharacter &m); //Restore the power of the moves after the passive for each turn
 };
 
 

@@ -8,6 +8,18 @@
 using namespace std;
 
 // does not include normal attack
+
+struct Move_info{ //Store the information of the move
+        string name;
+        int ID;
+        int power; //The power of the move 
+        int cost;
+        string type;
+        //Physical moves cost HP to cast
+        //Magical moves cost MP to cast
+        //Damage formula is self_atk * power / enemy_def, so 25 atk * 50 power / 50 def = 25 damage
+    };
+
 struct Enemy_Skill{
     int index; // index of the skill in the skill_list (start at 1) 0 is normal attack
     string type; // basic type of the skill: attack/ defend/ interfere (buff or debuff)/ regenerate 
@@ -31,6 +43,7 @@ class MainCharacter{
         int mp;
         int max_mp;
         vector<int> moveSet;
+        vector<Move_info> boosted_moves;
         string name;
         vector<string> image;
         int height;

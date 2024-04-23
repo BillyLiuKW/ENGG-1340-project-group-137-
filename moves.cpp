@@ -43,6 +43,7 @@ void slash(MainCharacter &m, Enemy &e,Move_info info, vector<string> &dialogs){
     e.hp -= damage;
     string int_value = to_string(damage);
     string dialog = display_damage(e, damage);
+    dialog += "Power: "+ to_string(info.power);
     dialogs.push_back(dialog);
 }
 
@@ -71,7 +72,6 @@ void regen(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
 }
 
 void rage(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){ //20% atk for 3 turns
-    //m.atk *= 1.2; //temp code
     int increase = m.atk * (info.power - 1); // calculate how many atk increase
     m.atk_boost.push_back(make_pair(increase, 3));
     m.mp -= info.cost;
@@ -91,7 +91,14 @@ void lethal_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &d
   dialogs.push_back(dialog);
 }
 
-
+void weapon_master(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){ //passive
+    for (int i = 0; i < m.moveSet.size(); i++){
+        if (moves::FULL_MOVE_POOL[m.moveSet[i]].type == "Physical"){
+            m.boosted_moves.push_back(moves::FULL_MOVE_POOL[m.moveSet[i]]); //Store the unboosted moves info
+            moves::FULL_MOVE_POOL[m.moveSet[i]].power *= 1.5; //Boost the power of the move
+        }
+    }
+}
 
 
 
@@ -125,6 +132,11 @@ bool moves::Maincharacter_ExecuteMove(int index,MainCharacter &m, Enemy &e){
         cout << "Please try again!" << endl;
         return false; //Invalid move
     }
+    for (auto& moveID : m.moveSet){
+      if (FULL_MOVE_POOL[moveID].type == "Passive"){
+        moveFunctions[moveID](m,e,FULL_MOVE_POOL[moveID], dialogs); //Execute the passive move function
+      }
+    }
     int ID = m.moveSet[index-1];
     Move_info move = FULL_MOVE_POOL[ID];
     if (!check_cost(m, move)){
@@ -137,10 +149,13 @@ bool moves::Maincharacter_ExecuteMove(int index,MainCharacter &m, Enemy &e){
         cout << "Please try again!" << endl;
         return false; //Passive moves cannot be used
     }
+
+
     string dialog = "<format><|blue|>" + m.name + "<end> used <format><|purple|>["  + move.name + "]<end>!";
     //dialog += (move.cost > 0)? ("<format><|blue|>MP<end> <format><|blue|><|bold>-" + to_string(move.cost) + "<end>") : "" ;
     dialogs.push_back(dialog);
     moveFunctions[move.ID](m,e,move, dialogs); //Execute the move function
+    restore_passive(m); //Restore effects of passive moves after executing the move
     return true;
   
 }
@@ -177,6 +192,21 @@ bool moves::check_cost(MainCharacter &m, Move_info move){
     return true; // enough HP/MP
 }
 
+void moves::restore_passive(MainCharacter &m){
+  for (int i = 0; i < m.boosted_moves.size(); i++){
+    FULL_MOVE_POOL[m.boosted_moves[i].ID] = m.boosted_moves[i]; //Restore the info of the moves
+  }
+  m.boosted_moves.clear(); //Clear the boosted moves
+}
 
 
-
+void moves::deleteMove(MainCharacter& character, int ID){
+    for (int i = 0; i < character.moveSet.size(); i++){
+        if (character.moveSet[i] == ID){
+            character.moveSet.erase(character.moveSet.begin() + i);
+            cout << "Move deleted!" << endl;
+            return;
+        }
+    }
+    cout << "Move not found!" << endl;
+}
