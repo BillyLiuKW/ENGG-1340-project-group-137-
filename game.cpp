@@ -300,17 +300,42 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
         cout << "Invalid Input. Please enter again : " ;
         cin >> lucky_draw_no; }
     int health, attack, defence, magic;
-    switch(level){
-        case 1:{
+    switch(level){ // basic value of random reward
+        case 2:{
             health = 10, attack = 5, defence = 3, magic = 5;
             break;
         }
-        case 2:{
+        case 3:{
             health = 10, attack = 5, defence = 5, magic = 5;
             break;
         }
-        case 3:{
+        case 4:{
             health = 20, attack = 15, defence = 10, magic = 10;
+            break;
+        }
+        case 5:{
+            health = 20, attack = 15, defence = 10, magic = 10;
+            break;
+        }
+        case 6:{
+            health = 20, attack = 15, defence = 10, magic = 10;
+            break;
+        }
+        case 7:{
+            health = 20, attack = 15, defence = 10, magic = 10;
+            break;
+        }
+        case 8:{
+            health = 20, attack = 15, defence = 10, magic = 10;
+            break;
+        }
+        case 9:{
+            health = 20, attack = 15, defence = 10, magic = 10;
+            break;
+        }
+        case 10:{
+            health = 20, attack = 15, defence = 10, magic = 10;
+            break;
         }
         default:{
             break;
