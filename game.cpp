@@ -196,7 +196,8 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
     display.clear_screen();
     display.insert_battelfield(m, e); // input main character and enemy information to the screen
     display.print_screen();
-
+    m.hp = m.max_hp;//refresh hp
+    m.mp = m.max_mp;//refresh mp
     this->current_level++;
     reward(m,this->current_level);// player can receive reward after every boss and checkpt
     // checkpoint reward are tackle in same function
@@ -336,15 +337,15 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
     int health, attack, defence, magic;
     switch(level){ // basic value of random reward
         case 2:{
-            health = 10, attack = 5, defence = 3, magic = 5;
-            break;
-        }
-        case 3:{
             health = 10, attack = 5, defence = 5, magic = 5;
             break;
         }
+        case 3:{
+            health = 20, attack = 10, defence = 10, magic = 10;
+            break;
+        }
         case 4:{
-            health = 20, attack = 15, defence = 10, magic = 10;
+            health = 25, attack = 15, defence = 10, magic = 10;
             break;
         }
         case 5:{
