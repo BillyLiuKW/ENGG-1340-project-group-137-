@@ -150,7 +150,7 @@ void life_siphon(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dia
 
 void sluggish_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
     int damage = calculate_damage(info.power, m.atk + m.atk_boost_sum, e.def + e.def_boost_sum);
-    miss(damage, dialogs, 30);
+    miss(damage, dialogs, 50);
     if (damage == 0){
         return;
     }
@@ -168,27 +168,38 @@ void moves::iniializeMoves(){
     Move_info fireballInfo = {"Fireball", 1, 20, 20, "Magical"};
     FULL_MOVE_POOL.push_back(fireballInfo);
     moveFunctions[1] = fireball;
+    
     Move_info regenInfo = {"Regen", 2, 30, 30, "Magical"};
     moveFunctions[2] = regen;
     FULL_MOVE_POOL.push_back(regenInfo);
+
     Move_info rageInfo = {"Rage", 3, 20, 30, "Magical"};
     moveFunctions[3] = rage;
     FULL_MOVE_POOL.push_back(rageInfo);
+
     Move_info lethal_strikeInfo = {"Lethal Strike", 4, 30, 30, "Physical"};
     moveFunctions[4] = lethal_strike;
     FULL_MOVE_POOL.push_back(lethal_strikeInfo);
+
     Move_info weapon_masterInfo = {"Weapon Master", 5, 0, 0, "Passive"};
     moveFunctions[5] = weapon_master;
     FULL_MOVE_POOL.push_back(weapon_masterInfo);
+
     Move_info mastery_of_magicInfo = {"Mastery of Magic", 6, 0, 0, "Passive"};
     moveFunctions[6] = mastery_of_magic;
     FULL_MOVE_POOL.push_back(mastery_of_magicInfo);
+
     Move_info efficient_tacticsInfo = {"Efficient Tactics", 7, 0, 0, "Passive"};
     moveFunctions[7] = efficient_tactics;
     FULL_MOVE_POOL.push_back(efficient_tacticsInfo);
+
     Move_info life_siphonInfo = {"Life Siphon", 8, 30, 40, "Magical"};
     moveFunctions[8] = life_siphon;
+    FULL_MOVE_POOL.push_back(life_siphonInfo);
 
+    Move_info sluggish_strikeInfo = {"Sluggish Strike", 9, 50, 0, "Physical"};
+    moveFunctions[9] = sluggish_strike;
+    FULL_MOVE_POOL.push_back(sluggish_strikeInfo);
 
 
 }

@@ -38,7 +38,7 @@ void efficient_tactics(MainCharacter &m, Enemy &e, Move_info info, vector<string
 
 void life_siphon(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals phys dmg to enemy, heals 50% of dmg dealt
 
-void sluggish_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals phys dmg to enemy, but chance to miss/ cost 0 hp
+void sluggish_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals phys dmg to enemy, but 50% chance to miss/ cost 0 hp
 
 class moves{
     public:
