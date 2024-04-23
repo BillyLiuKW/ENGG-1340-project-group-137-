@@ -90,6 +90,6 @@ In each turn, you can choose a move to use.
             }
          }
 
-     * File out (To save player's game status in checkpoints) 
+     * File output (To save player's game status in checkpoints) 
 
 
