@@ -326,6 +326,7 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
                     y--;
             }}
     else{
+        cout << "Welcome to checkpoint" << endl;
         type = "3";
     }
     string lucky_draw_no;
