@@ -20,8 +20,6 @@ class EnemyMoves{
             {"m_atk", &EnemyMoves::m_atk},
             {"e_def", &EnemyMoves::e_def},
             {"m_def", &EnemyMoves::m_def},
-            {"e_hp", &EnemyMoves::e_hp},
-            {"m_hp", &EnemyMoves::m_hp},
             {"e_cont_hp", &EnemyMoves::e_cont_hp},
             {"m_cont_hp", &EnemyMoves::m_cont_hp},
             {"e_crit_chance", &EnemyMoves::e_crit_chance},
@@ -39,7 +37,9 @@ class EnemyMoves{
         void normal_attack();
         // use the chosen skill
         void use_skill(int skill_id);
-        void boost_count_down(); 
+        // calculate all boost and subtract all boost by 1 round and remove rounds <= 0
+        void calculate_boost(); 
+        // change enemy hp by continue damage/ regen
         void hp_change(); // apply the conyinue damage or regeneration
     private:
         vector<double> z_score(vector<double> &skill_uses, vector<int> &skill_num, int& type_num_s);
