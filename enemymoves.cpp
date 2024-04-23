@@ -451,6 +451,9 @@ void EnemyMoves::calculate_boost(){
         pair.second--;
     }
     e.crit_chance_boost_sum = min(1.0 - e.critical_chance,  e.crit_chance_boost_sum); // set the max of total critical chance be 1
+    // don't let any stat become negative after debuff
+    e.atk_boost_sum = max(-e.atk + 1, e.atk_boost_sum);
+    e.def_boost_sum = max(-e.def + 1, e.def_boost_sum);
 
     // remove all pair that round remains <= 0 with lambda function
     e.atk_boost.erase(remove_if(e.atk_boost.begin(), e.atk_boost.end(), [](pair<int, int> pair){return pair.second <= 0;}), e.atk_boost.end());
