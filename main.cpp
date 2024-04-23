@@ -80,7 +80,7 @@ void select_option(int option, GAME game) {
             }
             else {
                 // Assigning stored values to m one by one.
-                fin >> m.name >> m.hp >> m.max_hp >> m.atk >> m.def;
+                fin >> m.name >> m.hp >> m.max_hp >> m.atk >> m.def >> m.mp;
                 // To input the size of moveSet stored.
                 int size;
                 fin >> size;

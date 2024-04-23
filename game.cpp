@@ -211,7 +211,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
         if (y_n == 'y') {
             ofstream fout("game_status.txt");
             if (fout.is_open()) {
-                fout << m.name << " " << m.hp << " " << m.max_hp << " " << m.atk << " " << m.def << " ";
+                fout << m.name << " " << m.hp << " " << m.max_hp << " " << m.atk << " " << m.def << " " << m.mp << " ";
                 fout << m.moveSet.size() << " ";
                 for (int k = 0; k < m.moveSet.size(); k++) {
                     fout << m.moveSet[k] << " ";
@@ -261,7 +261,7 @@ void GAME::Gameretry(){
             if (fin.is_open()) {
                 MainCharacter m;
                 // Assigning stored values to m one by one.
-                fin >> m.name >> m.hp >> m.max_hp >> m.atk >> m.def;
+                fin >> m.name >> m.hp >> m.max_hp >> m.atk >> m.def >> m.mp;
                 // To input the size of moveSet stored.
                 int size;
                 fin >> size;
