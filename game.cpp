@@ -266,7 +266,7 @@ bool isInteger(string x){
 
 void GAME::reward(MainCharacter &m, int level){ // normal reward where player can receive reward every level
     string type;
-    if (level != 3 || level != 5 || level != 7){
+    if (level != 3 && level != 5 && level != 7){
          cout << "Choose Reward Type : 1. Stat   2. Skills" << endl;
         cout << "Please Enter 1/2 : ";
         cin >> type ;
@@ -279,7 +279,7 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
                     y--;
             }}
     else{
-        type = 3;
+        type = "3";
     }
     string lucky_draw_no;
     cout << "Enter a number for lucky draw : ";
