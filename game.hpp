@@ -8,7 +8,7 @@ using namespace std;
 class GAME{
     public:
         Screen display; // size of the display screen
-        GAME() : display(60, 60){};
+        GAME() : display(60, 75){};
         // To handle the game logic.
         void StartGame(MainCharacter& m, Enemy& e);
         // To display the gameplay screen. 
@@ -16,7 +16,7 @@ class GAME{
         // To check whether the character dies. It can check both ends.
         bool survive(int hp);
         //To handle the victory in each level.
-        void Victory(MainCharacter &m, Enemy &e);
+        void Victory(MainCharacter &m, Enemy &e, Screen &display);
         // To retry the game.
         void Gameretry();
         //For levels distributing rewards for player.

@@ -29,7 +29,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
     display.dialogs.push_back("<format><|bold|><|red|>Level " +  to_string(current_level) + "<end>"); // show current level
     display.dialogs.push_back("<format><|bold|>BATTLE START!<end>");
     while (round < 11) {
-        // show thw screen once before any action
+        // show thw screen once before any action (don't remove this) should display 3 time each round
         display.dialogs.push_back(" "); // line break for the next round.
         display.dialogs.push_back("<format><|cyan|>Round " + to_string(round) + "<end>"); // show the current round.
         display.clear_screen();
@@ -46,6 +46,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         // Get user input for chosen skill
         //reward(m,2);
         //break;
+        
         int chosen_Skill;
         cout << "Please choose the skill you want to apply : ";
         cin >> chosen_Skill;
@@ -55,10 +56,22 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
            cin >> chosen_Skill;
         }
 
-        // execute continue damage/ regeneration for main character
-        // calculate all the buff/ debuff for the next round
+        // calculate all the buff/ debuff for the next half round
         // count down all buff/ debuff rounds by 1, remove
+        skills.calculate_boost(m);
+        enemy_skills.calculate_boost();
+        // execute continue damage/ regeneration for main character
+        skills.hp_change(m);
         // Player move End
+
+        // I don't like negative hp
+        m.hp = max(0, m.hp);
+        e.hp = max(0, e.hp);
+        
+        // show battelfield before enemy's move
+        display.clear_screen();
+        display.insert_battelfield(m, e);
+        display.print_screen();
         
         // Check if any character has died
         if (! survive(m.hp)) {
@@ -66,22 +79,30 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
             Gameretry();
             break;
         }
-
         if (! survive(e.hp)) {
             // return win function
-            Victory(m,e);
+            Victory(m, e, display);
             break;
         }
+        // give some time for the player to read the screen
+        cout << "Waiting for enemy's action ..." << endl;
+        sleep(3);
 
         // enemy's action
         display.dialogs.push_back(" "); // add a line to saperate use move and enemy move
-        enemy_skills.Enemy_ExecuteMove(); // do all the thing for enemy
+        enemy_skills.Enemy_ExecuteMove(); // use skill or normal attack
+
+        // calculate enemy boost before next player move.
+        skills.calculate_boost(m);
+        enemy_skills.calculate_boost();
+        enemy_skills.hp_change();
         // enemy's action End
 
         // show battelfield
         display.clear_screen();
         display.insert_battelfield(m, e);
         display.print_screen();
+        
         //  Check if any character has died
         if (! survive(m.hp)) {
             //player dead and need functions to provide retry function 
@@ -91,7 +112,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         //check whether enemy is dead
         if (! survive(e.hp)) {
             // return win function
-            Victory(m,e);
+            Victory(m, e, display);
             break;
         }
 
@@ -170,8 +191,12 @@ bool GAME::survive(int hp) {
     }
 }
 
-void GAME::Victory(MainCharacter &m, Enemy &e) {
-    cout << "Congratulations! The " << e.name << " is defeated!" << endl;
+void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
+    display.dialogs.push_back("<format><|yellow|>Congratulations!<end> You have defeated Enemy <format><|yellow|><|bold|>[" + e.name + "]<end>!");
+    display.clear_screen();
+    display.insert_battelfield(m, e); // input main character and enemy information to the screen
+    display.print_screen();
+
     this->current_level++;
     reward(m,this->current_level);// player can receive reward after every boss and checkpt
     // checkpoint reward are tackle in same function
@@ -258,7 +283,7 @@ void GAME::Gameretry(){
                 MainCharacter m;
                 Enemy e(this->current_level);
                 cout << "Proceeding to level 1...." << endl;
-                sleep(1);
+                sleep(2);
                 StartGame(m,e);
                 return;
             }
