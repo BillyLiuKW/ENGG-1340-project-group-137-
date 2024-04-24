@@ -215,7 +215,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
     }
     reward(m,this->current_level);// player can receive reward after every boss and checkpt
     // checkpoint reward are tackle in same function
-    if (this->current_level == 3 || this->current_level == 5 || this->current_level == 7) {
+    if (this->current_level == 3 || this->current_level == 6 || this->current_level == 9) {
         //player can get reward from these level and they are not required to beat any enemy in these levels.
         //these levels are checkpoints as well.
         this->current_level++;
@@ -323,7 +323,7 @@ bool isInteger(string x){
 
 void GAME::reward(MainCharacter &m, int level){ // normal reward where player can receive reward every level
     string type;
-    if (level != 3 && level != 5 && level != 7){
+    if (level != 3 && level != 6 && level != 9){
          cout << "Choose Reward Type : 1. Stat   2. Skills" << endl;
         cout << "Please Enter 1/2 : ";
         cin >> type ;
