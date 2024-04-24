@@ -114,7 +114,6 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         //  Check if any character has died
         if (! survive(m.hp)) {
             //player dead and need functions to provide retry function 
-            skills.resetBuffs(m); //Reset the buffs after battle
             Gameretry();
             break;
         }
