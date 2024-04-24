@@ -158,8 +158,17 @@ int main() {
     int option;
     while (true) {
         menu();
-        cout << "Select An Option: ";
-        cin >> option;
+        while (true){
+            cout << "Select An Option: ";
+            cin >> option;
+            if (cin.fail()) {
+                //cout << "Please select an correct option!" << endl;
+                cin.clear();        
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
+            }
+            break;
+        }
         select_option(option,game);
         // if player choose option 5, he or she will escape from select_option().
         if (option == 5) {
@@ -167,18 +176,23 @@ int main() {
             cout << "Do you want to exit the game? [y/n]" << endl;
             cin >> y_n;
             if (y_n == 'y') {
-                cout << "Thank you and goodbye!" << endl;
-                exit(0);
+                cout << "Do you really want to exit the game? [y/n]" << endl;
+                cin >> y_n;
+                if (y_n == 'y') {
+                    cout << "Thank you and goodbye!" << endl;
+                    exit(0);
+                }
             }
             
             else if (y_n == 'n'){
                 continue;;
             }
             else {
-                cout << "Error: invalid answer!" << endl;
+                cout << "I will regarded your answer as a no." << endl;
                 continue;
             }
         }
     }
-     return 0;
+    return 0;
 }
+
