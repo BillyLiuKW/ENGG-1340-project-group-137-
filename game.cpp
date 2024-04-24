@@ -127,7 +127,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         }
 
         round++;
-        sleep(3);
+        sleep(2);
     }
     // if the player cannot defeat the enemy in 10 rounds, the game will end.
     cout << "You cannot defeat " << e.name << " in 10 rounds!" << endl;
@@ -206,7 +206,9 @@ bool GAME::survive(int hp) {
 }
 
 void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
+    display.dialogs.push_back(" ");
     display.dialogs.push_back("<format><|yellow|>Congratulations!<end> You have defeated Enemy <format><|yellow|><|bold|>[" + e.name + "]<end>!");
+    sleep(1);
     display.clear_screen();
     display.insert_battelfield(m, e); // input main character and enemy information to the screen
     display.print_screen();
@@ -226,7 +228,14 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
         //End the game.
         exit(0);
     }
-    reward(m, e, this->current_level);// player can receive reward after every boss and checkpt
+    reward(m, this->current_level);// player can receive reward after every boss and checkpt
+
+    display.clear_screen();
+    display.insert_battelfield(m, e);
+    display.print_screen();
+
+    system("read -p '\033[1mPress Enter to continue...\033[0m' var"); // pause the game until the user press enter
+
     // checkpoint reward are tackle in same function
     if (this->current_level == 3 || this->current_level == 5 || this->current_level == 7) {
         //player can get reward from these level and they are not required to beat any enemy in these levels.
@@ -335,7 +344,7 @@ bool isInteger(string x){
     return true;
 }
 
-void GAME::reward(MainCharacter &m, Enemy &e, int level){ // normal reward where player can receive reward every level
+void GAME::reward(MainCharacter &m, int level){ // normal reward where player can receive reward every level
     string type;
     if (level != 3 && level != 5 && level != 7){
         cout << "Choose Reward Type : 1. Stat   2. Skills" << endl;
@@ -405,11 +414,11 @@ void GAME::reward(MainCharacter &m, Enemy &e, int level){ // normal reward where
             stats(m, stoi(lucky_draw_no), health, attack, defence,magic);
             break;}
         case (2):{
-            skill(m, e, stoi(lucky_draw_no));
+            skill(m, stoi(lucky_draw_no));
             break;}
         case 3:{
             stats(m, stoi(lucky_draw_no), health, attack, defence,magic);
-            skill(m, e, stoi(lucky_draw_no));
+            skill(m, stoi(lucky_draw_no));
             break;
         }
         default:
@@ -437,11 +446,12 @@ void GAME::stats(MainCharacter &m, int lucky_draw_no, int health, int attack, in
     m.def += def_increase;
     m.max_mp += mp_increase;
     m.mp += mp_increase;
-    cout << "hp+ " << hp_increase << "    ";
-    cout << "atk+ " << atk_increase << "    ";
-    cout << "def+ " << def_increase <<  "    ";
-    cout << "mp+ " << mp_increase << endl;
-    sleep(4);
+    string dialog = "";
+    dialog += "<format><|red|>HP<end> <format><|green|><|bold|>+" + to_string(hp_increase) + "<end> ";
+    dialog += "<format><|blue|>MP<end> <format><|green|><|bold|>+" + to_string(mp_increase) + "<end> ";
+    dialog += "<format><|cyan|>ATK<end> <format><|green|><|bold|>+" + to_string(atk_increase) + "<end> ";
+    dialog += "<format><|red|>DEF<end> <format><|green|><|bold|>+" + to_string(def_increase) + "<end>";
+    display.dialogs.push_back(dialog);
 }
 
 void reward_screen(MainCharacter m){
@@ -451,7 +461,7 @@ void reward_screen(MainCharacter m){
         cout << "   ";}
     cout << endl;}
 
-void GAME::skill(MainCharacter &m, Enemy &e, int lucky_draw_no){
+void GAME::skill(MainCharacter &m, int lucky_draw_no){
     //Player will see {1,2,3,4} instead of {0,1,2,3}  in the display moveSet
     srand(lucky_draw_no);
     cout << "Your current moves : " << endl;
@@ -464,13 +474,9 @@ void GAME::skill(MainCharacter &m, Enemy &e, int lucky_draw_no){
     //cout << "New Skill : " << moves::FULL_MOVE_POOL[random].name << endl;
 
     display.dialogs.push_back("Skill <format><|purple|>[" + moves::FULL_MOVE_POOL[random].name + "]<end> has been added.");
-    display.clear_screen();
-    display.insert_battelfield(m, e); // input main character and enemy information to the screen
-    display.print_screen();
-    //moves::addMove(m, moves::FULL_MOVE_POOL[random].ID);
+    moves::addMove(m, moves::FULL_MOVE_POOL[random].ID);
     //cout << "After : " << endl;
     //reward_screen(m);
-    system("read -p '\033[1mPress Enter to continue...\033[0m' var"); // pause the game until the user press enter
     
 
 
