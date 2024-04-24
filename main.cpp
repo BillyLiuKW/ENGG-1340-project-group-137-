@@ -102,48 +102,41 @@ void select_option(int option, GAME game) {
         }
 
         case 3:
-        {
-           ifstream fin("enemy_info.txt");
-           if (fin.is_open()) {
-            string line;
-            while (getline(fin,line)) {
-                cout << line << endl;
+            {
+            ifstream fin("enemy_info.txt");
+            if (fin.is_open()) {
+                string line;
+                while (getline(fin,line)) {
+                    cout << line << endl;
+                }
+                fin.close();
+
+                cout << endl;
+                system("read -p '\033[1mPress Enter to continue...\033[0m' var");}
+            //whenever there is a bug:
+            else {
+                cout << "Error: unable to provide Enemy Handbook," << endl;
             }
-            fin.close();
-           
-            cout << "Enter e to exit : ";
-            string e;
-            while ( e != "e" ){
-                cout << "Invalid Input ! Please enter (e) : ";
-                cin >> e;
-            }}
-           //whenever there is a bug:
-           else {
-            cout << "Error: unable to provide Enemy Handbook," << endl;
-           }
-        break;
-        }
+            break;
+            }
         case 4:
         {
             ifstream fin("game_instruction.txt");
             if (fin.is_open()) {
                 string line;
-            while (getline(fin,line)) {
-                cout << line << endl;
+                while (getline(fin,line)) {
+                    cout << line << endl;
+                }
+                fin.close();
+                
+                cout << endl;
+                system("read -p '\033[1mPress Enter to continue...\033[0m' var");
             }
-            fin.close();
-            cout << "Enter e to exit : ";
-            string e;
-            while ( e != "e" ){
-                cout << "Invalid Input ! Please enter (e) : ";
-                cin >> e;
+            else {
+                cout << "Error: unable to provide Game Instruction," << endl;
             }
-           }
-           else {
-            cout << "Error: unable to provide Game Instruction," << endl;
-           }
 
-        break;
+            break;
         }
         default:
         {

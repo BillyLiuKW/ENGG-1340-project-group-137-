@@ -464,7 +464,7 @@ void GAME::skill(MainCharacter &m, Enemy &e, int lucky_draw_no){
     //moves::addMove(m, moves::FULL_MOVE_POOL[random].ID);
     //cout << "After : " << endl;
     //reward_screen(m);
-    system("read -p 'Press Enter to continue...' var"); // pause the game until the user press enter
+    system("read -p '\033[1mPress Enter to continue...\033[0m' var"); // pause the game until the user press enter
     
 
 
