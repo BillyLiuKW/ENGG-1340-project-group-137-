@@ -385,6 +385,26 @@ Titan::Titan(){
         "      dsd#DSDS     DEsddasd      ",
         "      sadsadad     dasdsads      ",
     };
+    Enemy_Skill skill1 = {1, "attack", "Thunder Strike", vector<string>{"m_cont_hp 1.2 3"}};
+    Enemy_Skill skill2 = {2, "interfere", "Mind Control", vector<string>{"m_atk -20 3", "m_def -15 3", "e_atk 20 3", "e_def 15 3"}};
+    Enemy_Skill skill3 = {3, "defend", "Diamond Shield", vector<string>{"e_def 30 3", "e_cont_hp_const 10 3"}};
+    Enemy_Skill skill4 = {4, "attack", "Venomous Bite", vector<string>{"m_hp 1.2 0", "m_cont_hp_const -10 3"}};
+    Enemy_Skill skill5 = {5, "regenerate", "Healing Touch", vector<string>{"m_hp 1.1 0", "e_cont_hp_const 30 2"}};
+    Enemy_Skill skill6 = {6, "interfere", "Confusion", vector<string>{"m_atk -10 2", "m_def -10 2", "e_atk 10 2", "e_def 10 2", "e_crit_chance 0.5 2","e_crit_damage 0.3 2"}};
+    Enemy_Skill skill7 = {7, "attack", "Blazing Inferno", vector<string>{"m_cont_hp_const -5 3", "m_hp 1.1 0"}};
+    Enemy_Skill skill8 = {8, "regenerate", "Natural Regeneration", vector<string>{"e_cont_hp_const 20 3"}};
+    Enemy_Skill skill9 = {9, "defend", "Iron Will", vector<string>{"e_def 30 3"}};
+    Enemy_Skill skill10 = {10, "attack", "Jesus", vector<string>{"m_hp 1.5 0", "e_crit_chance 0.5 2", "e_crit_damage 0.3 2"}};
+    skill_list.push_back(skill1);
+    skill_list.push_back(skill2);
+    skill_list.push_back(skill3);
+    skill_list.push_back(skill4);
+    skill_list.push_back(skill5);
+    skill_list.push_back(skill6);
+    skill_list.push_back(skill7);
+    skill_list.push_back(skill8);
+    skill_list.push_back(skill9);
+    skill_list.push_back(skill10);
 }
 
 
