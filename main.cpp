@@ -114,7 +114,7 @@ void select_option(int option, GAME game) {
             // Both case will do the below code
             cout << "Proceeding to level " << game.current_level << " ...." << endl;
             Enemy e(game.current_level);
-            sleep(1.5);
+            sleep(2);
             game.StartGame(m,e);
             break;
         }
