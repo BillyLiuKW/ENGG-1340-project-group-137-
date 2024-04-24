@@ -10,6 +10,7 @@
 #include <iomanip>
 #include "character.hpp"
 #include <limits>
+#include <cmath>
 #include "moves.hpp"
 
 using namespace std;
@@ -218,6 +219,17 @@ void nova_blast(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dial
     moves::FULL_MOVE_POOL[14].power = 0; //reset the power to 0 after dealing damage
 }
 
+void pain_share(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
+    int missing_hp = m.max_hp - m.hp;
+    int missing_hp_percent = static_cast<int>(floor(static_cast<double>(missing_hp) * 100 / m.max_hp));
+    //Increase 10 power for every 20% missing hp
+    int increase = missing_hp_percent / 20 * 10;
+    int damage = calculate_damage(info.power+increase, m.atk + m.atk_boost_sum, e.def + e.def_boost_sum);
+    m.mp -= info.cost;
+    e.hp -= damage;
+    string dialog = display_damage(e, damage);
+    dialogs.push_back(dialog);
+}
 
 
 
@@ -282,6 +294,10 @@ void moves::iniializeMoves(){
     Move_info nova_blastInfo = {"Nova Blast", 14, 0, 50, "Magical"};
     moveFunctions[14] = nova_blast;
     FULL_MOVE_POOL.push_back(nova_blastInfo);
+
+    Move_info pain_shareInfo = {"Pain Share", 15, 10, 30, "Magical"};
+    moveFunctions[15] = pain_share;
+    FULL_MOVE_POOL.push_back(pain_shareInfo);
 
 }
 

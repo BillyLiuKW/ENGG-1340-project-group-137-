@@ -51,6 +51,8 @@ void strategist(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dial
 
 void nova_blast(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals magic dmg to enemy, requires one turn to charge
 
+void pain_share(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals magic dmg to enemy, scales off missing hp
+
 
 
 class moves{
