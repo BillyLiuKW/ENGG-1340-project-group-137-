@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
+#include <iomanip>
 #include "character.hpp"
 #include "moves.hpp"
 
@@ -191,6 +192,16 @@ void growth(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs)
     dialogs.push_back(dialog);
 }
 
+void strategist(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){ //passive
+    for (int i = 0; i < m.moveSet.size(); i++){
+        if (moves::FULL_MOVE_POOL[m.moveSet[i]].type == "Buff"){
+            m.boosted_moves.push_back(moves::FULL_MOVE_POOL[m.moveSet[i]]); //Store the unboosted moves info
+            moves::FULL_MOVE_POOL[m.moveSet[i]].power += 20; //Add instead of multiply to the buff amount
+        }
+    }
+}
+
+
 void moves::iniializeMoves(){
     Move_info slashInfo = {"Slash", 0 ,20, 10, "Physical"};
     FULL_MOVE_POOL.push_back(slashInfo);
@@ -244,6 +255,9 @@ void moves::iniializeMoves(){
     moveFunctions[12] = growth;
     FULL_MOVE_POOL.push_back(growthInfo);
 
+    Move_info strategistInfo = {"Strategist", 13, 0, 0, "Passive"};
+    moveFunctions[13] = strategist;
+    FULL_MOVE_POOL.push_back(strategistInfo);
 
 }
 
@@ -390,7 +404,7 @@ void moves::display_moves(MainCharacter &m){
   }
   cout << "-------------------------------------------------------------------------" << endl;
   for (int i = 0; i < moves.size(); i++){
-    cout << i+1 <<". " << moves[i].name << " | Cost: " << moves[i].cost << " | Power: " << moves[i].power << " | Type: " << moves[i].type<< endl;
+    cout << i+1 <<". " << left << setw(20) << moves[i].name << " | Cost: " << moves[i].cost << " | Power: " << moves[i].power << " | Type: " << moves[i].type<< endl;
   }
   cout << "-------------------------------------------------------------------------" << endl;
     

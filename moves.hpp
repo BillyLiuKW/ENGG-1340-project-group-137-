@@ -47,6 +47,8 @@ void iron_wall(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialo
 
 void growth(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //10% atk, 10% def, 3 turns
 
+void strategist(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //Passive move, increases power of buff moves by 20%
+
 
 
 class moves{
