@@ -26,9 +26,8 @@ void menu() {
         "            #   1. Start A New Game                           #            ",
         "            #   2. Continue                                   #            ",
         "            #   3. Enemy Handbook                             #            ",
-        "            #   4. Skills Handbook                            #            ",
-        "            #   5. Game Instruction                           #            ",
-        "            #   6. Exit                                       #            ",
+        "            #   4. Game Instruction                           #            ",
+        "            #   5. Exit                                       #            ",
         "            #                                                 #            ",
         "           )(=================================================)(           ",  
     };
@@ -124,7 +123,7 @@ void select_option(int option, GAME game) {
            }
         break;
         }
-        case 5:
+        case 4:
         {
             ifstream fin("game_instruction.txt");
             if (fin.is_open()) {
@@ -163,7 +162,7 @@ int main() {
         cin >> option;
         select_option(option,game);
         // if player choose option 5, he or she will escape from select_option().
-        if (option == 6) {
+        if (option == 5) {
             char y_n;
             cout << "Do you want to exit the game? [y/n]" << endl;
             cin >> y_n;
