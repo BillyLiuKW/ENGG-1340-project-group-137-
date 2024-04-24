@@ -5,9 +5,11 @@
 #include <fstream>
 #include <sstream>
 #include <cctype>
+#include <ctime>
 #include <algorithm>
 #include <cstdlib>
 #include <unistd.h>
+#include <random>
 #include "character.hpp"
 #include "game.hpp"
 #include "screen.hpp"
@@ -215,8 +217,6 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
     display.clear_screen();
     display.insert_battelfield(m, e); // input main character and enemy information to the screen
     display.print_screen();
-    m.hp = m.max_hp;
-    m.mp = m.max_mp;
     this->current_level++;
     // That means the player has win the game.
     
@@ -232,6 +232,30 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
         exit(0);
     }
     reward(m, this->current_level);// player can receive reward after every boss and checkpt
+
+    // main character recover. it will recover 25 - 75 % of HP and MP, where 50% is the mode.
+    random_device rd;
+    mt19937 gen(rd());
+
+    double min_value = 0.25;
+    double max_value = 0.75;
+    double mode = (min_value + max_value) / 2.0; // highest chance.
+
+    uniform_real_distribution<double> distribution(min_value, max_value);
+
+    // triangular distribution
+    double recover_percentage;
+    recover_percentage = (distribution(gen) + distribution(gen)) / 2.0;
+    int hp_recover_value = recover_percentage * m.hp;
+    hp_recover_value = min(m.max_hp - hp_recover_value, hp_recover_value); // set the limit not to exceed max.hp
+
+    recover_percentage = (distribution(gen) + distribution(gen)) / 2.0;
+    int mp_recover_value = recover_percentage * m.mp;
+    mp_recover_value = min(m.max_mp - mp_recover_value, mp_recover_value);
+    display.dialogs.push_back("<format><|blue|>" + m.name + "<end> <format><|red|>HP<end> recover <format><|green|><|bold|>" + to_string(hp_recover_value) + "<end>.");
+    display.dialogs.push_back("<format><|blue|>" + m.name + "<end> <format><|blue|>MP<end> recover <format><|green|><|bold|>" + to_string(mp_recover_value) + "<end>.");
+    m.hp += hp_recover_value;
+    m.mp += mp_recover_value;
 
     display.clear_screen();
     display.insert_battelfield(m, e);
@@ -360,12 +384,12 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
     }
     else{
         cout << "Welcome to checkpoint" << endl;
+        cout << "You will recieved both status increase and a skill" << endl;
         type = "3";
     }
     string lucky_draw_no;
     cout << "Enter a sequence for lucky draw : ";
     int lucky_sum = 0;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, lucky_draw_no);
     for (char c: lucky_draw_no){
         lucky_sum += static_cast<int>(c);
@@ -444,7 +468,12 @@ void round_to_five(int &x){
 }
 
 void GAME::stats(MainCharacter &m, int lucky_draw_no, int health, int attack, int defence, int magic){
-    srand(lucky_draw_no);
+    if (lucky_draw_no = 0){
+        srand(time(0));
+    }
+    else{
+        srand(lucky_draw_no);
+    }
     int hp_increase = rand() % health + health;
     int atk_increase = rand() % attack + attack;
     int def_increase = rand() % defence + defence;
@@ -460,8 +489,8 @@ void GAME::stats(MainCharacter &m, int lucky_draw_no, int health, int attack, in
     m.max_mp += mp_increase;
     m.mp += mp_increase;
     string dialog = "";
-    dialog += "<format><|red|>HP<end> <format><|green|><|bold|>+" + to_string(hp_increase) + "<end> ";
-    dialog += "<format><|blue|>MP<end> <format><|green|><|bold|>+" + to_string(mp_increase) + "<end> ";
+    dialog += "<format><|red|>Max HP<end> <format><|green|><|bold|>+" + to_string(hp_increase) + "<end> ";
+    dialog += "<format><|blue|>Max MP<end> <format><|green|><|bold|>+" + to_string(mp_increase) + "<end> ";
     dialog += "<format><|cyan|>ATK<end> <format><|green|><|bold|>+" + to_string(atk_increase) + "<end> ";
     dialog += "<format><|red|>DEF<end> <format><|green|><|bold|>+" + to_string(def_increase) + "<end>";
     display.dialogs.push_back(dialog);
@@ -476,7 +505,12 @@ void reward_screen(MainCharacter m){
 
 void GAME::skill(MainCharacter &m, int lucky_draw_no){
     //Player will see {1,2,3,4} instead of {0,1,2,3}  in the display moveSet
-    srand(lucky_draw_no);
+    if (lucky_draw_no = 0){
+        srand(time(0));
+    }
+    else{
+        srand(lucky_draw_no);
+    }
     cout << "Your current moves : " << endl;
     reward_screen(m);
     int random = rand() % moves::FULL_MOVE_POOL.size();
