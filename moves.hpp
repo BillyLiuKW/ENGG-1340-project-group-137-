@@ -19,6 +19,7 @@ void miss(int &dmg, vector<string> &dialogs,int chance); //Use this for moves th
 
 int calculate_damage(double power, int self_atk, int enemy_def); //Apply the damage formula
 //Define moves outside moves class
+
 void slash(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals phys dmg to enemy, base moves
 
 void fireball(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals magic dmg to enemy, base moves
@@ -44,6 +45,10 @@ void shield_blast(MainCharacter &m, Enemy &e, Move_info info, vector<string> &di
 
 void iron_wall(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //Increases def by 20% for 3 turns
 
+void growth(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //10% atk, 10% def, 3 turns
+
+
+
 class moves{
     public:
         moves(vector<string> &dialogs_list): dialogs(dialogs_list) {}
@@ -68,6 +73,8 @@ class moves{
         void calculate_boost(MainCharacter &m);
         // decrease all boost by 1 every half round
         void display_moves(MainCharacter &m);
+
+        void resetBuffs(MainCharacter &m); //Reset the buffs after battle
 
 
     private:

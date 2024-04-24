@@ -67,9 +67,8 @@ void fireball(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialog
 }
 
 void regen(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){ //30% max hp
-    int regeneration = info.power * m.max_hp;
+    int regeneration = info.power/100 * m.max_hp;
     if (m.hp + regeneration > m.max_hp){
-        regeneration = m.max_hp - m.max_hp;
         m.hp = m.max_hp;
     }
     else{
@@ -82,10 +81,10 @@ void regen(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
 }
 
 void rage(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){ //20% atk for 3 turns
-    int increase = m.atk * (info.power - 1); // calculate how many atk increase
+    int increase = info.power; // calculate how many atk increase
     m.atk_boost.push_back(make_pair(increase, 3*2)); // every rounds will minus 2;
     m.mp -= info.cost;
-    string int_value_1 = to_string(increase*100);
+    string int_value_1 = to_string(increase);
     string dialog = "<format><|blue|>" + m.name + "<end> <format><|cyan|>ATK<end> increases ";
     dialog += " <format><|bold|><|green|>" + int_value_1 + "%<end>";
     dialog += " for <format><|yellow|>3<end> rounds.";
@@ -170,11 +169,23 @@ void shield_blast(MainCharacter &m, Enemy &e, Move_info info, vector<string> &di
 }
 
 void iron_wall(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){ //20% def for 3 turns
-    int increase = m.def * (info.power - 1); // calculate how many def increase
-    m.atk_boost.push_back(make_pair(increase, 3*2)); // every rounds will minus 2;
+    int increase = info.power; // calculate how many def increase
+    m.def_boost.push_back(make_pair(increase, 3*2)); // every rounds will minus 2;
     m.mp -= info.cost;
     string int_value_1 = to_string(increase*100);
     string dialog = "<format><|blue|>" + m.name + "<end> <format><|green|>DEF<end> increases ";
+    dialog += " <format><|bold|><|green|>" + int_value_1 + "%<end>";
+    dialog += " for <format><|yellow|>3<end> rounds.";
+    dialogs.push_back(dialog);
+}
+
+void growth(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
+    int increase = info.power; // calculate how many atk increase
+    m.atk_boost.push_back(make_pair(increase, 3*2)); // every rounds will minus 2;
+    m.def_boost.push_back(make_pair(increase, 3*2)); // every rounds will minus 2;
+    m.mp -= info.cost;
+    string int_value_1 = to_string(increase);
+    string dialog = "<format><|blue|>" + m.name + "<end> <format><|green|>DEF<end> and <format><|cyan|>ATK<end> increases ";
     dialog += " <format><|bold|><|green|>" + int_value_1 + "%<end>";
     dialog += " for <format><|yellow|>3<end> rounds.";
     dialogs.push_back(dialog);
@@ -228,6 +239,12 @@ void moves::iniializeMoves(){
     Move_info iron_wallInfo = {"Iron Wall", 11, 20, 30, "Buff"};
     moveFunctions[11] = iron_wall;
     FULL_MOVE_POOL.push_back(iron_wallInfo);
+
+    Move_info growthInfo = {"Growth", 12, 10, 30, "Buff"};
+    moveFunctions[12] = growth;
+    FULL_MOVE_POOL.push_back(growthInfo);
+
+
 }
 
 bool moves::Maincharacter_ExecuteMove(int index, MainCharacter &m, Enemy &e){
@@ -335,11 +352,13 @@ void moves::calculate_boost(MainCharacter &m){
         m.atk_boost_sum += pair.first;
         pair.second--;
     }
+    m.atk_boost_sum = m.atk* m.atk_boost_sum/100;
     m.def_boost_sum = 0;
     for (auto &pair: m.def_boost) {
         m.def_boost_sum += pair.first;
         pair.second--;
     }
+    m.def_boost_sum = m.def* m.def_boost_sum/100;
 
     // remove all pair that round remains <= 0 with lambda function
     m.atk_boost.erase(remove_if(m.atk_boost.begin(), m.atk_boost.end(), [](pair<int, int> pair){return pair.second <= 0;}), m.atk_boost.end());
@@ -371,8 +390,17 @@ void moves::display_moves(MainCharacter &m){
   }
   cout << "-------------------------------------------------------------------------" << endl;
   for (int i = 0; i < moves.size(); i++){
-    cout << i+1 <<". " << moves[i].name << " Cost: " << moves[i].cost << " Power: " << moves[i].power << " Type: " << moves[i].type<< endl;
+    cout << i+1 <<". " << moves[i].name << " | Cost: " << moves[i].cost << " | Power: " << moves[i].power << " | Type: " << moves[i].type<< endl;
   }
   cout << "-------------------------------------------------------------------------" << endl;
     
+}
+
+
+void moves::resetBuffs(MainCharacter &m){
+    m.atk_boost.clear();
+    m.def_boost.clear();
+    m.hp_boost.clear();
+    m.atk_boost_sum = 0;
+    m.def_boost_sum = 0;
 }

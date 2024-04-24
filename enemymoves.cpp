@@ -300,7 +300,7 @@ void EnemyMoves::normal_attack(){
     dialogs.push_back("Enemy <format><|yellow|>[" + e.name + "]<end> has use <format><|bold|>normal attack<end>.");
     double damage = 0;
     int critical = is_critical(e.critical_chance + e.crit_chance_boost_sum);
-    damage = (e.atk + e.atk_boost_sum) * (1 + critical * (e.critical_damage + e.crit_damage_boost_sum)) - (m.def + m.def_boost_sum);
+    damage = (e.atk + e.atk_boost_sum) *20 * (1 + critical * (e.critical_damage + e.crit_damage_boost_sum)) / (m.def + m.def_boost_sum);
     (damage < 1)? damage = 1: damage = damage ; // if damage < 1, set damage to 1.
     m.hp -= static_cast<int>(damage);
     string int_value = to_string(static_cast<int>(damage));
