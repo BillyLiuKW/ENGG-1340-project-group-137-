@@ -237,6 +237,7 @@ void Screen::insert_information(int start_row, Enemy info){
     insert_item(start_row + info.height + 2, start_col_info, {ATK_info}, {"cyan"});
     insert_item(start_row + info.height + 2, start_col_info + 15, {DEF_info}, {"green"});
     insert_item(start_row + info.height + 3, start_col_info, {hp_info}, {"red","bold"});
+    insert_item(start_row + info.height + 3, start_col_info + 6 + max_health_bar + 4 + 1, "(" + to_string(info.max_hp) + ")", {"red","bold"});
 }
 void Screen::insert_information(int start_row, MainCharacter info){
     string ATK_info = "ATK: " + to_string(info.atk) + "(" + ((info.atk_boost_sum >= 0)? "+" : "") + to_string(info.atk_boost_sum) + ")";
@@ -259,8 +260,8 @@ void Screen::insert_information(int start_row, MainCharacter info){
     string mp_spacing(max_mp_bar, ' ');
     string health = to_string(info.hp);
     string mana = to_string(info.mp);
-    string hp_info = "HP [" + hp_spacing + "] " + health + " (" + to_string(info.max_hp) + ")";
-    string mp_info = "MP [" + mp_spacing + "] " + mana + " (" + to_string(info.max_mp) + ")";
+    string hp_info = "HP [" + hp_spacing + "] " + health;
+    string mp_info = "MP [" + mp_spacing + "] " + mana;
     for (int i = 0; i < health_bar; i++){
         hp_info[4+i] = '=';
     }
@@ -271,7 +272,10 @@ void Screen::insert_information(int start_row, MainCharacter info){
     insert_item(start_row + info.height + 2, start_col_info, {ATK_info}, {"cyan"});
     insert_item(start_row + info.height + 2, start_col_info + 15, {DEF_info}, {"green"});
     insert_item(start_row + info.height + 3, start_col_info, {hp_info}, {"red","bold"});
+    insert_item(start_row + info.height + 3, start_col_info + 6 + 4 + 1, "(" + to_string(info.max_hp) + ")", {"red","bold"});
     insert_item(start_row + info.height + 4, start_col_info, {mp_info}, {"blue","bold"});
+    insert_item(start_row + info.height + 4, start_col_info + 6 + max_health_bar + 4 + 1,  "(" + to_string(info.max_mp) + ")", {"blue","bold"});
+    
 }
 void Screen::clear_screen(){;
     screen.clear(); 
