@@ -287,6 +287,24 @@ Dragon::Dragon(){
         "                O<   :           ",
         "                 ]0fz,           "
     };
+    Enemy_Skill skill1 = {1, "attack", "Fireball", vector<string>{"m_cont_hp_const -15 4"}};
+    Enemy_Skill skill2 = {2, "defend", "Protection", vector<string>{"e_def 15 5"}};
+    Enemy_Skill skill3 = {3, "attack", "Claw Strike", vector<string>{"m_cont_hp_const -10 4", "m_hp 1.1 0","e_crit_chance 0.2, 3"}};
+    Enemy_Skill skill4 = {4, "interfere", "Roar", vector<string>{ "m_atk -10 2", "m_def -10 2", "e_def 10 2", "e_atk 10 2"}};
+    Enemy_Skill skill5 = {5, "regenerate", "Healing Pearl", vector<string>{"e_hp 30 0"}};
+    Enemy_Skill skill6 = {6, "attack", "Dragon Fury", vector<string>{"e_hp -50 0","m_hp 100 0"}};
+    Enemy_Skill skill7 = {7, "attack", "Tail Swipe", vector<string>{"m_hp 1.3 0"}};
+    Enemy_Skill skill8 = {8, "defend", "Dodge", vector<string>{"e_def 50 1"}};
+    Enemy_Skill skill9 = {9, "regenerate", "Hot Spring", vector<string>{"e_cont_hp 20 3", "e_hp 10 0", "e_atk 10 3"}};
+    skill_list.push_back(skill1);
+    skill_list.push_back(skill2);
+    skill_list.push_back(skill3);
+    skill_list.push_back(skill4);
+    skill_list.push_back(skill5);
+    skill_list.push_back(skill6);
+    skill_list.push_back(skill7);
+    skill_list.push_back(skill8);
+    skill_list.push_back(skill9);
 }
 
 Demon::Demon(){
