@@ -245,13 +245,13 @@ Robot::Robot(){
     Enemy_Skill skill1 = {1, "attack", "Electric Shock", vector<string>{"m_hp 1.2 0", "m_cont_hp_const -7 3"}};
     Enemy_Skill skill2 = {2, "defend", "Armor Plating", vector<string>{"m_def 10 8"}};
     Enemy_Skill skill3 = {3, "attack", "Plasma Blade", vector<string>{"m_hp 1.5 0", "m_atk -10 6"}};
-    Enemy_Skill skill4 = {4, "interfere", "Disrupt Systems", vector<string>{"m_def -10 6", "m_const_hp -5 0", "e_def 10 6", "e_cont_hp +5 6"}};
+    Enemy_Skill skill4 = {4, "interfere", "Disrupt Systems", vector<string>{"m_def -10 6", "m_const_hp -5 0", "e_def 10 6", "e_cont_hp_const +5 6"}};
     Enemy_Skill skill5 = {5, "regenerate", "Self-Reboot", vector<string>{"e_hp 30 0"}};
     Enemy_Skill skill6 = {6, "attack", "Ion Cannon", vector<string>{"m_hp 2 0", "m_cont_hp_const -5 2"}};
     Enemy_Skill skill7 = {7, "attack", "Rapid Fire", vector<string>{"m_hp 1.2 0"}};
     Enemy_Skill skill8 = {8, "interfere", "Virus Upload", vector<string>{"m_def -10 4", "m_hp 1.5 0", "e_crit_chance 0.5, 4", "e_crit_damage 0.5 4"}};
     Enemy_Skill skill9 = {9, "defend", "Force Field", vector<string>{"e_def 20 4"}};
-    Enemy_Skill skill10 = {10, "regenerate", "Nano Repair", vector<string>{"e_cont_hp 15 3"}};
+    Enemy_Skill skill10 = {10, "regenerate", "Nano Repair", vector<string>{"e_cont_hp_const 15 3"}};
     skill_list.push_back(skill1);
     skill_list.push_back(skill2);
     skill_list.push_back(skill3);
@@ -297,7 +297,7 @@ Dragon::Dragon(){
     Enemy_Skill skill6 = {6, "attack", "Dragon Fury", vector<string>{"e_hp -50 0","m_hp 100 0"}};
     Enemy_Skill skill7 = {7, "attack", "Tail Swipe", vector<string>{"m_hp 1.3 0"}};
     Enemy_Skill skill8 = {8, "defend", "Dodge", vector<string>{"e_def 50 2"}};
-    Enemy_Skill skill9 = {9, "regenerate", "Hot Spring", vector<string>{"e_cont_hp 20 3", "e_hp 10 0", "e_atk 10 6"}};
+    Enemy_Skill skill9 = {9, "regenerate", "Hot Spring", vector<string>{"e_cont_hp_const 20 3", "e_hp 10 0", "e_atk 10 6"}};
     skill_list.push_back(skill1);
     skill_list.push_back(skill2);
     skill_list.push_back(skill3);
