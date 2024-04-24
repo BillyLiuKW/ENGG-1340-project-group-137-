@@ -105,7 +105,7 @@ Dummy::Dummy(){
     Enemy_Skill skill2 = {2, "attack", "Heavy Attack", vector<string>{"m_hp 1.5 0", "m_atk -3 6", "m_cont_hp -0.5 2"}};
     Enemy_Skill skill3 = {3, "defend", "Defend", vector<string>{"e_def 5 6"}};
     Enemy_Skill skill4 = {4, "interfere", "Attack Boost", vector<string>{"e_atk 5 6", "e_crit_damage 0.5 6", "e_crit_chance 0.2 6"}};
-    Enemy_Skill skill5 = {5, "regenerate", "Recover", vector<string>{"e_cont_hp 15 3"}};
+    Enemy_Skill skill5 = {5, "regenerate", "Recover", vector<string>{"e_cont_hp_const 15 3"}};
     Enemy_Skill skill6 = {6, "attack", "Vampire", vector<string>{"m_hp 1.5 0", "e_hp 20 0"}};
     Enemy_Skill skill7 = {7, "attack", "Anger", vector<string>{"m_hp 2 0"}};
     Enemy_Skill skill8 = {8, "defend", "Jesus", vector<string>{"e_def 30 6", "m_hp 2.5 0"}};
