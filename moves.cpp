@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <iomanip>
 #include "character.hpp"
+#include <limits>
 #include "moves.hpp"
 
 using namespace std;
@@ -337,9 +338,15 @@ void moves::addMove(MainCharacter& character, int ID){
     else{
         cout << "Select a move to change (1-4) or input 'd' to discard the move: ";
         cin >> index;
-        string old_name = FULL_MOVE_POOL[character.moveSet[index-1]].name;
-        cout << "Replaced" << old_name << " with " << FULL_MOVE_POOL[ID].name << endl;
-        character.moveSet[index-1] = ID;
+        if (cin.fail()) {
+            cin.clear(); // clear the error state
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore the rest of the line
+            cout << "Invalid input. Please enter a number." << endl;
+        }else {
+            string old_name = FULL_MOVE_POOL[character.moveSet[index-1]].name;
+            cout << "Replaced" << old_name << " with " << FULL_MOVE_POOL[ID].name << endl;
+            character.moveSet[index-1] = ID;
+        }
     }
 }
 
