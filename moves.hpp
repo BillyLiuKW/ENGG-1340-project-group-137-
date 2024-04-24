@@ -49,6 +49,8 @@ void growth(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs)
 
 void strategist(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //Passive move, increases power of buff moves by 20%
 
+void nova_blast(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals magic dmg to enemy, requires one turn to charge
+
 
 
 class moves{

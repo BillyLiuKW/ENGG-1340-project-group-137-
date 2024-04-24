@@ -201,6 +201,25 @@ void strategist(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dial
     }
 }
 
+void nova_blast(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
+    if (info.power == 0){
+        string dialog = "<format><|blue|>" + m.name + "<end> is charging up <format><|purple|>["  + info.name + "]<end>!";
+        dialogs.push_back(dialog);
+        moves::FULL_MOVE_POOL[14].power = 60; //change the power to make next time this is called, it will deal damage
+        return;
+    }
+    int damage = calculate_damage(info.power, m.atk + m.atk_boost_sum, e.def + e.def_boost_sum);
+    m.mp -= info.cost;
+    e.hp -= damage;
+    string int_value = to_string(damage);
+    string dialog = display_damage(e, damage);
+    dialogs.push_back(dialog);
+    moves::FULL_MOVE_POOL[14].power = 0; //reset the power to 0 after dealing damage
+}
+
+
+
+
 
 void moves::iniializeMoves(){
     Move_info slashInfo = {"Slash", 0 ,20, 10, "Physical"};
@@ -258,6 +277,10 @@ void moves::iniializeMoves(){
     Move_info strategistInfo = {"Strategist", 13, 0, 0, "Passive"};
     moveFunctions[13] = strategist;
     FULL_MOVE_POOL.push_back(strategistInfo);
+
+    Move_info nova_blastInfo = {"Nova Blast", 14, 0, 50, "Magical"};
+    moveFunctions[14] = nova_blast;
+    FULL_MOVE_POOL.push_back(nova_blastInfo);
 
 }
 

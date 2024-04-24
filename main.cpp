@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <unistd.h>
 #include <string>
+#include <limits>
 #include "game.hpp"
 #include "character.hpp"
 #include "moves.hpp"

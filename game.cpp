@@ -12,6 +12,7 @@
 #include "screen.hpp"
 #include "moves.hpp"
 #include "enemymoves.hpp"
+#include <limits>
 using namespace std;
 
 void pass() {
