@@ -425,15 +425,17 @@ void moves::display_moves(MainCharacter &m){
   for (int i = 0; i < m.moveSet.size(); i++){
       moves.push_back(FULL_MOVE_POOL[m.moveSet[i]]);
   }
-    cout << " -------------------------------------------------------------------------" << endl;
+    //cout << "+-------------------------------------------------------------------------+" << endl;
+    cout << "|    Skills                    | Cost   | Power  | Type                   |" << endl;
     for (int i = 0; i < moves.size(); i++){
-        cout << " " << i+1 << ". ";
-        cout << left << setw(20) << moves[i].name;
-        cout << " | Cost: " << right << setw(3) << moves[i].cost << ((moves[i].type == "Physical")? " HP" : " MP");
-        cout  << " | Power: " << right << setw(3) << moves[i].power; 
-        cout << " | Type: " << moves[i].type<< endl;
+        cout << "| " << i+1 << ". ";
+        cout << left << setw(25) << moves[i].name;
+        cout << " | " << left << setw(3) << moves[i].cost << ((moves[i].type == "Physical")? " HP" : " MP");
+        cout << " | " << left << setw(6) << moves[i].power; 
+        cout << " | " << left << setw(23) << moves[i].type;
+        cout << "|" << endl;
     }
-    cout << " -------------------------------------------------------------------------" << endl;
+    cout << "+-------------------------------------------------------------------------+" << endl;
     
 }
 
