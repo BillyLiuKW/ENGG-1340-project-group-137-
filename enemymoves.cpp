@@ -73,6 +73,7 @@ int EnemyMoves::chooseSkillType(){
     }
     if (e.hp <= e.max_hp * 0.5){
         normal_attack_prob = 0.3;
+        skill_weighting[1] += 0.1;
         skill_weighting[3] += 0.1;
     }
     if (e.hp <= e.max_hp * 0.25){
