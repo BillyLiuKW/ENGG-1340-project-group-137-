@@ -3,6 +3,7 @@
 #include <string>
 #include <iomanip>
 #include <fstream>
+#include <sstream>
 #include <cctype>
 #include <algorithm>
 #include <cstdlib>
@@ -49,21 +50,23 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         //break;
         skills.display_moves(m);
         int chosen_Skill;
-        
-        do{
+
+        do{  
             while (true){ // to make sure the input is an integer
-                cout << "Please choose the skill you want to apply : ";
-                cin >> chosen_Skill;
-                if (cin.fail()) {  // if use input a non integer
-                    cout << "Please input an integer within the skill set!" << endl;
-                    cin.clear();        
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    continue;
+                cout << "Please input the skill index that you want to apply : ";
+                string line;
+                getline(cin, line); // prevent users include some space. only the first item is considered
+                istringstream iss(line);
+                iss >> chosen_Skill;
+                if (!iss.fail()) {  // check if user input an integer
+                    break;
                 }
-                break;
+                cout << "Please input an integer within the skill set!" << endl;
+                iss.clear();        
+                iss.ignore(numeric_limits<streamsize>::max(), '\n');
             }
         } while (!skills.Maincharacter_ExecuteMove(chosen_Skill, m, e));
-
+        
         // calculate all the buff/ debuff for the next half round
         // count down all buff/ debuff rounds by 1, remove
         skills.calculate_boost(m);
@@ -348,7 +351,7 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
     string type;
     if (level != 3 && level != 5 && level != 7){
         cout << "Choose Reward Type : 1. Stat   2. Skills" << endl;
-        cout << "Please Enter 1/2 : ";
+        cout << "Please Enter (1 or 2) : ";
         cin >> type ;
         while (stoi(type) != 1 && stoi(type) != 2){
             cout << "Invalid Input. Please enter again : " ;
@@ -360,65 +363,75 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
         type = "3";
     }
     string lucky_draw_no;
-    cout << "Enter a number for lucky draw : ";
-    cin >> lucky_draw_no;
+    cout << "Enter a sequence for lucky draw : ";
+    int lucky_sum = 0;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, lucky_draw_no);
+    for (char c: lucky_draw_no){
+        lucky_sum += static_cast<int>(c);
+    }
+    
+
+
+    /*
     while (!isInteger(lucky_draw_no)){
         cout << "Invalid Input. Please enter again : " ;
         cin >> lucky_draw_no; }
+    */
     int health, attack, defence, magic;
-   switch(level){ // basic value of random reward
-       case 2:{
-           health = 20, attack = 5, defence = 5, magic = 20;
-           break;
-       }
-       case 3:{
-           health = 40, attack = 15, defence = 10, magic = 40;
-           break;
-       }
-       case 4:{
-    
-           health = 50, attack = 20, defence = 10, magic = 50;
-           break;
-       }
-       case 5:{
-           health = 60, attack = 25, defence = 15, magic = 50;
-           break;
-       }
-       case 6:{
-           health = 80, attack = 30, defence = 15, magic = 60;
-           break;
-       }
+    switch(level){ // basic value of random reward
+        case 2:{
+            health = 20, attack = 5, defence = 5, magic = 20;
+            break;
+        }
+        case 3:{
+            health = 40, attack = 15, defence = 10, magic = 40;
+            break;
+        }
+        case 4:{
+        
+            health = 50, attack = 20, defence = 10, magic = 50;
+            break;
+        }
+        case 5:{
+            health = 60, attack = 25, defence = 15, magic = 50;
+            break;
+        }
+        case 6:{
+            health = 80, attack = 30, defence = 15, magic = 60;
+            break;
+        }
         case 7:{
-           health = 80, attack = 40, defence = 25, magic = 70;
-           break;
-       }
-       case 8:{
-           health = 90 , attack = 30, defence = 15, magic = 60;
-           break;
-       }
-       case 9:{
-           health = 90, attack = 40, defence = 25, magic = 80;
-           break;
-       }
-       case 10:{
-           health = 100, attack = 40, defence = 25, magic = 80;
-           break;
-       }
-       default:{
-           break;
-       }
-   }
+            health = 80, attack = 40, defence = 25, magic = 70;
+            break;
+        }
+        case 8:{
+            health = 90 , attack = 30, defence = 15, magic = 60;
+            break;
+        }
+        case 9:{
+            health = 90, attack = 40, defence = 25, magic = 80;
+            break;
+        }
+        case 10:{
+            health = 100, attack = 40, defence = 25, magic = 80;
+            break;
+        }
+        default:{
+            break;
+        }
+    }
 
     switch (stoi(type)){
         case (1):{
-            stats(m, stoi(lucky_draw_no), health, attack, defence,magic);
+            stats(m, lucky_sum, health, attack, defence,magic);
             break;}
         case (2):{
-            skill(m, stoi(lucky_draw_no));
+            skill(m, lucky_sum);
             break;}
         case 3:{
-            stats(m, stoi(lucky_draw_no), health, attack, defence,magic);
-            skill(m, stoi(lucky_draw_no));
+            stats(m, lucky_sum, health, attack, defence,magic);
+            skill(m, lucky_sum);
             break;
         }
         default:
