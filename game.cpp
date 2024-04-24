@@ -88,8 +88,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         }
         if (! survive(e.hp)) {
             // return win function
-            m.hp = m.max_hp;
-            m.mp = m.max_mp;
+            skills.resetBuffs(m);
             Victory(m, e, display);
             break;
         }
@@ -113,7 +112,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         display.print_screen();
         
         //  Check if any character has died
-        if (! survive(m.hp) || !survive(m.mp)) {
+        if (! survive(m.hp)) {
             //player dead and need functions to provide retry function 
             skills.resetBuffs(m); //Reset the buffs after battle
             Gameretry();
@@ -130,6 +129,10 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         round++;
         sleep(3);
     }
+    // if the player cannot defeat the enemy in 10 rounds, the game will end.
+    cout << "You cannot defeat " << e.name << " in 10 rounds!" << endl;
+    Gameretry();
+    sleep(2);
 
 }
 
@@ -207,6 +210,8 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
     display.clear_screen();
     display.insert_battelfield(m, e); // input main character and enemy information to the screen
     display.print_screen();
+    m.hp = m.max_hp;
+    m.mp = m.max_mp;
     this->current_level++;
     // That means the player has win the game.
     
@@ -300,6 +305,7 @@ void GAME::Gameretry(){
             //player should start from level 1 if they did not store any status.
             else {
                 MainCharacter m;
+                this->current_level = 1;
                 Enemy e(this->current_level);
                 cout << "Proceeding to level 1...." << endl;
                 sleep(2);
