@@ -45,7 +45,7 @@ vector<double> EnemyMoves::z_score(vector<double> &skill_uses, vector<int> &skil
             variance += (skill_uses[i] - mean)*(skill_uses[i] - mean);
         }
         variance /= type_num_s;
-        cout << "Number: " << type_num_s << " Mean: " << mean << " Variance: " << variance;
+        //cout << "Number: " << type_num_s << " Mean: " << mean << " Variance: " << variance;
          
         for (int i = 0; i < type_num; i++){ // turn to standard score
             if (skill_num[i] == 0) {
@@ -67,19 +67,42 @@ int EnemyMoves::chooseSkillType(){
     double normal_attack_prob = 0.4;
     vector<Enemy_Skill> attack_skills, defend_skills, interfence_skills, regerneration_skills;
     vector<int> skill_num(type_num, 0);
-    vector<double> skill_uses(type_num, 0), skill_weighting = {0.4, 0.2, 0.2, 0.2}; // with the same order
+    vector<double> skill_uses(type_num, 0), skill_weighting = {0.4, 0.2, 0.25, 0.15}; // with the same order
     if (e.hp > e.max_hp * 0.8){
-        skill_weighting = {0.4, 0.3, 0.2, 0.1};
+        skill_weighting[3] += 0.1;
     }
     if (e.hp <= e.max_hp * 0.5){
-        skill_weighting = {0.3, 0.2, 0.1, 0.4};
+        normal_attack_prob = 0.3;
+        skill_weighting[3] += 0.1;
     }
-    if (e.hp <= e.max_hp * 0.25 && m.hp > m.max_hp * 0.25){
-        skill_weighting = {0.2, 0.25, 0.1, 0.45};
+    if (e.hp <= e.max_hp * 0.25){
+        normal_attack_prob = 0.2;
+        skill_weighting[3] += 0.2;
     }
-    else if (e.hp <= e.max_hp * 0.25 && m.hp < m.max_hp * 0.25){
-        skill_weighting = {0.3, 0.2, 0.05, 0.45};
+    if (e.hp <= e.max_hp * 0.1){
+        normal_attack_prob = 0;
+        skill_weighting[3] += 0.2;
     }
+    if (m.hp <= m.max_hp * 0.5){
+        skill_weighting[0] += 0.1;
+    }
+    if (m.hp <= m.max_hp * 0.2){
+        skill_weighting[0] += 0.1;
+    }
+    if (m.hp <= m.max_hp * 0.1){
+        skill_weighting[0] += 0.2;
+    }
+    normal_attack_prob = 0;
+    double skill_prob_sum = 0;
+    for (double p: skill_weighting){
+        skill_prob_sum += p;
+    }
+    if (skill_prob_sum != 0){
+        for (int i; i < skill_weighting.size(); i++){
+            skill_weighting[i] /= skill_prob_sum;
+        }
+    }
+
     for (auto &skill: e.skill_list){
         string type = skill.type;
         if (type == "attack"){
@@ -166,28 +189,28 @@ int EnemyMoves::chooseSkillType(){
             probability[i] /= total_sum;
         }
     }
-    /* //output testing
-    cout << endl;
-    cout << "skill_num ";
+    /*//output testing
+    string sss = "";
+    sss = "skill_num ";
     for (auto i: skill_num){
-        cout << i << " ";
+        sss += to_string(i) + " ";
     }
-    cout << endl;
-    cout << "skill_uses ";
+    dialogs.push_back(sss);
+    sss = "skill_uses ";
     for (auto i: skill_uses){
-        cout << i << " ";
+        sss += to_string(i) + " ";
     }
-    cout << endl;
-    cout << "standard_score ";
+    dialogs.push_back(sss);
+    sss = "standard_score ";
     for (auto i: standard_score){
-        cout << i << " ";
+        sss += to_string(i) + " ";
     }
-    cout << endl;
-    cout << "prob ";
+    dialogs.push_back(sss);
+    sss = "Prob ";
     for (auto i: probability){
-        cout << i << " ";
+        sss += to_string(i) + " ";
     }
-    cout << endl;
+    dialogs.push_back(sss);
     // *** end */
 
     random_device rd;
@@ -304,7 +327,11 @@ void EnemyMoves::normal_attack(){
     (damage < 1)? damage = 1: damage = damage ; // if damage < 1, set damage to 1.
     m.hp -= static_cast<int>(damage);
     string int_value = to_string(static_cast<int>(damage));
-    dialogs.push_back("<format><|blue|>" + m.name + "<end> <format><|red|>HP<end> <format><|red|><|bold|>-"+ int_value + "<end>");
+    string dialog = "<format><|blue|>" + m.name + "<end> <format><|red|>HP<end> <format><|red|><|bold|>-"+ int_value + "<end>";
+    if (critical) {
+        dialog += "<format><|yellow|> CRIT!!<end>";
+    }
+    dialogs.push_back(dialog);
 }
 void EnemyMoves::use_skill(int skill_id){
     dialogs.push_back("Enemy <format><|yellow|>[" + e.name + "]<end> has use skill <format><|purple|>[" + e.skill_list[skill_id-1].skill_name + "]<end>.");
@@ -387,8 +414,17 @@ void EnemyMoves::m_def(double multiplier, double other){
 } 
 void EnemyMoves::e_cont_hp(double multiplier, double other){
     double change = multiplier * (e.atk + e.atk_boost_sum);
-    e.hp_boost.push_back(make_pair(static_cast<int> (change), static_cast<int>(other)));
+    e.hp_boost.push_back(make_pair(static_cast<int>(change), static_cast<int>(other)));
     string int_value_1 = to_string(static_cast<int>(change));
+    string int_value_2 = to_string(static_cast<int>(other));
+    string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end> <format><|red|>HP<end> <format>";
+    dialog += ((multiplier < 0)? ("<|red|><|bold|>" + int_value_1 + "<end> "): ("<|green|>regernate " + int_value_1 + "<end>"));
+    dialog += " for <format><|yellow|>" + int_value_2 + "<end> rounds.";
+    dialogs.push_back(dialog);
+}
+void EnemyMoves::e_cont_hp_const(double multiplier, double other){
+    e.hp_boost.push_back(make_pair(static_cast<int>(multiplier), static_cast<int>(other)));
+    string int_value_1 = to_string(static_cast<int>(multiplier));
     string int_value_2 = to_string(static_cast<int>(other));
     string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end> <format><|red|>HP<end> <format>";
     dialog += ((multiplier < 0)? ("<|red|><|bold|>" + int_value_1 + "<end> "): ("<|green|>regernate " + int_value_1 + "<end>"));
@@ -397,8 +433,16 @@ void EnemyMoves::e_cont_hp(double multiplier, double other){
 }
 void EnemyMoves::m_cont_hp(double multiplier, double other){
     double change = multiplier * (e.atk + e.atk_boost_sum);
-    m.hp_boost.push_back(make_pair(static_cast<int> (change), static_cast<int>(other)));
+    m.hp_boost.push_back(make_pair(static_cast<int>(change), static_cast<int>(other)));
     string int_value_1 = to_string(static_cast<int>(change));
+    string int_value_2 = to_string(static_cast<int>(other));
+    string dialog = "<format><|blue|>" + m.name + "<end> <format><|red|>HP<end> <format><|red|><|bold|>"+ int_value_1 +"<end>";
+    dialog += " for <format><|yellow|>" + int_value_2 + "<end> rounds.";
+    dialogs.push_back(dialog);
+}
+void EnemyMoves::m_cont_hp_const(double multiplier, double other){
+    m.hp_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other)));
+    string int_value_1 = to_string(static_cast<int>(multiplier));
     string int_value_2 = to_string(static_cast<int>(other));
     string dialog = "<format><|blue|>" + m.name + "<end> <format><|red|>HP<end> <format><|red|><|bold|>"+ int_value_1 +"<end>";
     dialog += " for <format><|yellow|>" + int_value_2 + "<end> rounds.";

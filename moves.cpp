@@ -15,7 +15,7 @@ map<int, function<void(MainCharacter&, Enemy&, Move_info, vector<string> &dialog
 vector<Move_info> moves::FULL_MOVE_POOL;
 
 int calculate_damage(int power, int self_atk, int enemy_def){
-    int damage = (power * self_atk / enemy_def);
+    int damage = (power * self_atk / enemy_def); 
     return damage;
 }
 

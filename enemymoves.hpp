@@ -21,7 +21,9 @@ class EnemyMoves{
             {"e_def", &EnemyMoves::e_def},
             {"m_def", &EnemyMoves::m_def},
             {"e_cont_hp", &EnemyMoves::e_cont_hp},
+            {"e_cont_hp_const", &EnemyMoves::e_cont_hp_const},
             {"m_cont_hp", &EnemyMoves::m_cont_hp},
+            {"m_cont_hp_const", &EnemyMoves::m_cont_hp_const},
             {"e_crit_chance", &EnemyMoves::e_crit_chance},
             {"e_crit_damage", &EnemyMoves::e_crit_damage},
             {"m_mp", &EnemyMoves::m_mp},
@@ -53,7 +55,9 @@ class EnemyMoves{
         void e_def(double multiplier, double other);
         void m_def(double multiplier, double other);
         void e_cont_hp(double multiplier, double other);
+        void e_cont_hp_const(double multiplier, double other);
         void m_cont_hp(double multiplier, double other);
+        void m_cont_hp_const(double multiplier, double other);
         void e_crit_chance(double multiplier, double other);
         void e_crit_damage(double multiplier, double other);
         void m_mp(double multiplier, double other);

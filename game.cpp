@@ -48,13 +48,12 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         //break;
         skills.display_moves(m);
         int chosen_Skill;
-        cout << "Please choose the skill you want to apply : ";
-        cin >> chosen_Skill;
         
-        while (!skills.Maincharacter_ExecuteMove(chosen_Skill, m, e)){
-           cout << "Please choose the skill you want to apply : ";
-           cin >> chosen_Skill;
-        }
+        do{
+            cin.ignore();
+            cout << "Please choose the skill you want to apply : ";
+            cin >> chosen_Skill;
+        } while (!skills.Maincharacter_ExecuteMove(chosen_Skill, m, e));
 
         // calculate all the buff/ debuff for the next half round
         // count down all buff/ debuff rounds by 1, remove
@@ -448,9 +447,7 @@ void GAME::skill(MainCharacter &m, int lucky_draw_no){
     moves::addMove(m, moves::FULL_MOVE_POOL[random].ID);
     cout << "After : " << endl;
     reward_screen(m);
-    string s;
-    cout << "Input something to continue" << endl;
-    cin >> s;
+    system("read -p 'Press Enter to continue...' var");
     
 
 
