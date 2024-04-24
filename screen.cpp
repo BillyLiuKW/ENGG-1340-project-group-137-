@@ -259,8 +259,8 @@ void Screen::insert_information(int start_row, MainCharacter info){
     string mp_spacing(max_mp_bar, ' ');
     string health = to_string(info.hp);
     string mana = to_string(info.mp);
-    string hp_info = "HP [" + hp_spacing + "] " + health + " (" + info.max_hp + ")";
-    string mp_info = "MP [" + mp_spacing + "] " + mana + " (" + info.max_mp + ")";
+    string hp_info = "HP [" + hp_spacing + "] " + health + " (" + to_string(info.max_hp) + ")";
+    string mp_info = "MP [" + mp_spacing + "] " + mana + " (" + to_string(info.max_mp) + ")";
     for (int i = 0; i < health_bar; i++){
         hp_info[4+i] = '=';
     }

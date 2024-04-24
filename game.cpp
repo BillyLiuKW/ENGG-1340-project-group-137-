@@ -240,18 +240,23 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
     double min_value = 0.25;
     double max_value = 0.75;
     double mode = (min_value + max_value) / 2.0; // highest chance.
-
-    uniform_real_distribution<double> distribution(min_value, max_value);
+    uniform_real_distribution<double> distribution_hp(min_value, max_value);
 
     // triangular distribution
     double recover_percentage;
-    recover_percentage = (distribution(gen) + distribution(gen)) / 2.0;
+    recover_percentage = (distribution_hp(gen) + distribution_hp(gen)) / 2.0;
     int hp_recover_value = recover_percentage * m.hp;
-    hp_recover_value = min(m.max_hp - hp_recover_value, hp_recover_value); // set the limit not to exceed max.hp
+    hp_recover_value = min(m.max_hp - m.hp, hp_recover_value); // set the limit not to exceed max.hp
 
-    recover_percentage = (distribution(gen) + distribution(gen)) / 2.0;
+    min_value = 0.4;
+    max_value = 0.9;
+    mode = (min_value + max_value) / 2.0; // highest chance.
+    uniform_real_distribution<double> distribution_mp(min_value, max_value);
+    
+    recover_percentage = (distribution_mp(gen) + distribution_mp(gen)) / 2.0;
     int mp_recover_value = recover_percentage * m.mp;
-    mp_recover_value = min(m.max_mp - mp_recover_value, mp_recover_value);
+    mp_recover_value = min(m.max_mp - m.mp, mp_recover_value);
+
     display.dialogs.push_back("<format><|blue|>" + m.name + "<end> <format><|red|>HP<end> recover <format><|green|><|bold|>" + to_string(hp_recover_value) + "<end>.");
     display.dialogs.push_back("<format><|blue|>" + m.name + "<end> <format><|blue|>MP<end> recover <format><|green|><|bold|>" + to_string(mp_recover_value) + "<end>.");
     m.hp += hp_recover_value;
