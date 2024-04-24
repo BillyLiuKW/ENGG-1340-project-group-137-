@@ -75,7 +75,7 @@ void select_option(int option, GAME game) {
             // check whether is game_status.txt existing.
             if (fin.fail()) {
                 cout << "You haven't stored any game status!Start a new game instead." << endl;
-                break;
+                sleep(1.5); // don't need to break, automatically start a new game
             }
             else {
                 // Assigning stored values to m one by one.
@@ -92,11 +92,11 @@ void select_option(int option, GAME game) {
                 //close the file after reading all data.
                 game.display.dialogs.insert(game.display.dialogs.begin(), "Game status successfully loaded"); // add the output message to dialog
                 fin.close();
-                cout << "Proceeding to level " << game.current_level << " ...." << endl;
             }
             // Both case will do the below code
+            cout << "Proceeding to level " << game.current_level << " ...." << endl;
             Enemy e(game.current_level);
-            sleep(1);
+            sleep(1.5);
             game.StartGame(m,e);
             break;
         }
@@ -105,6 +105,7 @@ void select_option(int option, GAME game) {
             {
             ifstream fin("enemy_info.txt");
             if (fin.is_open()) {
+                system("clear");
                 string line;
                 while (getline(fin,line)) {
                     cout << line << endl;
@@ -123,6 +124,7 @@ void select_option(int option, GAME game) {
         {
             ifstream fin("game_instruction.txt");
             if (fin.is_open()) {
+                system("clear");
                 string line;
                 while (getline(fin,line)) {
                     cout << line << endl;
@@ -150,6 +152,7 @@ int main() {
     GAME game;
     int option;
     while (true) {
+        system("clear");
         menu();
         while (true){
             cout << "Select An Option: ";
