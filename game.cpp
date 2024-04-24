@@ -50,9 +50,17 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         int chosen_Skill;
         
         do{
-            cin.ignore();
-            cout << "Please choose the skill you want to apply : ";
-            cin >> chosen_Skill;
+            while (true){ // to make sure the input is an integer
+                cout << "Please choose the skill you want to apply : ";
+                cin >> chosen_Skill;
+                if (cin.fail()) {  // if use input a non integer
+                    cout << "Please input an integer within the skill set!" << endl;
+                    cin.clear();        
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    continue;
+                }
+                break;
+            }
         } while (!skills.Maincharacter_ExecuteMove(chosen_Skill, m, e));
 
         // calculate all the buff/ debuff for the next half round
@@ -201,6 +209,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
     display.print_screen();
     this->current_level++;
     // That means the player has win the game.
+    
     if (this->current_level > 10) {
         cout << "Congratulations! You have defeated all enemies in this game! You are a true hero!!" << endl;
         cout << "See you next time!" << endl;
@@ -212,7 +221,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
         //End the game.
         exit(0);
     }
-    reward(m,this->current_level);// player can receive reward after every boss and checkpt
+    reward(m, e, this->current_level);// player can receive reward after every boss and checkpt
     // checkpoint reward are tackle in same function
     if (this->current_level == 3 || this->current_level == 5 || this->current_level == 7) {
         //player can get reward from these level and they are not required to beat any enemy in these levels.
@@ -320,20 +329,17 @@ bool isInteger(string x){
     return true;
 }
 
-void GAME::reward(MainCharacter &m, int level){ // normal reward where player can receive reward every level
+void GAME::reward(MainCharacter &m, Enemy &e, int level){ // normal reward where player can receive reward every level
     string type;
     if (level != 3 && level != 5 && level != 7){
-         cout << "Choose Reward Type : 1. Stat   2. Skills" << endl;
+        cout << "Choose Reward Type : 1. Stat   2. Skills" << endl;
         cout << "Please Enter 1/2 : ";
         cin >> type ;
-        int y = 1;
-        while (y){
-                if ( !isInteger(type) || stoi(type) > 2 )
-                    {cout << "Invalid Input. Please enter again : " ;
-                    cin >> type; }
-                else
-                    y--;
-            }}
+        while (stoi(type) != 1 && stoi(type) != 2){
+            cout << "Invalid Input. Please enter again : " ;
+            cin >> type; 
+        }
+    }
     else{
         cout << "Welcome to checkpoint" << endl;
         type = "3";
@@ -390,15 +396,14 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
 
     switch (stoi(type)){
         case (1):{
-            stats(m,stoi(lucky_draw_no), health, attack, defence,magic);
+            stats(m, stoi(lucky_draw_no), health, attack, defence,magic);
             break;}
         case (2):{
-            skill(m,stoi(lucky_draw_no));
+            skill(m, e, stoi(lucky_draw_no));
             break;}
         case 3:{
-            stats(m,stoi(lucky_draw_no), health, attack, defence,magic);
-            skill(m,stoi(lucky_draw_no));
-        
+            stats(m, stoi(lucky_draw_no), health, attack, defence,magic);
+            skill(m, e, stoi(lucky_draw_no));
             break;
         }
         default:
@@ -440,7 +445,7 @@ void reward_screen(MainCharacter m){
         cout << "   ";}
     cout << endl;}
 
-void GAME::skill(MainCharacter &m, int lucky_draw_no){
+void GAME::skill(MainCharacter &m, Enemy &e, int lucky_draw_no){
     //Player will see {1,2,3,4} instead of {0,1,2,3}  in the display moveSet
     srand(lucky_draw_no);
     cout << "Your current moves : " << endl;
@@ -450,11 +455,16 @@ void GAME::skill(MainCharacter &m, int lucky_draw_no){
         // Generate a new random number
         random = rand() % moves::FULL_MOVE_POOL.size(); // Avoid duplicate moves
     }
-    cout << "New Skill : " << moves::FULL_MOVE_POOL[random].name << endl;
-    moves::addMove(m, moves::FULL_MOVE_POOL[random].ID);
-    cout << "After : " << endl;
-    reward_screen(m);
-    system("read -p 'Press Enter to continue...' var");
+    //cout << "New Skill : " << moves::FULL_MOVE_POOL[random].name << endl;
+
+    display.dialogs.push_back("Skill <format><|purple|>[" + moves::FULL_MOVE_POOL[random].name + "]<end> has been added.");
+    display.clear_screen();
+    display.insert_battelfield(m, e); // input main character and enemy information to the screen
+    display.print_screen();
+    //moves::addMove(m, moves::FULL_MOVE_POOL[random].ID);
+    //cout << "After : " << endl;
+    //reward_screen(m);
+    system("read -p 'Press Enter to continue...' var"); // pause the game until the user press enter
     
 
 
