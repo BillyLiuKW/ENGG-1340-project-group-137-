@@ -346,47 +346,51 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
         cout << "Invalid Input. Please enter again : " ;
         cin >> lucky_draw_no; }
     int health, attack, defence, magic;
-    switch(level){ // basic value of random reward
-        case 2:{
-            health = 20, attack = 5, defence = 5, magic = 20;
-            break;
-        }
-        case 3:{
-            health = 40, attack = 15, defence = 10, magic = 40;
-            break;
-        }
-        case 4:{
-            health = 50, attack = 20, defence = 10, magic = 50;
-            break;
-        }
-        case 5:{
-            health = 60, attack = 20, defence = 15, magic = 50;
-            break;
-        }
-        case 6:{
-            health = 90, attack = 35, defence = 25, magic = 60;
-            break;
-        }
-        case 7:{
-            health = 100, attack = 40, defence = 25, magic = 80;
-            break;
-        }
-        case 8:{
-            health = 110, attack = 40, defence = 30, magic = 80;
-            break;
-        }
-        case 9:{
-            health = 120, attack = 45, defence = 30, magic = 90;
-            break;
-        }
-        case 10:{
-            health = 160, attack = 65, defence = 40, magic = 120;
-            break;
-        }
-        default:{
-            break;
-        }
-    }
+   switch(level){ // basic value of random reward
+       case 2:{
+           health = 20, attack = 5, defence = 5, magic = 20;
+           break;
+       }
+       case 3:{
+           health = 40, attack = 15, defence = 10, magic = 40;
+           break;
+       }
+       case 4:{
+           cout << "wrong understand" << endl;
+           health = 50, attack = 20, defence = 10, magic = 50;
+           break;
+       }
+       case 5:{
+           health = 50, attack = 20, defence = 10, magic = 40;
+           break;
+       }
+       case 6:{
+           health = 80, attack = 30, defence = 15, magic = 60;
+           break;
+       }
+       case 7:{
+           cout << "wrong understand" << endl;
+           health = 100, attack = 40, defence = 25, magic = 80;
+           break;
+       }
+       case 8:{
+           health = 90 , attack = 30, defence = 15, magic = 60;
+           break;
+       }
+       case 9:{
+           health = 110, attack = 40, defence = 20, magic = 80;
+           break;
+       }
+       case 10:{
+           cout << "wrong understand" << endl;
+           health = 160, attack = 65, defence = 40, magic = 120;
+           break;
+       }
+       default:{
+           break;
+       }
+   }
+
     switch (stoi(type)){
         case (1):{
             stats(m,stoi(lucky_draw_no), health, attack, defence,magic);
@@ -425,8 +429,11 @@ void GAME::stats(MainCharacter &m, int lucky_draw_no, int health, int attack, in
     m.def += def_increase;
     m.max_mp += mp_increase;
     m.mp += mp_increase;
-
-    
+    cout << "hp+ " << hp_increase << "    ";
+    cout << "atk+ " << atk_increase << "    ";
+    cout << "def+ " << def_increase <<  "    ";
+    cout << "mp+ " << mp_increase << endl;
+    sleep(4);
 }
 
 void reward_screen(MainCharacter m){

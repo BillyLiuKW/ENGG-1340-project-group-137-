@@ -121,7 +121,7 @@ Dummy::Dummy(){
 
 
 Goblin::Goblin(){
-    hp = 90;
+    hp = 100;
     atk = 20;
     def = 10;
     critical_chance = 0.05;
@@ -168,8 +168,8 @@ Goblin::Goblin(){
 
 
 Mutant::Mutant(){
-    hp = 170;
-    atk = 35;
+    hp = 130;
+    atk = 30;
     def = 20;
     critical_chance = 0.05;
     critical_damage = 0.5;
@@ -195,9 +195,9 @@ Mutant::Mutant(){
 }
 
 Robot::Robot(){
-    hp = 300;
+    hp = 200;
     atk = 15;
-    def = 40;
+    def = 45;
     critical_chance = 0.05;
     critical_damage = 0.5;
     name = "Robot";
@@ -223,7 +223,7 @@ Robot::Robot(){
 Dragon::Dragon(){
     hp = 780;
     atk = 80;
-    def = 50;
+    def = 20;
     critical_chance = 0.05;
     critical_damage = 0.5;
     name = "Dragon";
@@ -248,9 +248,9 @@ Dragon::Dragon(){
 }
 
 Demon::Demon(){
-    hp = 500;
-    atk = 110;
-    def = 30;
+    hp = 350;
+    atk = 70;
+    def = 50;
     critical_chance = 0.05;
     critical_damage = 0.5;
     name = "Demon";
@@ -275,9 +275,9 @@ Demon::Demon(){
 }
 
 Titan::Titan(){
-    hp = 850;
-    atk = 65;
-    def = 60;
+    hp = 500;
+    atk = 100;
+    def = 100;
     critical_chance = 0.05;
     critical_damage = 0.5;
     name = "Titan";
