@@ -15,8 +15,8 @@ They can either choose one type of reward:
 1. Strengthen the basic value of the character
 2. Attain new skills (maximum of 4 skills)
 
-When player reach level 3,5,7, they can receive both reward.
-They can also save their game record.
+When player reach level 3,5,7, they are not required to fight.
+Instead they can directly receive both reward.
 The reward will be given randomly to players based on their choice.
 
 At the end of each level, players can save their game progress and re-enter the game from the main menu.
