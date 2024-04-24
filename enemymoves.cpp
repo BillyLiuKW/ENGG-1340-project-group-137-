@@ -94,7 +94,7 @@ int EnemyMoves::chooseSkillType(){
     if (m.hp <= m.max_hp * 0.1){
         skill_weighting[0] += 0.5;
     }
-    normal_attack_prob = max(0, normal_attack_prob);
+    normal_attack_prob = max(0.0, normal_attack_prob);
 
     double skill_prob_sum = 0;
     for (double p: skill_weighting){
