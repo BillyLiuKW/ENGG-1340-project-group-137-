@@ -195,8 +195,8 @@ Mutant::Mutant(){
         "  uu     % Wds $     uu ",
         "         !ANJDS*DS^     "
     };
-    Enemy_Skill skill1 = {1, "attack", "Shapeshifiting", vector<string>{"m_hp 1.2 0", "e_def 20 0" }};
-    Enemy_Skill skill2 = {2, "attack", "Telepathy", vector<string>{"m_def -10 2","e_crit_chance 0.4, 2", "e_crit_damage 0.5, 2"}};
+    Enemy_Skill skill1 = {1, "attack", "Shapeshifting", vector<string>{"m_hp 1.2 0", "e_def 20 0"}};    
+    Enemy_Skill skill2 = {2, "attack", "Telepathy", vector<string>{"m_def -10 2", "e_crit_chance 0.4, 2", "e_crit_damage 0.5, 2"}};
     Enemy_Skill skill3 = {3, "attack", "Superhuman Strength", vector<string>{"m_hp 1.4 0", "e_def 20 3"}};
     Enemy_Skill skill4 = {4, "regenerate", "Regeneration", vector<string>{"e_hp 50 0"}};
     Enemy_Skill skill5 = {5, "defend", "Power Control", vector<string>{"m_def -10 2", "e_def 20 2"}};
@@ -240,9 +240,30 @@ Robot::Robot(){
         "       |las,d,     masmdl|      ",
         "       |ND*UH*     tD[3,s|      ",
     };
+    Enemy_Skill skill1 = {1, "attack", "Electric Shock", vector<string>{"m_hp 1.2 0", "m_cont_hp_const -7 3"}};
+    Enemy_Skill skill2 = {2, "defend", "Armor Plating", vector<string>{"m_def 10 5"}};
+    Enemy_Skill skill3 = {3, "attack", "Plasma Blade", vector<string>{"m_hp 1.5 0", "m_atk -10 3"}};
+    Enemy_Skill skill4 = {4, "interfere", "Disrupt Systems", vector<string>{"m_def -10 3", "m_const_hp -5 0", "e_def 10 3", "e_cont_hp +5 3"}};
+    Enemy_Skill skill5 = {5, "regenerate", "Self-Reboot", vector<string>{"e_hp 30 0"}};
+    Enemy_Skill skill6 = {6, "attack", "Ion Cannon", vector<string>{"m_hp 2 0", "m_cont_hp_const -5 2"}};
+    Enemy_Skill skill7 = {7, "attack", "Rapid Fire", vector<string>{"m_hp 1.2 0"}};
+    Enemy_Skill skill8 = {8, "interfere", "Virus Upload", vector<string>{"m_def -10 2", "m_hp 1.5 0", "e_crit_chance 0.5, 2", "e_crit_damage 0.5 2"}};
+    Enemy_Skill skill9 = {9, "defend", "Force Field", vector<string>{"e_def 20 2"}};
+    Enemy_Skill skill10 = {10, "regenerate", "Nano Repair", vector<string>{"e_cont_hp 15 3"}};
+    skill_list.push_back(skill1);
+    skill_list.push_back(skill2);
+    skill_list.push_back(skill3);
+    skill_list.push_back(skill4);
+    skill_list.push_back(skill5);
+    skill_list.push_back(skill6);
+    skill_list.push_back(skill7);
+    skill_list.push_back(skill8);
+    skill_list.push_back(skill9);
+    skill_list.push_back(skill10);
 }
+
 Dragon::Dragon(){
-    hp = 780;
+    hp = 250;
     atk = 80;
     def = 20;
     critical_chance = 0.05;
