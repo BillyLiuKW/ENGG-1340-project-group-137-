@@ -288,13 +288,13 @@ bool moves::Maincharacter_ExecuteMove(int index, MainCharacter &m, Enemy &e){
 
     string dialog = "<format><|blue|>" + m.name + "<end> used <format><|purple|>["  + move.name + "]<end>!";
     if (move.cost == 0){
-      //don't display cost if it's 0
+        //don't display cost if it's 0
     }
     else if (move.type == "Physical"){
-      dialog += (" <format><|red|>HP<end> <format><|red|><|bold|>-" + to_string(move.cost) + "<end>");
+        dialog += (" <format><|red|>HP<end> <format><|red|><|bold|>-" + to_string(move.cost) + "<end>");
     }
     else if (move.type == "Magical" || move.type == "Buff"){
-      dialog += (move.cost > 0)? (" <format><|blue|>MP<end> <format><|blue|><|bold|>-" + to_string(move.cost) + "<end>") : "" ;
+        dialog += (move.cost > 0)? (" <format><|blue|>MP<end> <format><|blue|><|bold|>-" + to_string(move.cost) + "<end>") : "" ;
     }
 
     dialogs.push_back(dialog);
@@ -308,15 +308,15 @@ void moves::addMove(MainCharacter& character, int ID){
     //Note that the player would see {1,2,3,4} instead of {0,1,2,3}
     int index;
     if (character.moveSet.size() < 4){
-      character.moveSet.push_back(ID);
-      cout << "Move added!" << endl;
+        character.moveSet.push_back(ID);
+        cout << "Move added!" << endl;
     }
     else{
-      cout << "Select a move to change (1-4) or input 'd' to discard the move: ";
-      cin >> index;
-      string old_name = FULL_MOVE_POOL[character.moveSet[index-1]].name;
-      cout << "Replaced" << old_name << " with " << FULL_MOVE_POOL[ID].name << endl;
-      character.moveSet[index-1] = ID;
+        cout << "Select a move to change (1-4) or input 'd' to discard the move: ";
+        cin >> index;
+        string old_name = FULL_MOVE_POOL[character.moveSet[index-1]].name;
+        cout << "Replaced" << old_name << " with " << FULL_MOVE_POOL[ID].name << endl;
+        character.moveSet[index-1] = ID;
     }
 }
 
@@ -400,11 +400,11 @@ void moves::hp_change(MainCharacter &m){
 void moves::display_moves(MainCharacter &m){
   vector<Move_info> moves;
   for (int i = 0; i < m.moveSet.size(); i++){
-    moves.push_back(FULL_MOVE_POOL[m.moveSet[i]]);
+      moves.push_back(FULL_MOVE_POOL[m.moveSet[i]]);
   }
   cout << "-------------------------------------------------------------------------" << endl;
   for (int i = 0; i < moves.size(); i++){
-    cout << i+1 <<". " << left << setw(20) << moves[i].name << " | Cost: " << moves[i].cost << " | Power: " << moves[i].power << " | Type: " << moves[i].type<< endl;
+      cout << i+1 <<". " << left << setw(20) << moves[i].name << " | Cost: " << moves[i].cost << ((move[i].cost == "physical")? (" HP" : "MP "))  << " | Power: " << moves[i].power << " | Type: " << moves[i].type<< endl;
   }
   cout << "-------------------------------------------------------------------------" << endl;
     
