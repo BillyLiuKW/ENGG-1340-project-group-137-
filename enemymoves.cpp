@@ -324,9 +324,10 @@ int EnemyMoves::chooseSkill(vector<Enemy_Skill> skills) {
 }
 void EnemyMoves::normal_attack(){
     dialogs.push_back("Enemy <format><|yellow|>[" + e.name + "]<end> has use <format><|bold|>normal attack<end>.");
-    double damage = 0;
+    double damage = 0, power = 20;
+    power += 10 * (max(0.0, (0.7 - e.hp/e.max_hp)) - max(0.0, (0.2 - e.hp/e.max_hp))); // power will increase up to 10 when enemy hp decrease from 70% - 20%
     int critical = is_critical(e.critical_chance + e.crit_chance_boost_sum);
-    damage = (e.atk + e.atk_boost_sum) *20 * (1 + critical * (e.critical_damage + e.crit_damage_boost_sum)) / (m.def + m.def_boost_sum);
+    damage = (e.atk + e.atk_boost_sum) * power * (1 + critical * (e.critical_damage + e.crit_damage_boost_sum)) / (m.def + m.def_boost_sum);
     (damage < 1)? damage = 1: damage = damage ; // if damage < 1, set damage to 1.
     m.hp -= static_cast<int>(damage);
     string int_value = to_string(static_cast<int>(damage));
@@ -366,8 +367,9 @@ void EnemyMoves::e_hp(double multiplier, double other){
 }
 void EnemyMoves::m_hp(double multiplier, double other){
     double damage = 0;
+    double penetrate = other; // ingore main character defend. up to 30% 
     int critical = is_critical(e.critical_chance + e.crit_chance_boost_sum);
-    damage = (e.atk +e.atk_boost_sum) * multiplier * (1 + critical * (e.critical_damage + e.crit_damage_boost_sum)) - (m.def + m.def_boost_sum);
+    damage = (e.atk +e.atk_boost_sum) * multiplier * (1 + critical * (e.critical_damage + e.crit_damage_boost_sum)) / (m.def + m.def_boost_sum) * (1 - 0.3 * penetrate);
     damage = max(1.0, damage);
     m.hp -= static_cast<int>(damage);
     string int_value = to_string(static_cast<int>(damage));
@@ -435,7 +437,7 @@ void EnemyMoves::e_cont_hp_const(double multiplier, double other){
     dialogs.push_back(dialog);
 }
 void EnemyMoves::m_cont_hp(double multiplier, double other){
-    double change = multiplier * (e.atk + e.atk_boost_sum);
+    double change = multiplier * (e.atk + e.atk_boost_sum) / (m.def + m.def_boost_sum); 
     m.hp_boost.push_back(make_pair(static_cast<int>(change), static_cast<int>(other)));
     string int_value_1 = to_string(static_cast<int>(change));
     string int_value_2 = to_string(static_cast<int>(other));
@@ -444,7 +446,7 @@ void EnemyMoves::m_cont_hp(double multiplier, double other){
     dialogs.push_back(dialog);
 }
 void EnemyMoves::m_cont_hp_const(double multiplier, double other){
-    m.hp_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other)));
+    m.hp_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // ingore defend
     string int_value_1 = to_string(static_cast<int>(multiplier));
     string int_value_2 = to_string(static_cast<int>(other));
     string dialog = "<format><|blue|>" + m.name + "<end> <format><|red|>HP<end> <format><|red|><|bold|>"+ int_value_1 +"<end>";

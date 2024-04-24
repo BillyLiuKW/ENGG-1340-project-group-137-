@@ -162,8 +162,21 @@ void select_option(int option, GAME game) {
         {
             break;
         }
-        
-      }
+        case 6: // 
+        {
+            // cheat code // for testing 
+            MainCharacter m;
+            cout << "Level?" << endl;
+            int level;
+            cin >> level; // dont make wrong input
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            m.name = "Hero";
+            game.current_level = level;
+            Enemy e(game.current_level);
+            game.StartGame(m,e);
+            break;
+        }
+    }
 }
 
 int main() {
