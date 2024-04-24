@@ -458,6 +458,7 @@ Enemy::Enemy(int type){
                 image = mutantEnemy->image;
                 height = image.size();
                 width = image[0].size();
+                skill_list = mutantEnemy->skill_list;
                 delete mutantEnemy;
                 break;
                 }
@@ -474,6 +475,7 @@ Enemy::Enemy(int type){
                 image = dragonEnemy->image;
                 height = image.size();
                 width = image[0].size();
+                skill_list = dragonEnemy->skill_list;
                 delete dragonEnemy;
                 break;
             }
@@ -490,6 +492,7 @@ Enemy::Enemy(int type){
                 image = robotEnemy->image;
                 height = image.size();
                 width = image[0].size();
+                skill_list = robotEnemy->skill_list;
                 delete robotEnemy;
                 break;
                 }
@@ -506,6 +509,7 @@ Enemy::Enemy(int type){
                 image = demonEnemy->image;
                 height = image.size();
                 width = image[0].size();
+                skill_list = demonEnemy->skill_list;
                 delete demonEnemy;
                 break;
                 }
@@ -522,6 +526,7 @@ Enemy::Enemy(int type){
                 image = titanEnemy->image;
                 height = image.size();
                 width = image[0].size();
+                skill_list = titanEnemy->skill_list;
                 delete titanEnemy;
                 break;
                 }

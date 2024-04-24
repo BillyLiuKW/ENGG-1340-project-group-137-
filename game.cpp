@@ -276,6 +276,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
             cout << "Do you want to store your game status? [y/n] " << endl;
             cin >> y_n;
         }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // this line must be add after any cin <<. Otherwise it willmake a new line in getline
         if (y_n == 'y') {
             ofstream fout("game_status.txt");
             if (fout.is_open()) {
@@ -314,6 +315,7 @@ void GAME::Gameretry(){
         cout << "Game over! You are defeated!" << endl;
         cout << "Do you want to retry? [y/n]" << endl;
         cin >> option;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         if (option == 'y') {
             ifstream fin("game_status.txt");
             if (fin.is_open()) {
@@ -381,6 +383,7 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
             cout << "Invalid Input. Please enter again : " ;
             cin >> type; 
         }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     else{
         cout << "Welcome to checkpoint" << endl;
@@ -394,7 +397,6 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
     for (char c: lucky_draw_no){
         lucky_sum += static_cast<int>(c);
     }
-    
 
 
     /*

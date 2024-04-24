@@ -214,7 +214,7 @@ int EnemyMoves::chooseSkillType(){
         sss += to_string(i) + " ";
     }
     dialogs.push_back(sss);
-    // *** end */
+    // *** end*/
 
     random_device rd;
     mt19937 generator(rd()); 
