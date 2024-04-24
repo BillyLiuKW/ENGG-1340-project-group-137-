@@ -4,6 +4,8 @@
 #include <cstdlib>
 #include <unistd.h>
 #include <string>
+#include <sstream>
+
 #include "game.hpp"
 #include "character.hpp"
 #include "moves.hpp"
@@ -51,7 +53,8 @@ void select_option(int option, GAME game) {
             string name = "Hero";
             while (true) {
                 cout << "What is your name? (Less than 20 characters)" << endl;
-                cin >> name;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); //  prevent input residue 
+                getline(cin, name);
                 if (name.length() > 20) {
                     cout << "Name is too long! Please enter a name less than 20 characters." << endl;
                     continue;
@@ -74,8 +77,22 @@ void select_option(int option, GAME game) {
             ifstream fin("game_status.txt");
             // check whether is game_status.txt existing.
             if (fin.fail()) {
-                cout << "You haven't stored any game status!Start a new game instead." << endl;
-                sleep(1.5); // don't need to break, automatically start a new game
+                cout << "You haven't stored any game status! Start a new game instead." << endl;
+                string name = "Hero";
+                while (true) {            
+                    cout << "What is your name? (Less than 20 characters)" << endl;
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); //  prevent input residue 
+                    getline(cin, name);
+                    if (name.length() > 20) {
+                        cout << "Name is too long! Please enter a name less than 20 characters." << endl;
+                        continue;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                m.name = name;
+                // don't need to break, automatically start a new game
             }
             else {
                 // Assigning stored values to m one by one.
