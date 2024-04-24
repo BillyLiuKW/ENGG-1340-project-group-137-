@@ -195,6 +195,24 @@ Mutant::Mutant(){
         "  uu     % Wds $     uu ",
         "         !ANJDS*DS^     "
     };
+    Enemy_Skill skill1 = {1, "attack", "Shapeshifiting", vector<string>{"m_hp 1.2 0", "e_def 20 0" }};
+    Enemy_Skill skill2 = {2, "attack", "Telepathy", vector<string>{"m_def -10 2","e_crit_chance 0.4, 2", "e_crit_damage 0.5, 2"}};
+    Enemy_Skill skill3 = {3, "attack", "Superhuman Strength", vector<string>{"m_hp 1.4 0", "e_def 20 3"}};
+    Enemy_Skill skill4 = {4, "regenerate", "Regeneration", vector<string>{"e_hp 50 0"}};
+    Enemy_Skill skill5 = {5, "defend", "Power Control", vector<string>{"m_def -10 2", "e_def 20 2"}};
+    Enemy_Skill skill6 = {6, "interfere", "Time Manipulation", vector<string>{"m_atk -10 2", "m_def -5 2", "e_atk +10 2", "e_def +5 2"}};
+    Enemy_Skill skill7 = {7, "defend", "Animal Control", vector<string>{"e_def +30 2"}};
+    Enemy_Skill skill8 = {8, "regenerate", "Vampire", vector<string>{"e_hp 30 0", "m_hp 1.5 0"}};
+    Enemy_Skill skill9 = {9, "attack", "Invisibe", vector<string>{"m_hp 2 0"}};
+    skill_list.push_back(skill1);
+    skill_list.push_back(skill2);
+    skill_list.push_back(skill3);
+    skill_list.push_back(skill4);
+    skill_list.push_back(skill5);
+    skill_list.push_back(skill6);
+    skill_list.push_back(skill7);
+    skill_list.push_back(skill8);
+    skill_list.push_back(skill9);
 }
 
 Robot::Robot(){
