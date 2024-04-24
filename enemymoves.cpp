@@ -64,36 +64,38 @@ vector<double> EnemyMoves::z_score(vector<double> &skill_uses, vector<int> &skil
 int EnemyMoves::chooseSkillType(){
     // calculate the probability of which type should use
     int type_num_s = type_num; // number of type of skill that have at least 1 skill
-    double normal_attack_prob = 0.4;
+    double normal_attack_prob = 0.35;
     vector<Enemy_Skill> attack_skills, defend_skills, interfence_skills, regerneration_skills;
     vector<int> skill_num(type_num, 0);
     vector<double> skill_uses(type_num, 0), skill_weighting = {0.4, 0.2, 0.25, 0.15}; // with the same order
     if (e.hp > e.max_hp * 0.8){
+        normal_attack_prob -= 0.05;
         skill_weighting[3] += 0.1;
     }
     if (e.hp <= e.max_hp * 0.5){
-        normal_attack_prob = 0.3;
-        skill_weighting[1] += 0.1;
+        normal_attack_prob -= 0.1;
+        skill_weighting[1] += 0.2;
         skill_weighting[3] += 0.1;
     }
     if (e.hp <= e.max_hp * 0.25){
-        normal_attack_prob = 0.2;
+        normal_attack_prob -= 0.1;
         skill_weighting[3] += 0.2;
     }
     if (e.hp <= e.max_hp * 0.1){
-        normal_attack_prob = 0;
+        normal_attack_prob -= 0.1;
         skill_weighting[3] += 0.2;
     }
     if (m.hp <= m.max_hp * 0.5){
         skill_weighting[0] += 0.1;
     }
     if (m.hp <= m.max_hp * 0.2){
-        skill_weighting[0] += 0.1;
-    }
-    if (m.hp <= m.max_hp * 0.1){
         skill_weighting[0] += 0.2;
     }
-    normal_attack_prob = 0;
+    if (m.hp <= m.max_hp * 0.1){
+        skill_weighting[0] += 0.5;
+    }
+    normal_attack_prob = max(0, normal_attack_prob);
+
     double skill_prob_sum = 0;
     for (double p: skill_weighting){
         skill_prob_sum += p;
