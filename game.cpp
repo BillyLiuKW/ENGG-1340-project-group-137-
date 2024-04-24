@@ -468,7 +468,7 @@ void round_to_five(int &x){
 }
 
 void GAME::stats(MainCharacter &m, int lucky_draw_no, int health, int attack, int defence, int magic){
-    if (lucky_draw_no = 0){
+    if (lucky_draw_no == 0){
         srand(time(0));
     }
     else{
@@ -505,7 +505,7 @@ void reward_screen(MainCharacter m){
 
 void GAME::skill(MainCharacter &m, int lucky_draw_no){
     //Player will see {1,2,3,4} instead of {0,1,2,3}  in the display moveSet
-    if (lucky_draw_no = 0){
+    if (lucky_draw_no == 0){
         srand(time(0));
     }
     else{
