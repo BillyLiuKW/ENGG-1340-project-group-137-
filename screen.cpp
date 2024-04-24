@@ -219,7 +219,7 @@ void Screen::insert_information(int start_row, Enemy info){
     string DEF_info = "DEF: " + to_string(info.def) + "(" + ((info.def_boost_sum >= 0)? "+" : "") + to_string(info.def_boost_sum) + ")";
     int max_health_bar = 20;
     //return starting position 
-    int start_col_info = (0+width-1)/2 - (6 + max_health_bar + 4)/2;
+    int start_col_info = (0+width-1)/2 - (6 + max_health_bar + 4 + 6)/2;
     int health_bar =  info.hp * max_health_bar / info.max_hp;
     if (health_bar > max_health_bar){
         health_bar = max_health_bar;
@@ -243,7 +243,7 @@ void Screen::insert_information(int start_row, MainCharacter info){
     string DEF_info = "DEF: " + to_string(info.def) + "(" + ((info.def_boost_sum >= 0)? "+" : "") + to_string(info.def_boost_sum) + ")";
     int max_health_bar = 20;
     int max_mp_bar = 20;
-    int start_col_info = (0+width-1)/2 - (6 + max_health_bar + 4)/2; // 4 = max digit of health
+    int start_col_info = (0+width-1)/2 - (6 + max_health_bar + 4 + 6)/2; // 4 = max digit of health
     int health_bar =  info.hp * max_health_bar / info.max_hp;
     if (health_bar > max_health_bar){
         health_bar = max_health_bar;
@@ -259,8 +259,8 @@ void Screen::insert_information(int start_row, MainCharacter info){
     string mp_spacing(max_mp_bar, ' ');
     string health = to_string(info.hp);
     string mana = to_string(info.mp);
-    string hp_info = "HP [" + hp_spacing + "] " + health;
-    string mp_info = "MP [" + mp_spacing + "] " + mana;
+    string hp_info = "HP [" + hp_spacing + "] " + health + " (" + info.max_hp + ")";
+    string mp_info = "MP [" + mp_spacing + "] " + mana + " (" + info.max_mp + ")";
     for (int i = 0; i < health_bar; i++){
         hp_info[4+i] = '=';
     }
