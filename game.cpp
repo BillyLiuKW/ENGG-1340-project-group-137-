@@ -22,6 +22,15 @@ void pass() {
     int a = 0;
 }
 
+bool isInteger(string x){
+    for (char c : x) {
+        if (!isdigit(c)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 
 // update 1.0.0 new display is avaliable
 void GAME::StartGame(MainCharacter& m, Enemy& e) { 
@@ -55,9 +64,20 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
 
         do{  
             while (true){ // to make sure the input is an integer
-                cout << "Please input the skill index that you want to apply : ";
+                cout << R"(Please input the skill that you want to apply or type "info" to display description of a skill: )";
                 string line;
                 getline(cin, line); // prevent users include some space. only the first item is considered
+                if (line == "info"){
+                    cout << "Please input the skill you want to know more about: ";
+                    string skill_index;
+                    getline(cin, skill_index);
+                    while (!isInteger(skill_index) || stoi(skill_index) < 0 || stoi(skill_index) > m.moveSet.size()){
+                        cout << "Invalid Input. Please enter again : " ;
+                        getline(cin, skill_index);
+                    }
+                    skill_desc_display(stoi(skill_index),m.moveSet);
+                    continue;
+                }
                 istringstream iss(line);
                 iss >> chosen_Skill;
                 if (!iss.fail()) {  // check if user input an integer
@@ -377,14 +397,6 @@ void GAME::Gameretry(){
     }
 }
 
-bool isInteger(string x){
-    for (char c : x) {
-        if (!isdigit(c)) {
-            return false;
-        }
-    }
-    return true;
-}
 
 void GAME::reward(MainCharacter &m, int level){ // normal reward where player can receive reward every level
     string type;
@@ -539,7 +551,16 @@ void GAME::skill(MainCharacter &m, int lucky_draw_no){
     moves::addMove(m, moves::FULL_MOVE_POOL[random].ID);
     //cout << "After : " << endl;
     //reward_screen(m);
-    
+}
 
-
+void GAME::skill_desc_display(int skill_index,vector<int> moveset){
+    if (skill_index == 0){
+        for (int i = 0 ; i < moveset.size() ; i++){
+            int currrent_move = moves::FULL_MOVE_POOL[moveset[i]].ID;
+            moves::move_description(currrent_move); 
+       }
+    } else{
+        int move_id = moveset[skill_index-1];
+        moves::move_description(move_id);
+    }
 }

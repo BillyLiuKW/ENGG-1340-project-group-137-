@@ -15,6 +15,7 @@ struct Move_info{ //Store the information of the move
         int power; //The power of the move 
         int cost;
         string type;
+        string desc;
         //Physical moves cost HP to cast
         //Magical moves cost MP to cast
         //Damage formula is self_atk * power / enemy_def, so 25 atk * 50 power / 50 def = 25 damage

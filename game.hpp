@@ -25,7 +25,9 @@ class GAME{
         //To save to the level.
         void stats(MainCharacter &m, int lucky_draw_no, int health, int attack, int defence, int magic);
         void skill(MainCharacter &m, int lucky_draw_no);
-};
+        void skill_desc_display(int skill_index,vector<int> moveset); //Display Description of skills
+
+};      
 
 
 #endif

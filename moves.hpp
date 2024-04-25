@@ -84,6 +84,8 @@ class moves{
 
         void resetBuffs(MainCharacter &m); //Reset the buffs after battle
 
+        static void move_description(int ID); //Display the description of the move
+
 
     private:
         static map<int, function<void(MainCharacter&, Enemy&, Move_info, vector<string> &dialogs)> > moveFunctions; //Create a function map for executing move functions

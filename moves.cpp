@@ -108,7 +108,7 @@ void weapon_master(MainCharacter &m, Enemy &e, Move_info info, vector<string> &d
     for (int i = 0; i < m.moveSet.size(); i++){
         if (moves::FULL_MOVE_POOL[m.moveSet[i]].type == "Physical"){
             m.boosted_moves.push_back(moves::FULL_MOVE_POOL[m.moveSet[i]]); //Store the unboosted moves info
-            moves::FULL_MOVE_POOL[m.moveSet[i]].power *= 1.5; //Boost the power of the move
+            moves::FULL_MOVE_POOL[m.moveSet[i]].power *= 1.3; //Boost the power of the move
         }
     }
 }
@@ -117,7 +117,7 @@ void mastery_of_magic(MainCharacter &m, Enemy &e, Move_info info, vector<string>
     for (int i = 0; i < m.moveSet.size(); i++){
         if (moves::FULL_MOVE_POOL[m.moveSet[i]].type == "Magical"){
             m.boosted_moves.push_back(moves::FULL_MOVE_POOL[m.moveSet[i]]); //Store the unboosted moves info
-            moves::FULL_MOVE_POOL[m.moveSet[i]].power *= 1.5; //Boost the power of the move
+            moves::FULL_MOVE_POOL[m.moveSet[i]].power *= 1.3; //Boost the power of the move
         }
     }
 }
@@ -251,70 +251,87 @@ void poison_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &d
 
 void moves::iniializeMoves(){
     Move_info slashInfo = {"Slash", 0 ,20, 10, "Physical"};
+    slashInfo.desc = "Deals Physical Damage";
     FULL_MOVE_POOL.push_back(slashInfo);
     moveFunctions[0] = slash;
     //Follow this format to define more moves
     Move_info fireballInfo = {"Fireball", 1, 20, 20, "Magical"};
+    fireballInfo.desc = "Deals Magical Damage";
     FULL_MOVE_POOL.push_back(fireballInfo);
     moveFunctions[1] = fireball;
 
     Move_info regenInfo = {"Regen", 2, 30, 30, "Magical"};
+    regenInfo.desc = "Restores HP";
     moveFunctions[2] = regen;
     FULL_MOVE_POOL.push_back(regenInfo);
 
     Move_info rageInfo = {"Rage", 3, 20, 30, "Buff"};
+    rageInfo.desc = "Increases ATK for 3 turns";
     moveFunctions[3] = rage;
     FULL_MOVE_POOL.push_back(rageInfo);
 
-    Move_info lethal_strikeInfo = {"Lethal Strike", 4, 30, 20, "Physical"};
+    Move_info lethal_strikeInfo = {"Lethal Strike", 4, 25, 25, "Physical"};
+    lethal_strikeInfo.desc = "50% Chance to Crit";
     moveFunctions[4] = lethal_strike;
     FULL_MOVE_POOL.push_back(lethal_strikeInfo);
 
     Move_info weapon_masterInfo = {"Weapon Master", 5, 0, 0, "Passive"};
+    weapon_masterInfo.desc = "Increases the Power of Physical Moves by 30%";
     moveFunctions[5] = weapon_master;
     FULL_MOVE_POOL.push_back(weapon_masterInfo);
 
     Move_info mastery_of_magicInfo = {"Mastery of Magic", 6, 0, 0, "Passive"};
+    mastery_of_magicInfo.desc = "Increases the Power of Magical Moves by 30%";
     moveFunctions[6] = mastery_of_magic;
     FULL_MOVE_POOL.push_back(mastery_of_magicInfo);
 
     Move_info efficient_tacticsInfo = {"Efficient Tactics", 7, 0, 0, "Passive"};
+    efficient_tacticsInfo.desc = "Reduces The Cost of all moves by 30%";
     moveFunctions[7] = efficient_tactics;
     FULL_MOVE_POOL.push_back(efficient_tacticsInfo);
 
     Move_info life_siphonInfo = {"Life Siphon", 8, 30, 40, "Magical"};
+    life_siphonInfo.desc = "Heals 50% of Damage Dealt";
     moveFunctions[8] = life_siphon;
     FULL_MOVE_POOL.push_back(life_siphonInfo);
 
     Move_info sluggish_strikeInfo = {"Sluggish Strike", 9, 50, 0, "Physical"};
+    sluggish_strikeInfo.desc = "50% Chance to Miss";
     moveFunctions[9] = sluggish_strike;
     FULL_MOVE_POOL.push_back(sluggish_strikeInfo);
 
     Move_info shield_blastInfo = {"Shield Blast", 10, 30, 30, "Magical"};
+    shield_blastInfo.desc = "Scales off DEF";
     moveFunctions[10] = shield_blast;
     FULL_MOVE_POOL.push_back(shield_blastInfo);
 
     Move_info iron_wallInfo = {"Iron Wall", 11, 20, 30, "Buff"};
+    iron_wallInfo.desc = "Increases DEF for 3 turns";
     moveFunctions[11] = iron_wall;
     FULL_MOVE_POOL.push_back(iron_wallInfo);
 
     Move_info growthInfo = {"Growth", 12, 10, 30, "Buff"};
+    growthInfo.desc = "Increases ATK and DEF for 3 turns";
     moveFunctions[12] = growth;
     FULL_MOVE_POOL.push_back(growthInfo);
 
     Move_info strategistInfo = {"Strategist", 13, 0, 0, "Passive"};
+    strategistInfo.desc = "Increases the Power of Buff Moves by 20%";
     moveFunctions[13] = strategist;
     FULL_MOVE_POOL.push_back(strategistInfo);
 
     Move_info nova_blastInfo = {"Nova Blast", 14, 0, 50, "Magical"};
+    nova_blastInfo.desc = "Requires One Turn to Charge";
     moveFunctions[14] = nova_blast;
     FULL_MOVE_POOL.push_back(nova_blastInfo);
 
     Move_info pain_shareInfo = {"Pain Share", 15, 10, 30, "Magical"};
+    pain_shareInfo.desc = "Increase Power by 10% for every 20% Missing HP";
     moveFunctions[15] = pain_share;
     FULL_MOVE_POOL.push_back(pain_shareInfo);
 
     Move_info poison_strikeInfo = {"Poison Strike", 16, 15, 20, "Physical"};
+    poison_strikeInfo.desc = "Poisons Enemy for 2 turns";
     moveFunctions[16] = poison_strike;
     FULL_MOVE_POOL.push_back(poison_strikeInfo);
     
@@ -474,6 +491,7 @@ void moves::display_moves(MainCharacter &m){
   }
     //cout << "+-------------------------------------------------------------------------+" << endl;
     cout << "|    Skills                    | Cost   | Power  | Type                   |" << endl;
+    cout << "|------------------------------|--------|--------|------------------------|" << endl;
     for (int i = 0; i < moves.size(); i++){
         cout << "| " << i+1 << ". ";
         cout << left << setw(25) << moves[i].name;
@@ -493,4 +511,9 @@ void moves::resetBuffs(MainCharacter &m){
     m.hp_boost.clear();
     m.atk_boost_sum = 0;
     m.def_boost_sum = 0;
+}
+
+
+void moves::move_description(int ID){
+    cout << "Skill Description of " << FULL_MOVE_POOL[ID].name << ": " << FULL_MOVE_POOL[ID].desc << endl;
 }
