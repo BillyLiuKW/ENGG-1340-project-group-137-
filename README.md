@@ -131,9 +131,9 @@ In each turn, you can choose a move to use. You will always move first and the e
                 }
                 //End the game.
                 exit(0);
-            }
-            ```
-            ```cpp
+        }
+        ```
+        ```cpp
             // checkpoint reward are tackle in same function
             if (this->current_level == 3 || this->current_level == 5 || this->current_level == 7) {
                 //player can get reward from these level and they are not required to beat any enemy in these levels.
