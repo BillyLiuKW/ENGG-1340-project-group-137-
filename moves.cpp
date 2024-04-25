@@ -392,14 +392,23 @@ void moves::addMove(MainCharacter& character, int ID, vector<string> &dialogs){
             cin.clear(); // clear the error state
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore the rest of the line
             cout << "Invalid input. Please enter a number." << endl;
-        } else {
+        } else  if (index > 4){
+            cout << "Invalid input. Please enter a number between (1-4)." << endl;
+        }
+        else {
             validInput = true;
         }
     }
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     if (index != 0){
         string old_name = FULL_MOVE_POOL[character.moveSet[index-1]].name;
-        cout << "Replaced" << old_name << " with " << FULL_MOVE_POOL[ID].name << endl;
-        character.moveSet[index-1] = ID;
+        if (character.moveSet.size() < index){
+            character.moveSet.push_back(ID);
+        }
+        else {
+            cout << "Replaced" << old_name << " with " << FULL_MOVE_POOL[ID].name << endl;
+            character.moveSet[index-1] = ID;
+        }       
         dialogs.push_back("Skill <format><|purple|>[" + FULL_MOVE_POOL[ID].name + "]<end> has been added.");
     }
     else {
