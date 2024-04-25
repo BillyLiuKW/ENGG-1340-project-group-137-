@@ -22,7 +22,7 @@ In each turn, you can choose a move to use. You will always move first and the e
 
 * Random Events
     * Critical Hits
-        both player and enemy have a critical chance that can deal extra damage.
+        * both player and enemy have a critical chance that can deal extra damage.
         ```cpp
         void Critical_hit(int &dmg, int chance = 10){
                 srand(time(0));
@@ -35,9 +35,9 @@ In each turn, you can choose a move to use. You will always move first and the e
         ```
 
     * Rewards
-        player can choose which type of reward they want to recieve.
-        After that, they will enter a sequence to generate a seed reward.
-        A reward will be given base on a random event generate by the seed.
+        * player can choose which type of reward they want to recieve. <br>
+          After that, they will enter a sequence to generate a seed reward. <br>
+          A reward will be given base on a random event generate by the seed.
             
         ```cpp
         void GAME::stats(MainCharacter &m, int lucky_draw_no, int health, int attack, int defence, int magic){
@@ -59,17 +59,17 @@ In each turn, you can choose a move to use. You will always move first and the e
         }
         ```
     * Enemy's action
-        Enemy action is base on a probability model.
-        Enemy will execute normal attack or different types of skill base on this probability model/
-        This model will change depend on different situtation
-        e.g.
-            1) When the health points of the enemy is lowerer, it has a higher chance to use defend or regenerate skill.
-               On the other hand, if the health points of the main character is lower, Enemy will use attack skill more fequently.
-            2) probability of specific skill will vary base on how many times it is used
-               i.e. more it derivative from the mean usage, lesser chance it will be used.
+        * Enemy action is base on a probability model.  
+          Enemy will execute normal attack or different types of skill base on this probability model.<br>
+          This model will change depend on different situtation <br>
+          e.g.
+            * 1) When the health points of the enemy is lowerer, it has a higher chance to use defend or regenerate skill.
+                 On the other hand, if the health points of the main character is lower, Enemy will use attack skill more fequently.
+            * 2) probability of specific skill will vary base on how many times it is used
+                 i.e. more it derivative from the mean usage, lesser chance it will be used.
     * Recover
-        After each battel, player will recieved a hp and mp recover.
-        The recover value is base on triangular distribution such that the median will have a highest probability.
+        * After each battel, player will recieved a hp and mp recover. <br>
+          The recover value is base on triangular distribution such that the median will have a highest probability.
           
               
 * File input/output
