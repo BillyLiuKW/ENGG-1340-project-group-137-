@@ -196,7 +196,7 @@ void Screen::insert_battelfield(MainCharacter& m, Enemy& e){
     //diaplay a speration
     insert_speration(start_row);
 
-    start_row += 1; //spacing
+    start_row += 2; //spacing
     //display main character
     if (m.hp > 0){
         start_col = (0+width-1)/2 - m.width/2;
