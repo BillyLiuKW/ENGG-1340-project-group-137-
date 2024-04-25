@@ -148,14 +148,7 @@ In each turn, you can choose a move to use. You will always move first and the e
                     cout << "remarkably brave! " << endl;
                     sleep(2);
                 }
-            }
-            //player will proceed to next level.
-            cout << "Proceeding to level " << this->current_level << " ...." << endl;
-            sleep(1);
-            Enemy new_e(this->current_level); 
-            StartGame(m, new_e);
-
-            
+            }        
         ```
 * Data Structures for Saving Game Status
   * Move Execution 
