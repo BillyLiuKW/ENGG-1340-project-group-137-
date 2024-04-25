@@ -179,7 +179,7 @@ In each turn, you can choose a move to use. You will always move first and the e
                 StartGame(m, new_e);
 
                 }
-        ```
+                ```
 * Data Structures for Saving Game Status
   * Move Execution 
   ```cpp
@@ -336,6 +336,7 @@ In each turn, you can choose a move to use. You will always move first and the e
     StartGame(m, new_e);
 
    }
+   ```
 
 * Program Codes in Multiple Files
   ```cpp
