@@ -192,11 +192,11 @@ void Screen::insert_battelfield(MainCharacter& m, Enemy& e){
         insert_item(start_row, start_col, grave, {});       
     }
     insert_information(start_row, e);
-    start_row += (e.height + 3 + 2); // new row = original row + enemy height + infomation height + spacing 2
+    start_row += (e.height + 3 + 1 + 0); // new row = original row + enemy height + infomation height + next row + spacing
     //diaplay a speration
     insert_speration(start_row);
 
-    start_row += 2; //spacing
+    start_row += 1; //spacing
     //display main character
     if (m.hp > 0){
         start_col = (0+width-1)/2 - m.width/2;
@@ -209,7 +209,7 @@ void Screen::insert_battelfield(MainCharacter& m, Enemy& e){
     insert_information(start_row, m);
 
     //insert dislogs
-    start_row += (m.height + 4 + 2); // 4 = information height, 2 = spacing
+    start_row += (m.height + 4 + 1); //  information height + spacing
     start_col = 1;
     insert_speration(start_row); // add a line of ======
     insert_dialog(start_row); // add the battle information
