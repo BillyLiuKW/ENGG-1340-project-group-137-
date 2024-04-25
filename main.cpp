@@ -82,6 +82,7 @@ void select_option(int option, GAME game) {
                 string name = "Hero";
                 while (true) {            
                     cout << "What is your name? (Less than 20 characters)" << endl;
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     getline(cin, name);
                     if (name.length() > 20) {
                         cout << "Name is too long! Please enter a name less than 20 characters." << endl;
@@ -112,7 +113,6 @@ void select_option(int option, GAME game) {
                 fin.close();
             }
             // Both case will do the below code
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); //  prevent input residue 
             cout << "Proceeding to level " << game.current_level << " ...." << endl;
             Enemy e(game.current_level);
             sleep(2);
