@@ -110,70 +110,45 @@ In each turn, you can choose a move to use. You will always move first and the e
          ```
 
      * File output (To save player's game status in checkpoints) 
-         ```cpp
-        void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
-                display.dialogs.push_back("<format><|yellow|>Congratulations!<end> You have defeated Enemy <format><|yellow|><|bold|>[" + e.name + "]<end>!");
-                display.clear_screen();
-                display.insert_battelfield(m, e); // input main character and enemy information to the screen
-                display.print_screen();
+        ```cpp
+            // checkpoint reward are tackle in same function
+            if (this->current_level == 3 || this->current_level == 5 || this->current_level == 7) {
+                //player can get reward from these level and they are not required to beat any enemy in these levels.
+                //these levels are checkpoints as well.
                 this->current_level++;
-                // That means the player has win the game.
-                
-                if (this->current_level > 10) {
-                        cout << "Congratulations! You have defeated all enemies in this game! You are a true hero!!" << endl;
-                        cout << "See you next time!" << endl;
-                        // To clear all game status 
-                        ifstream fin("game_status.txt");
-                        if (fin.good()) {
-                        remove("game_status.txt");
-                        }
-                        //End the game.
-                        exit(0);
+                char y_n;
+                cout << "Do you want to store your game status? [y/n] " << endl;
+                cin >> y_n;
+                while (y_n != 'y' && y_n != 'n') {
+                    cout << "Invalid input! Please enter again! " << endl;
+                    cout << "Do you want to store your game status? [y/n] " << endl;
+                    cin >> y_n;
                 }
-                reward(m, e, this->current_level);// player can receive reward after every boss and checkpt
-                // checkpoint reward are tackle in same function
-                if (this->current_level == 3 || this->current_level == 5 || this->current_level == 7) {
-                        //player can get reward from these level and they are not required to beat any enemy in these levels.
-                        //these levels are checkpoints as well.
-                        this->current_level++;
-                        char y_n;
-                        cout << "Do you want to store your game status? [y/n] " << endl;
-                        cin >> y_n;
-                        while (y_n != 'y' && y_n != 'n') {
-                        cout << "Invalid input! Please enter again! " << endl;
-                        cout << "Do you want to store your game status? [y/n] " << endl;
-                        cin >> y_n;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // this line must be add after any cin <<. Otherwise it willmake a new line in getline
+                if (y_n == 'y') {
+                    ofstream fout("game_status.txt");
+                    if (fout.is_open()) {
+                        fout << m.name << "\n" << m.hp << " " << m.max_hp << " " << m.atk << " " << m.def << " " << m.mp << " " << m.max_mp << " ";
+                        fout << m.moveSet.size() << " ";
+                        for (int k = 0; k < m.moveSet.size(); k++) {
+                            fout << m.moveSet[k] << " ";
                         }
-                        if (y_n == 'y') {
-                        ofstream fout("game_status.txt");
-                        if (fout.is_open()) {
-                                fout << m.name << " " << m.hp << " " << m.max_hp << " " << m.atk << " " << m.def << " " << m.mp << " ";
-                                fout << m.moveSet.size() << " ";
-                                for (int k = 0; k < m.moveSet.size(); k++) {
-                                fout << m.moveSet[k] << " ";
-                                }
-                                fout << this->current_level;
-                                fout.close();
-                                cout << "Game status saved successfully! " << endl;
-                                sleep(2);
-                        }
-
-                        else{
-                                cout << "Error! Not able to save your game status. " << endl;
-                        }
-                        }
-
-                        else {
-                        cout << "remarkably brave! " << endl;
+                        fout << this->current_level;
+                        fout.close();
+                        cout << "Game status saved successfully! " << endl;
                         sleep(2);
-                        }
+                    }
+
+                    else{
+                        cout << "Error! Not able to save your game status. " << endl;
+                    }
                 }
-                //player will proceed to next level.
-                cout << "Proceeding to level " << this->current_level << " ...." << endl;
-                sleep(1);
-                Enemy new_e(this->current_level); 
-                StartGame(m, new_e);
+
+                else {
+                    cout << "remarkably brave! " << endl;
+                    sleep(2);
                 }
+            }        
         ```
 * Data Structures for Saving Game Status
   * Move Execution 
@@ -261,6 +236,78 @@ In each turn, you can choose a move to use. You will always move first and the e
   delete dummyEnemy; //Delete the temporary class object to free up memory
   break;
   ```
+  * Checking, storing and updating the current level of the game (this pointer)
+  ```cpp
+  void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
+    display.dialogs.push_back(" ");
+    display.dialogs.push_back("<format><|yellow|>Congratulations!<end> You have defeated Enemy <format><|yellow|><|bold|>[" + e.name + "]<end>!");
+    sleep(1);
+    display.clear_screen();
+    display.insert_battelfield(m, e); // input main character and enemy information to the screen
+    display.print_screen();
+    this->current_level++;
+    // That means the player has win the game.
+    
+    if (this->current_level > 10) {
+        cout << "Congratulations! You have defeated all enemies in this game! You are a true hero!!" << endl;
+        cout << "See you next time!" << endl;
+        // To clear all game status 
+        ifstream fin("game_status.txt");
+        if (fin.good()) {
+            remove("game_status.txt");
+        }
+        //End the game.
+        exit(0);
+    }
+    ```
+    ```cpp
+    // checkpoint reward are tackle in same function
+    if (this->current_level == 3 || this->current_level == 5 || this->current_level == 7) {
+        //player can get reward from these level and they are not required to beat any enemy in these levels.
+        //these levels are checkpoints as well.
+        this->current_level++;
+        char y_n;
+        cout << "Do you want to store your game status? [y/n] " << endl;
+        cin >> y_n;
+        while (y_n != 'y' && y_n != 'n') {
+            cout << "Invalid input! Please enter again! " << endl;
+            cout << "Do you want to store your game status? [y/n] " << endl;
+            cin >> y_n;
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // this line must be add after any cin <<. Otherwise it willmake a new line in getline
+        if (y_n == 'y') {
+            ofstream fout("game_status.txt");
+            if (fout.is_open()) {
+                fout << m.name << "\n" << m.hp << " " << m.max_hp << " " << m.atk << " " << m.def << " " << m.mp << " " << m.max_mp << " ";
+                fout << m.moveSet.size() << " ";
+                for (int k = 0; k < m.moveSet.size(); k++) {
+                    fout << m.moveSet[k] << " ";
+                }
+                fout << this->current_level;
+                fout.close();
+                cout << "Game status saved successfully! " << endl;
+                sleep(2);
+            }
+
+            else{
+                cout << "Error! Not able to save your game status. " << endl;
+            }
+        }
+
+        else {
+            cout << "remarkably brave! " << endl;
+            sleep(2);
+        }
+    }
+    //player will proceed to next level.
+    cout << "Proceeding to level " << this->current_level << " ...." << endl;
+    sleep(1);
+    Enemy new_e(this->current_level); 
+    StartGame(m, new_e);
+
+   }
+   ```
+
 * Program Codes in Multiple Files
   ```cpp
   // In game.cpp
