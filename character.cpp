@@ -152,12 +152,12 @@ Goblin::Goblin(){
     Enemy_Skill skill1 = {1, "interfere", "Stealing", vector<string>{"m_atk -5 2", "m_def -5 2", "e_atk +5 2", "e_def +5 2"}};
     Enemy_Skill skill2 = {2, "attack", "Yelling", vector<string>{"m_hp 20 0"}};
     Enemy_Skill skill3 = {3, "attack", "Fling", vector<string>{"m_hp 20 0", "m_cont_hp_const -5 3"}};
-    Enemy_Skill skill4 = {4, "defende", "Shield", vector<string>{"e_def 7 2", "e_hp 15 0"}};
-    Enemy_Skill skill5 = {5, "regenerate", "Rage", vector<string>{"e_cont_hp 4 3", "e_crit_chance 0.4 3", "e_crit_damage 1 3"}};
+    Enemy_Skill skill4 = {4, "defend", "Shield", vector<string>{"e_def 7 2", "e_hp 15 0"}};
+    Enemy_Skill skill5 = {5, "regenerate", "Rage", vector<string>{"e_cont_hp 0.8 2", "e_crit_chance 0.4 3", "e_crit_damage 1 3"}};
     Enemy_Skill skill6 = {6, "interfere", "Convert", vector<string>{"m_mp 15 0", "e_hp 15 0"}};
     Enemy_Skill skill7 = {7, "interfere", "Encourage", vector<string>{"e_atk 5 2"}};
     Enemy_Skill skill8 = {8, "Jump Attack", "Jesus", vector<string>{"m_hp 20 0", "m_atk -5 2"}};
-    Enemy_Skill skill9 = {9, "defend", "Ingore", vector<string>{"e_def 5 2", "m_atk -5 2"}};
+    Enemy_Skill skill9 = {9, "defend", "Ingore", vector<string>{"e_def 6 2", "m_atk -6 2"}};
     Enemy_Skill skill10 = {9, "regenerate", "Low Lv Magic", vector<string>{"e_hp 10 0", "e_cont_hp_const 15 3"}};
     skill_list.push_back(skill1);
     skill_list.push_back(skill2);

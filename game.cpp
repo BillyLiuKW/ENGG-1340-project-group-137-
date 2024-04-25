@@ -112,6 +112,9 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         enemy_skills.hp_change();
         // enemy's action End
 
+        m.hp = max(0, m.hp);
+        e.hp = max(0, e.hp);
+        
         // show battelfield
         display.clear_screen();
         display.insert_battelfield(m, e);
@@ -288,7 +291,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
         if (y_n == 'y') {
             ofstream fout("game_status.txt");
             if (fout.is_open()) {
-                fout << m.name << " " << m.hp << " " << m.max_hp << " " << m.atk << " " << m.def << " " << m.mp << " ";
+                fout << m.name << "\n" << m.hp << " " << m.max_hp << " " << m.atk << " " << m.def << " " << m.mp << " " << m.max_mp << " ";
                 fout << m.moveSet.size() << " ";
                 for (int k = 0; k < m.moveSet.size(); k++) {
                     fout << m.moveSet[k] << " ";
@@ -329,7 +332,8 @@ void GAME::Gameretry(){
             if (fin.is_open()) {
                 MainCharacter m;
                 // Assigning stored values to m one by one.
-                fin >> m.name >> m.hp >> m.max_hp >> m.atk >> m.def >> m.mp;
+                getline(fin, m.name);
+                fin >> m.hp >> m.max_hp >> m.atk >> m.def >> m.mp >> m.max_mp;
                 // To input the size of moveSet stored.
                 int size;
                 fin >> size;
@@ -386,7 +390,7 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
     if (level != 3 && level != 5 && level != 7){
         cout << "Choose Reward Type : 1. Stat   2. Skills" << endl;
         cout << "Please Enter (1 or 2) : ";
-        cin >> type ;
+        cin >> type;
         while (stoi(type) != 1 && stoi(type) != 2){
             cout << "Invalid Input. Please enter again : " ;
             cin >> type; 
@@ -402,8 +406,8 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
     cout << "Enter a sequence for lucky draw : ";
     int lucky_sum = 0;
     getline(cin, lucky_draw_no);
-    for (char c: lucky_draw_no){
-        lucky_sum += static_cast<int>(c);
+    for (int i = 0; i < lucky_draw_no.length(); i++){
+        lucky_sum += static_cast<int>(lucky_draw_no[i]) * (i+1);
     }
 
 
