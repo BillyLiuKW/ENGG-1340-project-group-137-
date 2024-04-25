@@ -33,7 +33,7 @@ In each turn, you can choose a move to use.
         ```
 
     * Rewards 
-    ```cpp
+        ```cpp
         void GAME::stats(MainCharacter &m, int lucky_draw_no, int health, int attack, int defence, int magic){
                 srand(lucky_draw_no);
                 int hp_increase = rand() % health + health;
@@ -50,9 +50,8 @@ In each turn, you can choose a move to use.
                 m.def += def_increase;
                 m.max_mp += mp_increase;
                 m.mp += mp_increase;
-
-                
         }
+        ```
 * File input/output
      * File Input (when player was defeated and chose to retry the game, their stored game status will be loaded)
         ```cpp
@@ -108,6 +107,7 @@ In each turn, you can choose a move to use.
                 }   
             }
          }
+         ```
 
      * File output (To save player's game status in checkpoints) 
          ```cpp
@@ -173,5 +173,105 @@ In each turn, you can choose a move to use.
                 sleep(1);
                 Enemy new_e(this->current_level); 
                 StartGame(m, new_e);
-
                 }
+        ```
+* Data Structures for Saving Game Status
+  * Move Execution 
+  ```cpp
+  //Set up the function map to directly call the function using moveFunctions[i]
+  //In moves.hpp
+  map<int, function<void(MainCharacter&, Enemy&, Move_info, vector<string> &dialogs)> > moves::moveFunctions;
+  ```
+  ```cpp
+  //Example usage
+  //In moves.cpp
+  void slash(MainCharacter &m, Enemy &e,Move_info info, vector<string> &dialogs){
+        int damage = calculate_damage(info.power, m.atk + m.atk_boost_sum, e.def + e.def_boost_sum);
+        m.hp -= info.cost;
+        Critical_hit(damage, dialogs);
+        e.hp -= damage;
+        string int_value = to_string(damage);
+        string dialog = display_damage(e, damage);
+        dialogs.push_back(dialog);
+  }
+  moveFunctions[0] = slash;
+  moveFunction[0](arg1,arg2,arg3,arg4);
+  ```
+
+  * Vector For Move Information
+  ```cpp
+  //In character.hpp
+  //Define the Move_info contents
+  struct Move_info{ //Store the information of the move
+        string name;
+        int ID;
+        int power; 
+        int cost;
+        string type;
+  };
+  ```
+  ```cpp
+  //In moves.cpp
+  //Set up the vector for moves
+  vector<Move_info> moves::FULL_MOVE_POOL;
+  ```
+  ```cpp
+  //Insert the Move_info to vector FULL_MOVE_POOL to save the information of the move
+  void moves::iniializeMoves(){
+    Move_info slashInfo = {"Slash", 0 ,20, 10, "Physical"};
+    FULL_MOVE_POOL.push_back(slashInfo);
+  }
+  ```
+* Dynamic Memory Management
+  * Enemy Creation
+  ```cpp
+  // In character.hpp
+  // Create a class definition for every enemy type
+  class Dummy{
+    public:
+        Dummy();
+        int hp;
+        int atk;
+        int def;
+        double critical_chance;
+        double critical_damage;
+        string name;
+        vector<string> image;
+        int height;
+        int width;
+        vector<Enemy_Skill> skill_list;
+  };
+  ```
+  ```cpp
+  // In character.cpp
+  // Temporarily create the class object and inserts the stats to the more general Enemy class
+  // In Enemy class
+  Dummy* dummyEnemy = new Dummy();
+  hp = dummyEnemy->hp;
+  max_hp = dummyEnemy->hp;
+  atk = dummyEnemy->atk;
+  def = dummyEnemy->def;
+  critical_chance = dummyEnemy->critical_chance;
+  critical_damage = dummyEnemy->critical_damage;              
+  name = dummyEnemy->name;
+  image = dummyEnemy->image;
+  height = image.size();
+  width = image[0].size();
+  skill_list = dummyEnemy->skill_list;
+  delete dummyEnemy; //Delete the temporary class object to free up memory
+  break;
+  ```
+* Program Codes in Multiple Files
+  ```cpp
+  // In game.cpp
+  // We make .hpp header files to use code from other files
+  #include "character.hpp"
+  #include "game.hpp"
+  #include "screen.hpp"
+  #include "moves.hpp"
+  #include "enemymoves.hpp"
+  ```
+  
+
+
+        
