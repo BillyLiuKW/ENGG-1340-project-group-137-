@@ -68,13 +68,13 @@ int EnemyMoves::chooseSkillType(){
     vector<Enemy_Skill> attack_skills, defend_skills, interfence_skills, regerneration_skills;
     vector<int> skill_num(type_num, 0);
     vector<double> skill_uses(type_num, 0), skill_weighting = {0.4, 0.2, 0.25, 0.15}; // with the same order
-    if (e.hp > e.max_hp * 0.8){
+    if (e.hp < e.max_hp * 0.8){
         normal_attack_prob -= 0.05;
         skill_weighting[3] += 0.1;
     }
     if (e.hp <= e.max_hp * 0.5){
         normal_attack_prob -= 0.1;
-        skill_weighting[1] += 0.2;
+        skill_weighting[0] -= 0.1;
         skill_weighting[3] += 0.1;
     }
     if (e.hp <= e.max_hp * 0.25){
@@ -89,10 +89,10 @@ int EnemyMoves::chooseSkillType(){
         skill_weighting[0] += 0.1;
     }
     if (m.hp <= m.max_hp * 0.2){
-        skill_weighting[0] += 0.2;
+        skill_weighting[0] += 0.3;
     }
     if (m.hp <= m.max_hp * 0.1){
-        skill_weighting[0] += 0.5;
+        skill_weighting[0] += 0.6;
     }
     normal_attack_prob = max(0.0, normal_attack_prob);
 
@@ -380,6 +380,7 @@ void EnemyMoves::m_hp(double multiplier, double other){
     dialogs.push_back(dialog);
 }
 void EnemyMoves::e_atk(double multiplier, double other){
+    other *= 2;
     e.atk_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
     string int_value_1 = to_string(static_cast<int>(multiplier));
     string int_value_2 = to_string(static_cast<int>(other/2));
@@ -390,6 +391,7 @@ void EnemyMoves::e_atk(double multiplier, double other){
     
 }
 void EnemyMoves::m_atk(double multiplier, double other){
+    other *= 2;
     m.atk_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
     string int_value_1 = to_string(static_cast<int>(multiplier));
     string int_value_2 = to_string(static_cast<int>(other/2));
@@ -400,6 +402,7 @@ void EnemyMoves::m_atk(double multiplier, double other){
 
 }
 void EnemyMoves::e_def(double multiplier, double other){
+    other *= 2;
     e.def_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
     string int_value_1 = to_string(static_cast<int>(multiplier));
     string int_value_2 = to_string(static_cast<int>(other/2));
@@ -409,6 +412,7 @@ void EnemyMoves::e_def(double multiplier, double other){
     dialogs.push_back(dialog);
 }
 void EnemyMoves::m_def(double multiplier, double other){
+    other *= 2;
     m.def_boost.push_back(make_pair(static_cast<int> (multiplier), static_cast<int>(other))); // other the number of round
     string int_value_1 = to_string(static_cast<int>(multiplier));
     string int_value_2 = to_string(static_cast<int>(other/2));
@@ -455,6 +459,7 @@ void EnemyMoves::m_cont_hp_const(double multiplier, double other){
 
 }
 void EnemyMoves::e_crit_chance(double multiplier, double other){
+    other *= 2;
     e.crit_chance_boost.push_back(make_pair(multiplier, static_cast<int>(other)));
     string int_value_1 = to_string(static_cast<int>(multiplier * 100));
     string int_value_2 = to_string(static_cast<int>(other/2));
@@ -463,6 +468,7 @@ void EnemyMoves::e_crit_chance(double multiplier, double other){
     dialogs.push_back(dialog);
 }
 void EnemyMoves::e_crit_damage(double multiplier, double other){
+    other *= 2;
     e.crit_damage_boost.push_back(make_pair(multiplier, static_cast<int>(other)));
     string int_value_1 = to_string(static_cast<int>(multiplier * 100));
     string int_value_2 = to_string(static_cast<int>(other/2));
@@ -471,8 +477,9 @@ void EnemyMoves::e_crit_damage(double multiplier, double other){
     dialogs.push_back(dialog);
 }
 void EnemyMoves::m_mp(double multiplier, double other){
-    m.mp -= static_cast<int>(multiplier);
-    string int_value = to_string(static_cast<int>(multiplier));
+    int decrease = min(m.mp, static_cast<int>(multiplier));
+    m.mp -= decrease;
+    string int_value = to_string(decrease);
     string dialog = "<format><|blue|>" + m.name + "<end> <format><|blue|>MP<end> <format><|red|><|bold|>-"+ int_value + "<end>";
     dialogs.push_back(dialog);
 }

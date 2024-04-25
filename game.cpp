@@ -231,36 +231,39 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
         //End the game.
         exit(0);
     }
-    reward(m, this->current_level);// player can receive reward after every boss and checkpt
-
     // main character recover. it will recover 25 - 75 % of HP and MP, where 50% is the mode.
     random_device rd;
     mt19937 gen(rd());
 
-    double min_value = 0.25;
-    double max_value = 0.75;
-    double mode = (min_value + max_value) / 2.0; // highest chance.
-    uniform_real_distribution<double> distribution_hp(min_value, max_value);
+    int min_value = 25; //percentage
+    int max_value = 75;
+    uniform_int_distribution<int> distribution_hp(min_value, max_value);
 
     // triangular distribution
-    double recover_percentage;
-    recover_percentage = (distribution_hp(gen) + distribution_hp(gen)) / 2.0;
-    int hp_recover_value = recover_percentage * m.hp;
+    int recover_percentage_hp = (distribution_hp(gen) + distribution_hp(gen)) / 2.0;
+    int hp_recover_value = m.max_hp * recover_percentage_hp;
     hp_recover_value = min(m.max_hp - m.hp, hp_recover_value); // set the limit not to exceed max.hp
 
-    min_value = 0.4;
-    max_value = 0.9;
-    mode = (min_value + max_value) / 2.0; // highest chance.
-    uniform_real_distribution<double> distribution_mp(min_value, max_value);
+    min_value = 40;
+    max_value = 90;
+    uniform_int_distribution<int> distribution_mp(min_value, max_value);
     
-    recover_percentage = (distribution_mp(gen) + distribution_mp(gen)) / 2.0;
-    int mp_recover_value = recover_percentage * m.mp;
+    int recover_percentage_mp = (distribution_mp(gen) + distribution_mp(gen)) / 2.0;
+    int mp_recover_value = m.max_mp * recover_percentage_mp;
     mp_recover_value = min(m.max_mp - m.mp, mp_recover_value);
+    /* test
+    string str_1 = to_string(recover_percentage_hp);
+    string str_2 = to_string(recover_percentage_mp);
+    display.dialogs.push_back("<format><|blue|>" + m.name + "<end> <format><|red|>HP<end> recover <format><|green|><|bold|>" + to_string(hp_recover_value) + " (" + str_1 +  "%)<end>.");
+    display.dialogs.push_back("<format><|blue|>" + m.name + "<end> <format><|blue|>MP<end> recover <format><|green|><|bold|>" + to_string(mp_recover_value) + " (" + str_2 +  "%)<end>.");
+    */
 
     display.dialogs.push_back("<format><|blue|>" + m.name + "<end> <format><|red|>HP<end> recover <format><|green|><|bold|>" + to_string(hp_recover_value) + "<end>.");
     display.dialogs.push_back("<format><|blue|>" + m.name + "<end> <format><|blue|>MP<end> recover <format><|green|><|bold|>" + to_string(mp_recover_value) + "<end>.");
     m.hp += hp_recover_value;
     m.mp += mp_recover_value;
+
+    reward(m, this->current_level);// player can receive reward after every boss and checkpt
 
     display.clear_screen();
     display.insert_battelfield(m, e);

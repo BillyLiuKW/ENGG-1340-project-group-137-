@@ -84,12 +84,13 @@ void regen(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
 }
 
 void rage(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){ //20% atk for 3 turns
-    int increase = info.power; // calculate how many atk increase
+    int increase = info.power * m.atk / 100; // calculate how many atk increase
     m.atk_boost.push_back(make_pair(increase, 3*2)); // every rounds will minus 2;
     m.mp -= info.cost;
     string int_value_1 = to_string(increase);
+    string int_value_2 = to_string(info.power);
     string dialog = "<format><|blue|>" + m.name + "<end> <format><|cyan|>ATK<end> increases ";
-    dialog += " <format><|bold|><|green|>" + int_value_1 + "%<end>";
+    dialog += " <format><|bold|><|green|>" + int_value_1 + "(" + int_value_2 + "%)<end>";
     dialog += " for <format><|yellow|>3<end> rounds.";
     dialogs.push_back(dialog);
 }
@@ -172,24 +173,28 @@ void shield_blast(MainCharacter &m, Enemy &e, Move_info info, vector<string> &di
 }
 
 void iron_wall(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){ //20% def for 3 turns
-    int increase = info.power; // calculate how many def increase
+    int increase = info.power * m.def / 100; // calculate how many def increase (exacat, not percentage)
     m.def_boost.push_back(make_pair(increase, 3*2)); // every rounds will minus 2;
     m.mp -= info.cost;
-    string int_value_1 = to_string(increase*100);
+    string int_value_1 = to_string(increase);
+    string int_value_2 = to_string(info.power);
     string dialog = "<format><|blue|>" + m.name + "<end> <format><|green|>DEF<end> increases ";
-    dialog += " <format><|bold|><|green|>" + int_value_1 + "%<end>";
+    dialog += " <format><|bold|><|green|>" + int_value_1 + " (" + int_value_2 + "%)<end>";
     dialog += " for <format><|yellow|>3<end> rounds.";
     dialogs.push_back(dialog);
 }
 
 void growth(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
-    int increase = info.power; // calculate how many atk increase
-    m.atk_boost.push_back(make_pair(increase, 3*2)); // every rounds will minus 2;
-    m.def_boost.push_back(make_pair(increase, 3*2)); // every rounds will minus 2;
+    int increase_atk = info.power * m.atk / 100; // calculate how many atk increase
+    int increase_def = info.power * m.def / 100;
+    m.atk_boost.push_back(make_pair(increase_atk, 3*2)); // every rounds will minus 2;
+    m.def_boost.push_back(make_pair(increase_def, 3*2)); // every rounds will minus 2;
     m.mp -= info.cost;
-    string int_value_1 = to_string(increase);
-    string dialog = "<format><|blue|>" + m.name + "<end> <format><|green|>DEF<end> and <format><|cyan|>ATK<end> increases ";
-    dialog += " <format><|bold|><|green|>" + int_value_1 + "%<end>";
+    string int_value_1 = to_string(info.power);
+    string int_atk = to_string(increase_atk);
+    string int_def = to_string(increase_def);
+    string dialog = "<format><|blue|>" + m.name + "<end> <format><|green|>DEF<end> <format><|green|><|bold|>+"+ int_def + " (" + int_value_1 +"%)<end>";
+    dialog += ", <format><|cyan|>ATK<end>  <format><|green|><|bold|>+" + int_atk + " (" + int_value_1 + "%)<end>";
     dialog += " for <format><|yellow|>3<end> rounds.";
     dialogs.push_back(dialog);
 }
@@ -412,13 +417,13 @@ void moves::calculate_boost(MainCharacter &m){
         m.atk_boost_sum += pair.first;
         pair.second--;
     }
-    m.atk_boost_sum = m.atk* m.atk_boost_sum/100;
+    m.atk_boost_sum = m.atk_boost_sum;
     m.def_boost_sum = 0;
     for (auto &pair: m.def_boost) {
         m.def_boost_sum += pair.first;
         pair.second--;
     }
-    m.def_boost_sum = m.def* m.def_boost_sum/100;
+    m.def_boost_sum = m.def_boost_sum;
 
     // remove all pair that round remains <= 0 with lambda function
     m.atk_boost.erase(remove_if(m.atk_boost.begin(), m.atk_boost.end(), [](pair<int, int> pair){return pair.second <= 0;}), m.atk_boost.end());

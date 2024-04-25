@@ -79,21 +79,21 @@ Dummy::Dummy(){
     // m_hp : enemy deal damage to main_C: formula (e.atk+e.buff_atk)*1st argument (power) / (m.def+m.buff_def)
     //              format: "m_hp double_power(+ve) 0"
     // e_def : enemy defend change defefend of 1st arg for 2nd arg rounds (1st arg can be both +ve or -ve)
-    //              format: "e_def int_change(+ve/-ve) int_rounds * 2"                      ********* rounds num need to * 2
+    //              format: "e_def int_change(+ve/-ve) int_rounds"                      
     // m_def : same as above, but in main_c
-    //              format: "m_def int_change(+ve/-ve) int_rounds * 2"                      ********* rounds num need to * 2 
+    //              format: "m_def int_change(+ve/-ve) int_rounds"
     // e_atk : bascially same but just atk
-    //              format: "e_atk int_change(+ve/-ve) int_rounds * 2"                      ********* rounds num need to * 2 
+    //              format: "e_atk int_change(+ve/-ve) int_rounds"
     // m_atk : same
-     //             format: "m_atk int_change(+ve/-ve) int_rounds * 2"                      ********* rounds num need to * 2
+     //             format: "m_atk int_change(+ve/-ve) int_rounds"
     // e_cont_hp : enemy hp damage/ decrease for each round, // 
-    //              format: "e_cont_hp double_mutiplier(+ve/-ve) int_rounds"                ********* rounds num don't need to * 2
+    //              format: "e_cont_hp double_mutiplier(+ve/-ve) int_rounds"
     // e_cont_hp_const : enemy hp damage/ decrease a constant value for each round, 
-    //              format: "e_cont_hp int_constant(-ve) int_rounds"                        ********* rounds num don't need to * 2
+    //              format: "e_cont_hp int_constant(-ve) int_rounds"
     // m_cont_hp : main_c hp damage/ decrease for each round consider enemy atk and m_c def
-    //              format: "m_cont_hp double_power(-ve) int_rounds"                        ********* rounds num don't need to * 2
+    //              format: "m_cont_hp double_power(-ve) int_rounds"
     // m_cont_hp_const : main_c hp damage/ decrease a constant value for each round ingore def
-    //              format: "m_cont_hp int_constant(-ve) int_rounds"                        ********* rounds num don't need to * 2
+    //              format: "m_cont_hp int_constant(-ve) int_rounds"
     // e_crit_chance : enemy critical chance increase temporialy,
     //              format: "e_crit_chance double_increase(+ve)(between 0-1) int_rounds * 2"  0.2 = +20% crit chance
     // e_crit_damage : enemy critical damage increase temporialy,
@@ -103,14 +103,14 @@ Dummy::Dummy(){
     // a skill can hold multiple option above 
     // example {skill ID, skill_ ype, skill name, {"option2 arg1 arg2", "option1 arg1 arg2"}}
     
-    Enemy_Skill skill1 = {1, "regenerate", "Heal", vector<string>{"e_hp 10 0"}};
-    Enemy_Skill skill2 = {2, "attack", "Heavy Attack", vector<string>{"m_hp 15 0", "m_atk -3 6", "m_cont_hp -5 2"}};
-    Enemy_Skill skill3 = {3, "defend", "Defend", vector<string>{"e_def 5 6"}};
-    Enemy_Skill skill4 = {4, "interfere", "Attack Boost", vector<string>{"e_atk 5 6", "e_crit_damage 0.5 6", "e_crit_chance 0.2 6"}};
+    Enemy_Skill skill1 = {1, "regenerate", "Heal", vector<string>{"e_hp 30 0"}};
+    Enemy_Skill skill2 = {2, "attack", "Heavy Attack", vector<string>{"m_hp 15 0", "m_atk -3 3", "m_cont_hp -5 2"}};
+    Enemy_Skill skill3 = {3, "defend", "Defend", vector<string>{"e_def 5 3"}};
+    Enemy_Skill skill4 = {4, "interfere", "Attack Boost", vector<string>{"e_atk 5 3", "e_crit_damage 0.5 3", "e_crit_chance 0.2 3"}};
     Enemy_Skill skill5 = {5, "regenerate", "Recover", vector<string>{"e_cont_hp_const 10 3"}};
     Enemy_Skill skill6 = {6, "attack", "Vampire", vector<string>{"m_hp 15 0", "e_hp 15 0"}};
     Enemy_Skill skill7 = {7, "attack", "Anger", vector<string>{"m_hp 25 0"}};
-    Enemy_Skill skill8 = {8, "defend", "Jesus", vector<string>{"e_def 10 6", "m_hp 10 0"}};
+    Enemy_Skill skill8 = {8, "defend", "Jesus", vector<string>{"e_def 6 3", "m_hp 10 0"}};
     Enemy_Skill skill9 = {9, "attack", "Revenge", vector<string>{"m_hp 20 0", "e_hp 10 0"}};
     skill_list.push_back(skill1);
     skill_list.push_back(skill2);
@@ -149,11 +149,11 @@ Goblin::Goblin(){
         "          Lma     &hJb         ",
         "        upbwX     M***aha      "
     };
-    Enemy_Skill skill1 = {1, "interfere", "Stealing", vector<string>{"m_atk -5 4", "m_def -5 4", "e_atk +5 4", "e_def +5 4"}};
+    Enemy_Skill skill1 = {1, "interfere", "Stealing", vector<string>{"m_atk -5 2", "m_def -5 2", "e_atk +5 2", "e_def +5 2"}};
     Enemy_Skill skill2 = {2, "attack", "Yelling", vector<string>{"m_hp 20 0"}};
     Enemy_Skill skill3 = {3, "attack", "Fling", vector<string>{"m_hp 20 0", "m_cont_hp_const -5 3"}};
     Enemy_Skill skill4 = {4, "defende", "Shield", vector<string>{"e_def 7 2", "e_hp 15 0"}};
-    Enemy_Skill skill5 = {5, "regenerate", "Rage", vector<string>{"e_cont_hp 4 3", "e_crit_chance 0.4 6", "e_crit_damage 1 6"}};
+    Enemy_Skill skill5 = {5, "regenerate", "Rage", vector<string>{"e_cont_hp 4 3", "e_crit_chance 0.4 3", "e_crit_damage 1 3"}};
     Enemy_Skill skill6 = {6, "interfere", "Convert", vector<string>{"m_mp 15 0", "e_hp 15 0"}};
     Enemy_Skill skill7 = {7, "interfere", "Encourage", vector<string>{"e_atk 5 2"}};
     Enemy_Skill skill8 = {8, "Jump Attack", "Jesus", vector<string>{"m_hp 20 0", "m_atk -5 2"}};
@@ -198,12 +198,12 @@ Mutant::Mutant(){
         "         !ANJDS*DS^     "
     };
     Enemy_Skill skill1 = {1, "attack", "Shapeshifting", vector<string>{"m_hp 20 0", "e_def 10 0"}};    
-    Enemy_Skill skill2 = {2, "attack", "Telepathy", vector<string>{"m_def -10 2", "e_crit_chance 0.4 4", "e_crit_damage 0.5 4"}};
+    Enemy_Skill skill2 = {2, "attack", "Telepathy", vector<string>{"m_def -10 2", "e_crit_chance 0.4 2", "e_crit_damage 0.5 2"}};
     Enemy_Skill skill3 = {3, "attack", "Superhuman Strength", vector<string>{"m_hp 20 0", "e_def 15 3"}};
     Enemy_Skill skill4 = {4, "regenerate", "Regeneration", vector<string>{"e_hp 25 0"}};
     Enemy_Skill skill5 = {5, "defend", "Power Control", vector<string>{"m_def -10 2", "e_def 10 2"}};
     Enemy_Skill skill6 = {6, "interfere", "Time Manipulation", vector<string>{"m_atk -10 2", "m_def -5 2", "e_atk +10 2", "e_def +5 2"}};
-    Enemy_Skill skill7 = {7, "defend", "Animal Control", vector<string>{"e_def 10 4"}};
+    Enemy_Skill skill7 = {7, "defend", "Animal Control", vector<string>{"e_def 10 3"}};
     Enemy_Skill skill8 = {8, "regenerate", "Vampire", vector<string>{"e_hp 20 0", "m_hp 20 0"}};
     Enemy_Skill skill9 = {9, "attack", "Invisibe", vector<string>{"m_hp 30 0"}};
     skill_list.push_back(skill1);
@@ -243,14 +243,14 @@ Robot::Robot(){
         "       |ND*UH*     tD[3,s|      ",
     };
     Enemy_Skill skill1 = {1, "attack", "Electric Shock", vector<string>{"m_hp 22 0", "m_cont_hp_const -7 3"}};
-    Enemy_Skill skill2 = {2, "defend", "Armor Plating", vector<string>{"m_def 10 8"}};
-    Enemy_Skill skill3 = {3, "attack", "Plasma Blade", vector<string>{"m_hp 25 0", "m_atk -10 6"}};
-    Enemy_Skill skill4 = {4, "interfere", "Disrupt Systems", vector<string>{"m_def -10 6", "m_cont_hp_const -5 3", "e_def 10 6", "e_cont_hp_const +5 3"}};
+    Enemy_Skill skill2 = {2, "defend", "Armor Plating", vector<string>{"m_def 10 4"}};
+    Enemy_Skill skill3 = {3, "attack", "Plasma Blade", vector<string>{"m_hp 25 0", "m_atk -10 3"}};
+    Enemy_Skill skill4 = {4, "interfere", "Disrupt Systems", vector<string>{"m_def -10 3", "m_cont_hp_const -5 3", "e_def 10 3", "e_cont_hp_const +5 3"}};
     Enemy_Skill skill5 = {5, "regenerate", "Self-Reboot", vector<string>{"e_hp 30 0"}};
     Enemy_Skill skill6 = {6, "attack", "Ion Cannon", vector<string>{"m_hp 30 0", "m_cont_hp -0.8 2"}};
     Enemy_Skill skill7 = {7, "attack", "Rapid Fire", vector<string>{"m_hp 25 0.5"}};
-    Enemy_Skill skill8 = {8, "interfere", "Virus Upload", vector<string>{"m_def -10 4", "m_hp 24 0.2", "e_crit_chance 0.5, 4", "e_crit_damage 0.5 4"}};
-    Enemy_Skill skill9 = {9, "defend", "Force Field", vector<string>{"e_def 20 4"}};
+    Enemy_Skill skill8 = {8, "interfere", "Virus Upload", vector<string>{"m_def -10 3", "m_hp 24 0.2", "e_crit_chance 0.5, 3", "e_crit_damage 0.5 3"}};
+    Enemy_Skill skill9 = {9, "defend", "Force Field", vector<string>{"e_def 20 2"}};
     Enemy_Skill skill10 = {10, "regenerate", "Nano Repair", vector<string>{"e_cont_hp_const 15 3"}};
     skill_list.push_back(skill1);
     skill_list.push_back(skill2);
@@ -290,14 +290,14 @@ Dragon::Dragon(){
         "                 ]0fz,           "
     };
     Enemy_Skill skill1 = {1, "attack", "Fireball", vector<string>{"m_cont_hp_const -15 4"}};
-    Enemy_Skill skill2 = {2, "defend", "Protection", vector<string>{"e_def 15 10"}};
-    Enemy_Skill skill3 = {3, "attack", "Claw Strike", vector<string>{"m_cont_hp_const -10 4", "m_hp 18 0","e_crit_chance 0.2, 6"}};
-    Enemy_Skill skill4 = {4, "interfere", "Roar", vector<string>{ "m_atk -10 4", "m_def -10 4", "e_def 10 4", "e_atk 10 4"}};
+    Enemy_Skill skill2 = {2, "defend", "Protection", vector<string>{"e_def 15 5"}};
+    Enemy_Skill skill3 = {3, "attack", "Claw Strike", vector<string>{"m_cont_hp_const -10 4", "m_hp 18 0","e_crit_chance 0.2 3"}};
+    Enemy_Skill skill4 = {4, "interfere", "Roar", vector<string>{ "m_atk -10 2", "m_def -10 2", "e_def 10 2", "e_atk 10 2"}};
     Enemy_Skill skill5 = {5, "regenerate", "Healing Pearl", vector<string>{"e_hp 30 0"}};
     Enemy_Skill skill6 = {6, "attack", "Dragon Fury", vector<string>{"e_hp -50 0","m_hp 100 0"}};
     Enemy_Skill skill7 = {7, "attack", "Tail Swipe", vector<string>{"m_hp 23 0"}};
-    Enemy_Skill skill8 = {8, "defend", "Dodge", vector<string>{"e_def 80 4"}};
-    Enemy_Skill skill9 = {9, "regenerate", "Hot Spring", vector<string>{"e_cont_hp_const 20 3", "e_hp 10 0", "e_atk 10 6"}};
+    Enemy_Skill skill8 = {8, "defend", "Dodge", vector<string>{"e_def 80 2"}};
+    Enemy_Skill skill9 = {9, "regenerate", "Hot Spring", vector<string>{"e_cont_hp_const 20 3", "e_hp 10 0", "e_atk 10 3"}};
     skill_list.push_back(skill1);
     skill_list.push_back(skill2);
     skill_list.push_back(skill3);
@@ -335,17 +335,17 @@ Demon::Demon(){
         "<                            >  ",
     };
     Enemy_Skill skill1 = {1, "attack", "Venom", vector<string>{"m_hp 28 0", "m_cont_hp -6 3"}};
-    Enemy_Skill skill2 = {2, "interfere", "Fire form the HELL", vector<string>{"m_cont_hp -3 4", "m_atk -25 8", "m_def -25 8"}};
+    Enemy_Skill skill2 = {2, "interfere", "Fire form the HELL", vector<string>{"m_cont_hp -3 4", "m_atk -25 4", "m_def -25 4"}};
     Enemy_Skill skill3 = {3, "interfere", "MP Stealing", vector<string>{"m_mp -50 0", "m_atk -10 3"}};
     Enemy_Skill skill4 = {4, "attack", "Horror", vector<string>{"m_hp -24 0.5", "m_cont_hp_const -15 3"}};
     Enemy_Skill skill5 = {5, "regenerate", "Infection", vector<string>{"e_cont_hp 1 3", "m_cont_hp -15 3", "m_hp 15 1"}};
-    Enemy_Skill skill6 = {6, "defend", "You Shall Not Pass", vector<string>{"e_def 20 8", "e_cont_hp_const 5 2"}};
-    Enemy_Skill skill7 = {7, "interfere", "Sarifice", vector<string>{"e_hp -20 0", "e_def -10 6", "e_crit_chance 1 4", "e_crit_damage 2 4"}};
+    Enemy_Skill skill6 = {6, "defend", "You Shall Not Pass", vector<string>{"e_def 20 4", "e_cont_hp_const 5 2"}};
+    Enemy_Skill skill7 = {7, "interfere", "Sarifice", vector<string>{"e_hp -20 0", "e_def -10 3", "e_crit_chance 1 2", "e_crit_damage 2 2"}};
     Enemy_Skill skill8 = {8, "defend", "Solidified", vector<string>{"e_def 1000 2"}};
     Enemy_Skill skill9 = {9, "attack", "Damage Shift", vector<string>{"m_hp 20 0", "m_cont_hp -10 2", "e_hp 20 0", "e_cont_hp 1 2"}};
     Enemy_Skill skill10 = {10, "regenerate", "Come from Abyss", vector<string>{"e_cont_hp_const 100 3"}};
-    Enemy_Skill skill11 = {11, "interfere", "Final Form", vector<string>{"e_cont_hp 1 3", "e_atk 40 4", "e_def 30 4", "e_crit_chance 0.6 4", "e_crit_damage 4 4"}};
-    Enemy_Skill skill12 = {12, "attack", "Ignite", vector<string>{"m_cont_hp -12 3", "m_cont_hp_const -10 3", "m_def -10 6"}};
+    Enemy_Skill skill11 = {11, "interfere", "Final Form", vector<string>{"e_cont_hp 1 3", "e_atk 40 2", "e_def 30 2", "e_crit_chance 0.6 2", "e_crit_damage 4 2"}};
+    Enemy_Skill skill12 = {12, "attack", "Ignite", vector<string>{"m_cont_hp -12 3", "m_cont_hp_const -10 3", "m_def -10 3"}};
     skill_list.push_back(skill1);
     skill_list.push_back(skill2);
     skill_list.push_back(skill3);
@@ -386,15 +386,15 @@ Titan::Titan(){
         "      sadsadad     dasdsads      ",
     };
     Enemy_Skill skill1 = {1, "attack", "Thunder Strike", vector<string>{"m_cont_hp -14 3"}};
-    Enemy_Skill skill2 = {2, "interfere", "Mind Control", vector<string>{"m_atk -20 6", "m_def -15 6", "e_atk 20 6", "e_def 15 6"}};
-    Enemy_Skill skill3 = {3, "defend", "Diamond Shield", vector<string>{"e_def 30 6", "e_cont_hp_const 10 3"}};
+    Enemy_Skill skill2 = {2, "interfere", "Mind Control", vector<string>{"m_atk -20 3", "m_def -15 3", "e_atk 20 3", "e_def 15 3"}};
+    Enemy_Skill skill3 = {3, "defend", "Diamond Shield", vector<string>{"e_def 30 3", "e_cont_hp_const 10 3"}};
     Enemy_Skill skill4 = {4, "attack", "Venomous Bite", vector<string>{"m_hp 24 0.2", "m_cont_hp_const -10 3"}};
     Enemy_Skill skill5 = {5, "regenerate", "Healing Touch", vector<string>{"m_hp 20 0", "e_cont_hp_const 30 2"}};
-    Enemy_Skill skill6 = {6, "interfere", "Confusion", vector<string>{"m_atk -10 4", "m_def -10 4", "e_atk 10 4", "e_def 10 4", "e_crit_chance 0.5 4","e_crit_damage 0.3 4"}};
+    Enemy_Skill skill6 = {6, "interfere", "Confusion", vector<string>{"m_atk -10 2", "m_def -10 2", "e_atk 10 2", "e_def 10 2", "e_crit_chance 0.5 2","e_crit_damage 0.3 2"}};
     Enemy_Skill skill7 = {7, "attack", "Blazing Inferno", vector<string>{"m_cont_hp_const -5 3", "m_hp 22 0.1"}};
     Enemy_Skill skill8 = {8, "regenerate", "Natural Regeneration", vector<string>{"e_cont_hp_const 20 3"}};
-    Enemy_Skill skill9 = {9, "defend", "Iron Will", vector<string>{"e_def 30 6"}};
-    Enemy_Skill skill10 = {10, "attack", "Jesus", vector<string>{"m_hp 25 0.2", "e_crit_chance 0.5 4", "e_crit_damage 0.3 4"}};
+    Enemy_Skill skill9 = {9, "defend", "Iron Will", vector<string>{"e_def 30 3"}};
+    Enemy_Skill skill10 = {10, "attack", "Jesus", vector<string>{"m_hp 25 0.2", "e_crit_chance 0.5 2", "e_crit_damage 0.3 2"}};
     skill_list.push_back(skill1);
     skill_list.push_back(skill2);
     skill_list.push_back(skill3);
