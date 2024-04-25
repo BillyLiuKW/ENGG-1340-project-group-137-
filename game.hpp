@@ -8,7 +8,7 @@ using namespace std;
 class GAME{
     public:
         Screen display; // size of the display screen
-        GAME() : display(55, 75){};
+        GAME() : display(56, 75){};
         // To handle the game logic.
         void StartGame(MainCharacter& m, Enemy& e);
         // To display the gameplay screen. 
