@@ -103,15 +103,15 @@ Dummy::Dummy(){
     // a skill can hold multiple option above 
     // example {skill ID, skill_ ype, skill name, {"option2 arg1 arg2", "option1 arg1 arg2"}}
     
-    Enemy_Skill skill1 = {1, "regenerate", "Heal", vector<string>{"e_hp 50 0"}};
-    Enemy_Skill skill2 = {2, "attack", "Heavy Attack", vector<string>{"m_hp 25 0", "m_atk -3 6", "m_cont_hp -5 2"}};
+    Enemy_Skill skill1 = {1, "regenerate", "Heal", vector<string>{"e_hp 10 0"}};
+    Enemy_Skill skill2 = {2, "attack", "Heavy Attack", vector<string>{"m_hp 15 0", "m_atk -3 6", "m_cont_hp -5 2"}};
     Enemy_Skill skill3 = {3, "defend", "Defend", vector<string>{"e_def 5 6"}};
     Enemy_Skill skill4 = {4, "interfere", "Attack Boost", vector<string>{"e_atk 5 6", "e_crit_damage 0.5 6", "e_crit_chance 0.2 6"}};
-    Enemy_Skill skill5 = {5, "regenerate", "Recover", vector<string>{"e_cont_hp_const 15 3"}};
-    Enemy_Skill skill6 = {6, "attack", "Vampire", vector<string>{"m_hp 25 0", "e_hp 20 0"}};
-    Enemy_Skill skill7 = {7, "attack", "Anger", vector<string>{"m_hp 30 0"}};
-    Enemy_Skill skill8 = {8, "defend", "Jesus", vector<string>{"e_def 30 6", "m_hp 35 1"}};
-    Enemy_Skill skill9 = {9, "attack", "Revenge", vector<string>{"m_hp 50 0", "e_hp 10 0"}};
+    Enemy_Skill skill5 = {5, "regenerate", "Recover", vector<string>{"e_cont_hp_const 10 3"}};
+    Enemy_Skill skill6 = {6, "attack", "Vampire", vector<string>{"m_hp 15 0", "e_hp 15 0"}};
+    Enemy_Skill skill7 = {7, "attack", "Anger", vector<string>{"m_hp 25 0"}};
+    Enemy_Skill skill8 = {8, "defend", "Jesus", vector<string>{"e_def 10 6", "m_hp 10 0"}};
+    Enemy_Skill skill9 = {9, "attack", "Revenge", vector<string>{"m_hp 20 0", "e_hp 10 0"}};
     skill_list.push_back(skill1);
     skill_list.push_back(skill2);
     skill_list.push_back(skill3);
@@ -126,8 +126,8 @@ Dummy::Dummy(){
 
 Goblin::Goblin(){
     hp = 100;
-    atk = 30;
-    def = 30;
+    atk = 20;
+    def = 20;
     critical_chance = 0.05;
     critical_damage = 0.5;
     name = "Goblin";
@@ -150,15 +150,15 @@ Goblin::Goblin(){
         "        upbwX     M***aha      "
     };
     Enemy_Skill skill1 = {1, "interfere", "Stealing", vector<string>{"m_atk -5 4", "m_def -5 4", "e_atk +5 4", "e_def +5 4"}};
-    Enemy_Skill skill2 = {2, "attack", "Yelling", vector<string>{"m_hp 25 0"}};
-    Enemy_Skill skill3 = {3, "attack", "Fling", vector<string>{"m_hp 21 0", "m_cont_hp_const -8 6"}};
-    Enemy_Skill skill4 = {4, "defende", "Shield", vector<string>{"e_def 15 4", "e_hp 20 0"}};
+    Enemy_Skill skill2 = {2, "attack", "Yelling", vector<string>{"m_hp 20 0"}};
+    Enemy_Skill skill3 = {3, "attack", "Fling", vector<string>{"m_hp 20 0", "m_cont_hp_const -5 3"}};
+    Enemy_Skill skill4 = {4, "defende", "Shield", vector<string>{"e_def 7 2", "e_hp 15 0"}};
     Enemy_Skill skill5 = {5, "regenerate", "Rage", vector<string>{"e_cont_hp 4 3", "e_crit_chance 0.4 6", "e_crit_damage 1 6"}};
     Enemy_Skill skill6 = {6, "interfere", "Convert", vector<string>{"m_mp 15 0", "e_hp 15 0"}};
-    Enemy_Skill skill7 = {7, "interfere", "Encourage", vector<string>{"e_atk 20 10"}};
-    Enemy_Skill skill8 = {8, "Jump Attack", "Jesus", vector<string>{"m_hp 30 0", "m_atk -5 6"}};
-    Enemy_Skill skill9 = {9, "defend", "Ingore", vector<string>{"e_def 12 8", "m_atk -8 6"}};
-    Enemy_Skill skill10 = {9, "regenerate", "Low Lv Magic", vector<string>{"e_hp 10 0", "e_cont_hp_const 20 3"}};
+    Enemy_Skill skill7 = {7, "interfere", "Encourage", vector<string>{"e_atk 5 2"}};
+    Enemy_Skill skill8 = {8, "Jump Attack", "Jesus", vector<string>{"m_hp 20 0", "m_atk -5 2"}};
+    Enemy_Skill skill9 = {9, "defend", "Ingore", vector<string>{"e_def 5 2", "m_atk -5 2"}};
+    Enemy_Skill skill10 = {9, "regenerate", "Low Lv Magic", vector<string>{"e_hp 10 0", "e_cont_hp_const 15 3"}};
     skill_list.push_back(skill1);
     skill_list.push_back(skill2);
     skill_list.push_back(skill3);
@@ -197,14 +197,14 @@ Mutant::Mutant(){
         "  uu     % Wds $     uu ",
         "         !ANJDS*DS^     "
     };
-    Enemy_Skill skill1 = {1, "attack", "Shapeshifting", vector<string>{"m_hp 20 0", "e_def 20 0"}};    
-    Enemy_Skill skill2 = {2, "attack", "Telepathy", vector<string>{"m_def -10 4", "e_crit_chance 0.4 4", "e_crit_damage 0.5 4"}};
-    Enemy_Skill skill3 = {3, "attack", "Superhuman Strength", vector<string>{"m_hp 24 0", "e_def 20 6"}};
-    Enemy_Skill skill4 = {4, "regenerate", "Regeneration", vector<string>{"e_hp 50 0"}};
-    Enemy_Skill skill5 = {5, "defend", "Power Control", vector<string>{"m_def -10 4", "e_def 20 4"}};
-    Enemy_Skill skill6 = {6, "interfere", "Time Manipulation", vector<string>{"m_atk -10 4", "m_def -5 4", "e_atk +10 4", "e_def +5 4"}};
-    Enemy_Skill skill7 = {7, "defend", "Animal Control", vector<string>{"e_def +30 4"}};
-    Enemy_Skill skill8 = {8, "regenerate", "Vampire", vector<string>{"e_hp 30 0", "m_hp 25 0"}};
+    Enemy_Skill skill1 = {1, "attack", "Shapeshifting", vector<string>{"m_hp 20 0", "e_def 10 0"}};    
+    Enemy_Skill skill2 = {2, "attack", "Telepathy", vector<string>{"m_def -10 2", "e_crit_chance 0.4 4", "e_crit_damage 0.5 4"}};
+    Enemy_Skill skill3 = {3, "attack", "Superhuman Strength", vector<string>{"m_hp 20 0", "e_def 15 3"}};
+    Enemy_Skill skill4 = {4, "regenerate", "Regeneration", vector<string>{"e_hp 25 0"}};
+    Enemy_Skill skill5 = {5, "defend", "Power Control", vector<string>{"m_def -10 2", "e_def 10 2"}};
+    Enemy_Skill skill6 = {6, "interfere", "Time Manipulation", vector<string>{"m_atk -10 2", "m_def -5 2", "e_atk +10 2", "e_def +5 2"}};
+    Enemy_Skill skill7 = {7, "defend", "Animal Control", vector<string>{"e_def 10 4"}};
+    Enemy_Skill skill8 = {8, "regenerate", "Vampire", vector<string>{"e_hp 20 0", "m_hp 20 0"}};
     Enemy_Skill skill9 = {9, "attack", "Invisibe", vector<string>{"m_hp 30 0"}};
     skill_list.push_back(skill1);
     skill_list.push_back(skill2);
@@ -218,7 +218,7 @@ Mutant::Mutant(){
 }
 
 Robot::Robot(){
-    hp = 200;
+    hp = 400;
     atk = 15;
     def = 55;
     critical_chance = 0.05;
@@ -265,7 +265,7 @@ Robot::Robot(){
 }
 
 Dragon::Dragon(){
-    hp = 250;
+    hp = 300;
     atk = 80;
     def = 30;
     critical_chance = 0.05;
