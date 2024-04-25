@@ -272,7 +272,8 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
     display.insert_battelfield(m, e);
     display.print_screen();
 
-    system("read -p '\033[1mPress Enter to continue...\033[0m' var"); // pause the game until the user press enter
+    cout << "Press Enter to continue..." << endl;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // pause the game until the user presses enter
 
     // checkpoint reward are tackle in same function
     if (this->current_level == 3 || this->current_level == 5 || this->current_level == 7) {
@@ -398,7 +399,7 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     else{
-        cout << "Welcome to checkpoint" << endl;
+        cout << "Welcome to Rest Point" << endl;
         cout << "You will recieved both status increase and a skill" << endl;
         type = "3";
     }
@@ -423,36 +424,36 @@ void GAME::reward(MainCharacter &m, int level){ // normal reward where player ca
             break;
         }
         case 3:{
-            health = 40, attack = 15, defence = 10, magic = 40;
+            health = 25, attack = 10, defence = 10, magic = 30;
             break;
         }
         case 4:{
         
-            health = 50, attack = 20, defence = 10, magic = 50;
+            health = 30, attack = 15, defence = 15, magic = 40;
             break;
         }
         case 5:{
-            health = 60, attack = 25, defence = 15, magic = 50;
+            health = 40, attack = 25, defence = 15, magic = 40;
             break;
         }
         case 6:{
-            health = 80, attack = 30, defence = 15, magic = 60;
+            health = 50, attack = 30, defence = 15, magic = 40;
             break;
         }
         case 7:{
-            health = 80, attack = 40, defence = 25, magic = 70;
+            health = 50, attack = 30, defence = 20, magic = 40;
             break;
         }
         case 8:{
-            health = 90 , attack = 30, defence = 15, magic = 60;
+            health = 50 , attack = 35, defence = 20, magic = 50;
             break;
         }
         case 9:{
-            health = 90, attack = 40, defence = 25, magic = 80;
+            health = 55, attack = 40, defence = 25, magic = 50;
             break;
         }
         case 10:{
-            health = 100, attack = 40, defence = 25, magic = 80;
+            health = 60, attack = 40, defence = 25, magic = 50;
             break;
         }
         default:{
@@ -532,7 +533,7 @@ void GAME::skill(MainCharacter &m, int lucky_draw_no){
         // Generate a new random number
         random = rand() % moves::FULL_MOVE_POOL.size(); // Avoid duplicate moves
     }
-    //cout << "New Skill : " << moves::FULL_MOVE_POOL[random].name << endl;
+    cout << "New Skill : " << moves::FULL_MOVE_POOL[random].name << endl;
 
     display.dialogs.push_back("Skill <format><|purple|>[" + moves::FULL_MOVE_POOL[random].name + "]<end> has been added.");
     moves::addMove(m, moves::FULL_MOVE_POOL[random].ID);

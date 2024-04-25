@@ -1,21 +1,21 @@
 
-# Dungeons
+# Dungeon
 
 Embark on an adventure to conquer a dungeon filled with carefully designed mechanics!
 
 
 ## Gameplay
 
-You will start the adventure as the Hero. As you progress through the floors of the dungeon, you will gain more power and  your goal is defeat [insert final boss name here].
+You will start the adventure as the Hero. As you progress through the floors of the dungeon, you will gain more power and your goal is to conquer the dungeon.
 
-In each turn, you can choose a move to use.
+In each turn, you can choose a move to use. You will always move first and the enemy AI will choose a move as well. Simpily enter the move number to fight the enemy. After defeating an enemy, rewards will be give and you can power up your character throughout the journey.
 
 
 ## Identification
 
-- [@YAM MAN NOK (3036223294)](https://github.com/Flybug234)
-- [@LIU KONG WA (3036227446)](https://github.com/BillyLiuKW)
-- [@CHAN WA HONG(3036227226)](https://github.com/cwhong05)
+- YAM MAN NOK (3036223294) [@Flybug234](https://github.com/Flybug234)
+- LIU KONG WA (3036227446) [@BillyLiuKW](https://github.com/BillyLiuKW)
+- CHAN WA HONG(3036227226) [@cwhong05](https://github.com/cwhong05)
 
 ## Features
 

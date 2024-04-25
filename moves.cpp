@@ -209,19 +209,21 @@ void strategist(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dial
 }
 
 void nova_blast(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
+    m.mp -= info.cost;
     if (info.power == 0){
         string dialog = "<format><|blue|>" + m.name + "<end> is charging up <format><|purple|>["  + info.name + "]<end>!";
         dialogs.push_back(dialog);
         moves::FULL_MOVE_POOL[14].power = 60; //change the power to make next time this is called, it will deal damage
+        moves::FULL_MOVE_POOL[14].cost = 0; //change the cost to 0 so that cost is only used initially
         return;
     }
     int damage = calculate_damage(info.power, m.atk + m.atk_boost_sum, e.def + e.def_boost_sum);
-    m.mp -= info.cost;
     e.hp -= damage;
     string int_value = to_string(damage);
     string dialog = display_damage(e, damage);
     dialogs.push_back(dialog);
     moves::FULL_MOVE_POOL[14].power = 0; //reset the power to 0 after dealing damage
+    moves::FULL_MOVE_POOL[14].cost = 50; //reset the cost to 50 after dealing damage
 }
 
 void pain_share(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
@@ -357,16 +359,20 @@ void moves::addMove(MainCharacter& character, int ID){
         cout << "Move added!" << endl;
     }
     else{
-        cout << "Select a move to change (1-4) or input 'd' to discard the move: ";
+        cout << "Select a move to change (1-4) or input 0 to discard the move: ";
         cin >> index;
         if (cin.fail()) {
             cin.clear(); // clear the error state
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore the rest of the line
             cout << "Invalid input. Please enter a number." << endl;
-        }else {
+        }else if (index != 0){
             string old_name = FULL_MOVE_POOL[character.moveSet[index-1]].name;
             cout << "Replaced" << old_name << " with " << FULL_MOVE_POOL[ID].name << endl;
             character.moveSet[index-1] = ID;
+        }
+        else {
+            cout << "Move discarded!" << endl;
+        
         }
     }
 }
