@@ -228,9 +228,9 @@ void nova_blast(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dial
 
 void pain_share(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
     int missing_hp = m.max_hp - m.hp;
-    int missing_hp_percent = static_cast<int>(floor(static_cast<double>(missing_hp) * 100 / m.max_hp));
+    int missing_hp_percent = static_cast<int>(floor(static_cast<double>(missing_hp) * 100 / m.max_hp)); //Round down to the nearest 20%
     //Increase 10 power for every 20% missing hp
-    int increase = missing_hp_percent / 20 * 10;
+    int increase = missing_hp_percent / 20 * 10; 
     int damage = calculate_damage(info.power+increase, m.atk + m.atk_boost_sum, e.def + e.def_boost_sum);
     m.mp -= info.cost;
     e.hp -= damage;
@@ -238,7 +238,15 @@ void pain_share(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dial
     dialogs.push_back(dialog);
 }
 
-
+void poison_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
+    int damage = calculate_damage(info.power, m.atk + m.atk_boost_sum, e.def + e.def_boost_sum);
+    m.mp -= info.cost;
+    e.hp -= damage;
+    e.hp_boost.push_back(make_pair(-(damage * 0.2), 3)); // poison scales 20% of initial damage every turn
+    string int_value = to_string(damage);
+    string dialog = display_damage(e, damage);
+    dialogs.push_back(dialog);
+}
 
 
 void moves::iniializeMoves(){
@@ -258,7 +266,7 @@ void moves::iniializeMoves(){
     moveFunctions[3] = rage;
     FULL_MOVE_POOL.push_back(rageInfo);
 
-    Move_info lethal_strikeInfo = {"Lethal Strike", 4, 30, 30, "Physical"};
+    Move_info lethal_strikeInfo = {"Lethal Strike", 4, 30, 20, "Physical"};
     moveFunctions[4] = lethal_strike;
     FULL_MOVE_POOL.push_back(lethal_strikeInfo);
 
@@ -305,6 +313,11 @@ void moves::iniializeMoves(){
     Move_info pain_shareInfo = {"Pain Share", 15, 10, 30, "Magical"};
     moveFunctions[15] = pain_share;
     FULL_MOVE_POOL.push_back(pain_shareInfo);
+
+    Move_info poison_strikeInfo = {"Poison Strike", 16, 15, 20, "Physical"};
+    moveFunctions[16] = poison_strike;
+    FULL_MOVE_POOL.push_back(poison_strikeInfo);
+    
 
 }
 
