@@ -219,8 +219,8 @@ Mutant::Mutant(){
 
 Robot::Robot(){
     hp = 400;
-    atk = 15;
-    def = 55;
+    atk = 70;
+    def = 60;
     critical_chance = 0.05;
     critical_damage = 0.5;
     name = "Robot";
@@ -249,7 +249,7 @@ Robot::Robot(){
     Enemy_Skill skill5 = {5, "regenerate", "Self-Reboot", vector<string>{"e_hp 30 0"}};
     Enemy_Skill skill6 = {6, "attack", "Ion Cannon", vector<string>{"m_hp 30 0", "m_cont_hp -0.8 2"}};
     Enemy_Skill skill7 = {7, "attack", "Rapid Fire", vector<string>{"m_hp 25 0.5"}};
-    Enemy_Skill skill8 = {8, "interfere", "Virus Upload", vector<string>{"m_def -10 3", "m_hp 24 0.2", "e_crit_chance 0.5, 3", "e_crit_damage 0.5 3"}};
+    Enemy_Skill skill8 = {8, "interfere", "Virus Upload", vector<string>{"m_def -10 3", "m_hp 24 0.2", "e_crit_chance 0.5 3", "e_crit_damage 0.5 3"}};
     Enemy_Skill skill9 = {9, "defend", "Force Field", vector<string>{"e_def 20 2"}};
     Enemy_Skill skill10 = {10, "regenerate", "Nano Repair", vector<string>{"e_cont_hp_const 15 3"}};
     skill_list.push_back(skill1);
