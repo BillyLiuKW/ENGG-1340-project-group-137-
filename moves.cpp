@@ -381,29 +381,30 @@ bool moves::Maincharacter_ExecuteMove(int index, MainCharacter &m, Enemy &e){
   
 }
 
-void moves::addMove(MainCharacter& character, int ID){
+void moves::addMove(MainCharacter& character, int ID, vector<string> &dialogs){
     //Note that the player would see {1,2,3,4} instead of {0,1,2,3}
     int index;
-    if (character.moveSet.size() < 4){
-        character.moveSet.push_back(ID);
-        cout << "Move added!" << endl;
-    }
-    else{
+    bool validInput = false;
+    while (!validInput) {
         cout << "Select a move to change (1-4) or input 0 to discard the move: ";
         cin >> index;
         if (cin.fail()) {
             cin.clear(); // clear the error state
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore the rest of the line
             cout << "Invalid input. Please enter a number." << endl;
-        }else if (index != 0){
-            string old_name = FULL_MOVE_POOL[character.moveSet[index-1]].name;
-            cout << "Replaced" << old_name << " with " << FULL_MOVE_POOL[ID].name << endl;
-            character.moveSet[index-1] = ID;
+        } else {
+            validInput = true;
         }
-        else {
-            cout << "Move discarded!" << endl;
-        
-        }
+    }
+    if (index != 0){
+        string old_name = FULL_MOVE_POOL[character.moveSet[index-1]].name;
+        cout << "Replaced" << old_name << " with " << FULL_MOVE_POOL[ID].name << endl;
+        character.moveSet[index-1] = ID;
+        dialogs.push_back("Skill <format><|purple|>[" + FULL_MOVE_POOL[ID].name + "]<end> has been added.");
+    }
+    else {
+        cout << "Move discarded!" << endl;
+        dialogs.push_back("Skill <format><|purple|>[" + FULL_MOVE_POOL[ID].name + "]<end> Discarded.");
     }
 }
 

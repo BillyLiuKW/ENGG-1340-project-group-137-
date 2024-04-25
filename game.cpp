@@ -546,9 +546,9 @@ void GAME::skill(MainCharacter &m, int lucky_draw_no){
         random = rand() % moves::FULL_MOVE_POOL.size(); // Avoid duplicate moves
     }
     cout << "New Skill : " << moves::FULL_MOVE_POOL[random].name << endl;
+    moves::addMove(m, moves::FULL_MOVE_POOL[random].ID, display.dialogs);
 
-    display.dialogs.push_back("Skill <format><|purple|>[" + moves::FULL_MOVE_POOL[random].name + "]<end> has been added.");
-    moves::addMove(m, moves::FULL_MOVE_POOL[random].ID);
+
     //cout << "After : " << endl;
     //reward_screen(m);
 }

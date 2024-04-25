@@ -69,7 +69,7 @@ class moves{
         string getMoveName(int ID);
         //Get the name of the move
 
-        static void addMove(MainCharacter& character, int ID);
+        static void addMove(MainCharacter& character, int ID, vector<string> &dialogs); 
         //Add moves to character's moveSet
         static vector<Move_info> FULL_MOVE_POOL;
 
