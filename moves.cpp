@@ -516,5 +516,5 @@ void moves::resetBuffs(MainCharacter &m){
 
 
 void moves::move_description(int ID){
-    cout << "Skill Description of " << FULL_MOVE_POOL[ID].name << ": " << FULL_MOVE_POOL[ID].desc << endl;
+    cout << FULL_MOVE_POOL[ID].name << ": " << FULL_MOVE_POOL[ID].desc << endl;
 }

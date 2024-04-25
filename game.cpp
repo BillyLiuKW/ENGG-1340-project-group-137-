@@ -541,11 +541,13 @@ void GAME::skill(MainCharacter &m, int lucky_draw_no){
     cout << "Your current moves : " << endl;
     reward_screen(m);
     int random = rand() % moves::FULL_MOVE_POOL.size();
-    while (find(m.moveSet.begin(), m.moveSet.end(), moves::FULL_MOVE_POOL[random].ID) != m.moveSet.end()) {
+    while (find(m.moveSet.begin(), m.moveSet.end(), moves::FULL_MOVE_POOL[random].ID) != m.moveSet.end()) { //If the random number is already in the moveSet
         // Generate a new random number
         random = rand() % moves::FULL_MOVE_POOL.size(); // Avoid duplicate moves
     }
     cout << "New Skill : " << moves::FULL_MOVE_POOL[random].name << endl;
+    int id = moves::FULL_MOVE_POOL[random].ID;
+    moves::move_description(id);
     moves::addMove(m, moves::FULL_MOVE_POOL[random].ID, display.dialogs);
 
 
