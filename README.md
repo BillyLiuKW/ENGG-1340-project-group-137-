@@ -110,29 +110,6 @@ In each turn, you can choose a move to use. You will always move first and the e
          ```
 
      * File output (To save player's game status in checkpoints) 
-         ```cpp
-        void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
-            display.dialogs.push_back(" ");
-            display.dialogs.push_back("<format><|yellow|>Congratulations!<end> You have defeated Enemy <format><|yellow|><|bold|>[" + e.name + "]<end>!");
-            sleep(1);
-            display.clear_screen();
-            display.insert_battelfield(m, e); // input main character and enemy information to the screen
-            display.print_screen();
-            this->current_level++;
-            // That means the player has win the game.
-            
-            if (this->current_level > 10) {
-                cout << "Congratulations! You have defeated all enemies in this game! You are a true hero!!" << endl;
-                cout << "See you next time!" << endl;
-                // To clear all game status 
-                ifstream fin("game_status.txt");
-                if (fin.good()) {
-                    remove("game_status.txt");
-                }
-                //End the game.
-                exit(0);
-        }
-        ```
         ```cpp
             // checkpoint reward are tackle in same function
             if (this->current_level == 3 || this->current_level == 5 || this->current_level == 7) {
@@ -178,7 +155,7 @@ In each turn, you can choose a move to use. You will always move first and the e
             Enemy new_e(this->current_level); 
             StartGame(m, new_e);
 
-        }
+            
         ```
 * Data Structures for Saving Game Status
   * Move Execution 
