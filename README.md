@@ -197,6 +197,15 @@ In each turn, you can choose a move to use. You will always move first and the e
           ```cpp
           // an example skill
           Enemy_Skill skill2 = {2, "attack", "Heavy Attack", vector<string>{"m_hp 15 0", "m_atk -3 3", "m_cont_hp -5 2"}};
+          
+          // the skill structure
+          struct Enemy_Skill{
+              int index; // index of the skill in the skill_list
+              string type; // basic type of the skill: attack/ defend/ interfere (buff or debuff)/ regenerate 
+              string skill_name;
+              vector<string> effect;
+              int uses; // number of skills used
+          };
           ```
           
         * The effect in the skill store one or more simple action to do <br>
@@ -211,7 +220,7 @@ In each turn, you can choose a move to use. You will always move first and the e
               {"m_hp", &EnemyMoves::m_hp},
               {"e_atk", &EnemyMoves::e_atk},
               {"m_atk", &EnemyMoves::m_atk},
-            ...  
+              ...  
            };
 
           // part of an example function
