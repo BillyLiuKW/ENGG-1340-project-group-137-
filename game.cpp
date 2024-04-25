@@ -70,10 +70,17 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
                 if (line == "info"){
                     cout << "Please input the skill you want to know more about: ";
                     string skill_index;
-                    getline(cin, skill_index);
-                    while (!isInteger(skill_index) || stoi(skill_index) < 0 || stoi(skill_index) > m.moveSet.size()){
-                        cout << "Invalid Input. Please enter again : " ;
+                    while (true){
                         getline(cin, skill_index);
+                        if (!isInteger(skill_index)){
+                            cout << "Please enter a valid \033[1minteger\033[0m index. Please try again: ";
+                            continue;
+                        }
+                        if (stoi(skill_index) < 0 || stoi(skill_index) > m.moveSet.size()){
+                            cout << "Please enter an index \033[1mwithin\033[0m the skill set. Please try again: ";
+                            continue;
+                        }
+                        break;
                     }
                     skill_desc_display(stoi(skill_index),m.moveSet);
                     continue;
@@ -83,7 +90,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
                 if (!iss.fail()) {  // check if user input an integer
                     break;
                 }
-                cout << "Please input an integer within the skill set!" << endl;
+                cout << "Please input a valid \033[1minteger\033[0m index or \033[1m\"info\"\033[0m!" << endl;
                 iss.clear();        
                 iss.ignore(numeric_limits<streamsize>::max(), '\n');
             }
