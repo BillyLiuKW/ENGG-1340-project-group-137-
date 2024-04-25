@@ -192,7 +192,43 @@ In each turn, you can choose a move to use. You will always move first and the e
   moveFunctions[0] = slash;
   moveFunction[0](arg1,arg2,arg3,arg4);
   ```
+  * Enemy's skill.
+     * Each skill is a structure containing its index, skill type, name, and effect
+          ```cpp
+          // an example skill
+          Enemy_Skill skill2 = {2, "attack", "Heavy Attack", vector<string>{"m_hp 15 0", "m_atk -3 3", "m_cont_hp -5 2"}};
+          ```
+          
+        * The effect in the skill store one or more simple action to do <br>
+          For example, reduce player HP, increase own ATK etc. <br>
+          the other arguments is the power and duration/ special effect (if any) <br>
+          <br>
+          a map will match each simple action and execute its corresponding
+          ```cpp
+          // part of the map
+          map<string, function<void(EnemyMoves&, double, double)> > skill_option = {
+              {"e_hp", &EnemyMoves::e_hp},
+              {"m_hp", &EnemyMoves::m_hp},
+              {"e_atk", &EnemyMoves::e_atk},
+              {"m_atk", &EnemyMoves::m_atk},
+            ...  
+           };
 
+          // part of an example function
+          void EnemyMoves::m_hp(double multiplier, double other){
+              double damage = 0;
+              double penetrate = other; // ingore main character defend. up to 30% 
+              int critical = is_critical(e.critical_chance + e.crit_chance_boost_sum);
+              damage = (e.atk +e.atk_boost_sum) * multiplier * (1 + critical * (e.critical_damage + e.crit_damage_boost_sum)) / (m.def +    m.def_boost_sum) * (1 - 0.3 * penetrate);
+              damage = max(1.0, damage);
+              m.hp -= static_cast<int>(damage);
+              ...
+          }   
+          ```
+        * all the skills of an enemy will store at a vector of skill_structure.
+          
+
+       
   * Vector For Move Information
   ```cpp
   //In character.hpp
