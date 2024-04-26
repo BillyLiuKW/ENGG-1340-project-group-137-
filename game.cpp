@@ -161,24 +161,14 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
             Victory(m, e, display);
             break;
         }
-        int min_hp_use = -1;
-        int min_mp_use = -1;
+        int min_hp_use = 10000; // just a random large number. 
+        int min_mp_use = 10000;
         for (auto i: m.moveSet){
             if (moves::FULL_MOVE_POOL[i].type == "Physical"){
-                if (min_hp_use == -1){
-                    min_hp_use = moves::FULL_MOVE_POOL[i].cost;
-                }
-                else{
-                    min_hp_use = min(min_hp_use, moves::FULL_MOVE_POOL[i].cost);
-                }
+                min_hp_use = min(min_hp_use, moves::FULL_MOVE_POOL[i].cost);
             }
             else if (moves::FULL_MOVE_POOL[i].type == "Magical" || moves::FULL_MOVE_POOL[i].type == "Buff"){
-                if (min_mp_use == -1){
-                    min_mp_use = moves::FULL_MOVE_POOL[i].cost;
-                }
-                else{
-                    min_mp_use = min(min_mp_use, moves::FULL_MOVE_POOL[i].cost);
-                }
+                min_mp_use = min(min_mp_use, moves::FULL_MOVE_POOL[i].cost);
             }
         }
         if (m.hp < min_hp_use && m.mp < min_mp_use){
