@@ -10,6 +10,11 @@ You will start the adventure as the Hero. As you progress through the floors of 
 
 In each turn, you can choose a move to use. You will always move first and the enemy AI will choose a move as well. Simpily enter the move number to fight the enemy. After defeating an enemy, rewards will be give and you can power up your character throughout the journey.
 
+## Execution
+Steps : 
+1. Type "make" in terminal
+2. Type "./play" in terminal to start the game
+3. After running the game, you can type "make clean" to clean all the files for the project
 
 ## Identification
 
