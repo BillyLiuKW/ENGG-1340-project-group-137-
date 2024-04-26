@@ -423,7 +423,7 @@ string moves::getMoveName(int ID){
 }
 
 bool moves::check_cost(MainCharacter &m, Move_info move){
-    if (move.type == "Physical" && m.hp < move.cost){
+    if (move.type == "Physical" && m.hp <= move.cost){
         return false;
     }
     else{
