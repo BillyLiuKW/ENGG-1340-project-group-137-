@@ -42,6 +42,8 @@ void miss(int &dmg, vector<string> &dialogs, int chance){
     }
 }
 
+
+
 string display_damage(Enemy &e, int damage){
     string int_value = to_string(damage);
     string dialog = "Enemy <format><|yellow|>[" + e.name + "]<end>'s <format><|red|>HP<end>";
@@ -257,6 +259,27 @@ void astral_beam(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dia
     dialogs.push_back(dialog);
 }
 
+void clean_body(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
+    int flag = 0; //flag for the dialogs so that it shows atk def debuff removed
+    string dialog; 
+    for (int i = 0; i < m.atk_boost.size(); i++){
+        if (m.atk_boost[i].first < 0){
+            m.atk_boost.erase(m.atk_boost.begin() + i);
+            flag = 1;
+        }
+    }
+    for (int i = 0; i < m.def_boost.size(); i++){
+        if (m.def_boost[i].first < 0){
+            m.def_boost.erase(m.def_boost.begin() + i);
+            flag = 1;        }
+    }
+    if (flag == 1){
+        dialog += "Due to Clean Body, <format><>|red|>ATK<end> and <format><|cyan|>DEF<end> Debuff has been cleansed!";
+        dialogs.push_back(dialog);
+    }
+
+}
+
 
 void moves::iniializeMoves(){
     Move_info slashInfo = {"Slash", 0 ,20, 10, "Physical"};
@@ -348,6 +371,13 @@ void moves::iniializeMoves(){
     astral_beamInfo.desc = "Ignores 20% of Enemy DEF";
     moveFunctions[17] = astral_beam;
     FULL_MOVE_POOL.push_back(astral_beamInfo);
+
+    Move_info clean_bodyInfo = {"Clean Body", 18, 0, 0, "Passive"};
+    clean_bodyInfo.desc = "Ignores All Debuffs";
+    moveFunctions[18] = clean_body;
+    FULL_MOVE_POOL.push_back(clean_bodyInfo);
+
+
 
 
 }

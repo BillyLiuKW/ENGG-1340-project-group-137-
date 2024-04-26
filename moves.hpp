@@ -57,6 +57,8 @@ void poison_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &d
 
 void astral_beam(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals magic dmg to enemy, ignore 20% of enemy def
 
+void clean_body(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //Passive move, ignore all debuffs
+
 
 
 class moves{
