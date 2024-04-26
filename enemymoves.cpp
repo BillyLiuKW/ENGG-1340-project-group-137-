@@ -324,7 +324,7 @@ int EnemyMoves::chooseSkill(vector<Enemy_Skill> skills) {
 }
 void EnemyMoves::normal_attack(){
     dialogs.push_back("Enemy <format><|yellow|>[" + e.name + "]<end> has use <format><|bold|>normal attack<end>.");
-    double damage = 0, power = 20;
+    double damage = 0, power = 16;
     power += 10 * (max(0.0, (0.7 - e.hp/e.max_hp)) - max(0.0, (0.2 - e.hp/e.max_hp))); // power will increase up to 10 when enemy hp decrease from 70% - 20%
     int critical = is_critical(e.critical_chance + e.crit_chance_boost_sum);
     damage = (e.atk + e.atk_boost_sum) * power * (1 + critical * (e.critical_damage + e.crit_damage_boost_sum)) / (m.def + m.def_boost_sum);

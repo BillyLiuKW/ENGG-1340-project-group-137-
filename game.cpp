@@ -141,14 +141,15 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
 
         m.hp = max(0, m.hp);
         e.hp = max(0, e.hp);
-        
+
         // show battelfield
         display.clear_screen();
         display.insert_battelfield(m, e);
         display.print_screen();
         
+        sleep(1);
         //  Check if any character has died
-        if (! survive(m.hp) || !survive(m.mp)) {
+        if (! survive(m.hp)) {
             //player dead and need functions to provide retry function 
             Gameretry();
             break;
@@ -160,9 +161,33 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
             Victory(m, e, display);
             break;
         }
-
+        int min_hp_use = -1;
+        int min_mp_use = -1;
+        for (auto i: m.moveSet){
+            if (moves::FULL_MOVE_POOL[i].type == "Physical"){
+                if (min_hp_use == -1){
+                    min_hp_use = moves::FULL_MOVE_POOL[i].cost;
+                }
+                else{
+                    min_hp_use = min(min_hp_use, moves::FULL_MOVE_POOL[i].cost);
+                }
+            }
+            else if (moves::FULL_MOVE_POOL[i].type == "Magical" || moves::FULL_MOVE_POOL[i].type == "Buff"){
+                if (min_mp_use == -1){
+                    min_mp_use = moves::FULL_MOVE_POOL[i].cost;
+                }
+                else{
+                    min_mp_use = min(min_mp_use, moves::FULL_MOVE_POOL[i].cost);
+                }
+            }
+        }
+        if (m.hp < min_hp_use && m.mp < min_mp_use){
+            cout << "You do not have enough HP/MP to use any skill." << endl;
+            Gameretry();
+            break;
+        }
         round++;
-        sleep(2);
+        sleep(1);
     }
     // if the player cannot defeat the enemy in 10 rounds, the game will end.
     cout << "You cannot defeat " << e.name << " in 10 rounds!" << endl;
