@@ -249,6 +249,14 @@ void poison_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &d
     dialogs.push_back(dialog);
 }
 
+void astral_beam(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
+    int damage = calculate_damage(info.power, m.atk + m.atk_boost_sum, (e.def + e.def_boost_sum) * 0.8); //ignore 20% of enemy def
+    m.mp -= info.cost;
+    e.hp -= damage;
+    string dialog = display_damage(e, damage);
+    dialogs.push_back(dialog);
+}
+
 
 void moves::iniializeMoves(){
     Move_info slashInfo = {"Slash", 0 ,20, 10, "Physical"};
@@ -335,7 +343,12 @@ void moves::iniializeMoves(){
     poison_strikeInfo.desc = "Poisons Enemy for 2 turns";
     moveFunctions[16] = poison_strike;
     FULL_MOVE_POOL.push_back(poison_strikeInfo);
-    
+
+    Move_info astral_beamInfo = {"Astral Beam", 17, 25, 35, "Magical"};
+    astral_beamInfo.desc = "Ignores 20% of Enemy DEF";
+    moveFunctions[17] = astral_beam;
+    FULL_MOVE_POOL.push_back(astral_beamInfo);
+
 
 }
 

@@ -55,7 +55,7 @@ void pain_share(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dial
 
 void poison_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals phys dmg to enemy, poisons enemy for 2 turns
 
-
+void astral_beam(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals magic dmg to enemy, ignore 20% of enemy def
 
 
 
