@@ -271,7 +271,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
 
     // triangular distribution
     int recover_percentage_hp = (distribution_hp(gen) + distribution_hp(gen)) / 2.0;
-    int hp_recover_value = m.max_hp * recover_percentage_hp;
+    int hp_recover_value = m.max_hp * recover_percentage_hp / 100;
     hp_recover_value = min(m.max_hp - m.hp, hp_recover_value); // set the limit not to exceed max.hp
 
     min_value = 40;
@@ -279,7 +279,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
     uniform_int_distribution<int> distribution_mp(min_value, max_value);
     
     int recover_percentage_mp = (distribution_mp(gen) + distribution_mp(gen)) / 2.0;
-    int mp_recover_value = m.max_mp * recover_percentage_mp;
+    int mp_recover_value = m.max_mp * recover_percentage_mp / 100;
     mp_recover_value = min(m.max_mp - m.mp, mp_recover_value);
     /* test
     string str_1 = to_string(recover_percentage_hp);
@@ -299,7 +299,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
     display.insert_battelfield(m, e);
     display.print_screen();
 
-    cout << "Press Enter to continue..." << endl;
+    cout << "\033[1mPress Enter to continue...\033[0m" << endl;
     cin.ignore(numeric_limits<streamsize>::max(), '\n'); // pause the game until the user presses enter
 
     // checkpoint reward are tackle in same function

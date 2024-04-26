@@ -175,7 +175,7 @@ Goblin::Goblin(){
 Mutant::Mutant(){
     hp = 130;
     atk = 35;
-    def = 45;
+    def = 40;
     critical_chance = 0.05;
     critical_damage = 0.5;
     name = "Mutant";

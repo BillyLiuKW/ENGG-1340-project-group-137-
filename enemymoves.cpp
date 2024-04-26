@@ -146,7 +146,7 @@ int EnemyMoves::chooseSkillType(){
     }
     double difference = max - min;
 
-    double prob_sum; 
+    double prob_sum = 0; 
     for(int i = 0; i < type_num; i++){
         if (skill_num[i] != 0){
             prob_sum += skill_weighting[i];
