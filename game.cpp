@@ -148,7 +148,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         display.print_screen();
         
         //  Check if any character has died
-        if (! survive(m.hp)) {
+        if (! survive(m.hp) || !survive(m.mp)) {
             //player dead and need functions to provide retry function 
             Gameretry();
             break;
