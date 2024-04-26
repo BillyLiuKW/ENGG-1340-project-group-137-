@@ -28,7 +28,7 @@ void Critical_hit(int &dmg, vector<string> &dialogs, int chance = 10){
     if (random < chance){
         string dialog = "<format><|bold|><|red|>Critical hit!<end>";
         dialogs.push_back(dialog);
-        dmg *= 1.5;
+        dmg *= 1.3;
     }
 }
 
@@ -240,7 +240,8 @@ void pain_share(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dial
 
 void poison_strike(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs){
     int damage = calculate_damage(info.power, m.atk + m.atk_boost_sum, e.def + e.def_boost_sum);
-    m.mp -= info.cost;
+    m.hp -= info.cost;
+    Critical_hit(damage, dialogs);
     e.hp -= damage;
     e.hp_boost.push_back(make_pair(-(damage * 0.2), 3)); // poison scales 20% of initial damage every turn
     string int_value = to_string(damage);
