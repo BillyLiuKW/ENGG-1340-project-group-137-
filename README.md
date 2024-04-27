@@ -13,6 +13,7 @@ In each turn, you can choose a move to use. You will always move first and the e
 ## Video
 Link : 
 https://drive.google.com/file/d/1b8jUeqv1bEbfI0VriHTPgfhMqNbBunCu/view?usp=sharing
+
 Powerpoint Link : 
 https://connecthkuhk-my.sharepoint.com/:p:/g/personal/u3622722_connect_hku_hk/EeZ32rQ5Bb9Ii8n97PbTIzsBKKR8d-P5wWlzvwCS3Hb1ww?e=DWfeiR
 
