@@ -10,6 +10,12 @@ You will start the adventure as the Hero. As you progress through the floors of 
 
 In each turn, you can choose a move to use. You will always move first and the enemy AI will choose a move as well. Simpily enter the move number to fight the enemy. After defeating an enemy, rewards will be give and you can power up your character throughout the journey.
 
+## Video
+Link : 
+https://drive.google.com/file/d/1b8jUeqv1bEbfI0VriHTPgfhMqNbBunCu/view?usp=sharing
+Powerpoint Link : 
+https://connecthkuhk-my.sharepoint.com/:p:/g/personal/u3622722_connect_hku_hk/EeZ32rQ5Bb9Ii8n97PbTIzsBKKR8d-P5wWlzvwCS3Hb1ww?e=DWfeiR
+
 ## Execution
 Steps : 
 1. Type "make" in terminal
