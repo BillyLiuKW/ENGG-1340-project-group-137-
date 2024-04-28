@@ -8,20 +8,39 @@ Embark on an adventure to conquer a dungeon filled with carefully designed mecha
 
 You will start the adventure as the Hero. As you progress through the floors of the dungeon, you will gain more power and your goal is to conquer the dungeon.
 
-In each turn, you can choose a move to use. You will always move first and the enemy AI will choose a move as well. Simpily enter the move number to fight the enemy. After defeating an enemy, rewards will be give and you can power up your character throughout the journey.
+In each turn, you can choose a move to use. You will always move first and the enemy AI will choose a move as well. Simpily enter the move number to fight the enemy. After defeating an enemy, rewards will be give and you can power up your character throughout the journey. You can save your progress when you reach the rest points. 
 
-## Video
-Link : 
-https://drive.google.com/file/d/1b8jUeqv1bEbfI0VriHTPgfhMqNbBunCu/view?usp=sharing
+![Showcase](https://imgur.com/SAoIFbq.png)
 
-Powerpoint Link : 
-https://connecthkuhk-my.sharepoint.com/:p:/g/personal/u3622722_connect_hku_hk/EeZ32rQ5Bb9Ii8n97PbTIzsBKKR8d-P5wWlzvwCS3Hb1ww?e=DWfeiR
+When you choose a moves, the battle screen will show you a log of what happened
 
-## Execution
-Steps : 
-1. Type "make" in terminal
-2. Type "./play" in terminal to start the game
-3. After running the game, you can type "make clean" to clean all the files for the project
+![Showcase](https://imgur.com/VxYvets.png)
+
+When the HP of your opponent reaches 0, you will proceed to the next level. <br>
+If your HP reaches 0, it will be gameover and you can either start from your last save or start fresh
+
+## Execution and Compilation 
+1. Compile using this command
+```bash
+make
+```
+or
+```bash
+make dungeons
+```
+
+2. Start the game
+```bash
+make play
+```
+or
+```bash
+./dungeons
+```
+3. Clean the build
+```bash
+make clean
+```
 
 ## Identification
 
@@ -396,6 +415,9 @@ Steps :
   #include "enemymoves.hpp"
   ```
   
+## Video
+Link : 
+https://drive.google.com/file/d/1b8jUeqv1bEbfI0VriHTPgfhMqNbBunCu/view?usp=sharing
 
 
         

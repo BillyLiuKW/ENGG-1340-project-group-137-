@@ -1,8 +1,10 @@
 OBJECTS = character.o game.o moves.o main.o screen.o enemymoves.o
 FLAGS = "-std=c++11"
 
-play: $(OBJECTS) 
-	g++ $(FLAGS) $(OBJECTS) -o play
+all: dungeons
+
+dungeons: $(OBJECTS) 
+	g++ $(FLAGS) $(OBJECTS) -o dungeons
 
 game.o: game.cpp game.hpp character.o moves.o screen.o enemymoves.o
 	g++ $(FLAGS) -c game.cpp -o game.o
@@ -23,10 +25,9 @@ screen.o: screen.cpp screen.hpp textformat.hpp character.o
 	g++ $(FLAGS) -c screen.cpp -o screen.o
 
 
-test: 
-	./play
+play: 
+	./dungeons
 clean:
-	rm -f $(OBJECTS) play
+	rm -f $(OBJECTS) dungeons
 
-
-.PHONY: clean test
+.PHONY: clean play all
