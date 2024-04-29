@@ -163,6 +163,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
         }
         int min_hp_use = 10000; // just a random large number. 
         int min_mp_use = 10000;
+        // it should be impossible to win if the player do not have any "physical" and "magical" skill
         for (auto i: m.moveSet){
             if (moves::FULL_MOVE_POOL[i].type == "Physical"){
                 min_hp_use = min(min_hp_use, moves::FULL_MOVE_POOL[i].cost);
@@ -171,6 +172,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
                 min_mp_use = min(min_mp_use, moves::FULL_MOVE_POOL[i].cost);
             }
         }
+        // check if the player can you any skill
         if (m.hp < min_hp_use && m.mp < min_mp_use){
             cout << "You do not have enough HP/MP to use any skill." << endl;
             Gameretry();
@@ -186,7 +188,7 @@ void GAME::StartGame(MainCharacter& m, Enemy& e) {
 
 }
 
-
+// this function not use anymore. It is just a memory for the good old day.
 void GAME::Display(const string& Maincharacter_name, int Maincharacter_hp, int Maincharacter_atk, const string& enemy_name, int enemy_hp, int enemy_atk) {
     // leaving some spaces to show the screen.
     cout << string(5, '\n');
@@ -259,8 +261,9 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
     display.dialogs.push_back(" ");
     display.dialogs.push_back("<format><|yellow|>Congratulations!<end> You have defeated Enemy <format><|yellow|><|bold|>[" + e.name + "]<end>!");
     sleep(1);
+    // standard display screen procedure
     display.clear_screen();
-    display.insert_battelfield(m, e); // input main character and enemy information to the screen
+    display.insert_battelfield(m, e);
     display.print_screen();
     this->current_level++;
     // That means the player has win the game.
@@ -276,7 +279,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
         //End the game.
         exit(0);
     }
-    // main character recover. it will recover 25 - 75 % of HP and MP, where 50% is the mode.
+    // main character recover. it will randomly recover 25 - 75 % of HP and 40 - 90 % MP, where 50% is the mode.
     random_device rd;
     mt19937 gen(rd());
 
@@ -314,8 +317,8 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
     display.insert_battelfield(m, e);
     display.print_screen();
 
-    cout << "\033[1mPress Enter to continue...\033[0m" << endl;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // pause the game until the user presses enter
+    cout << "\033[1mPress Enter to continue...\033[0m" << endl; // pause the game until the user presses enter
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
 
     // checkpoint reward are tackle in same function
     if (this->current_level == 3 || this->current_level == 5 || this->current_level == 7) {
@@ -330,7 +333,7 @@ void GAME::Victory(MainCharacter &m, Enemy &e, Screen &display) {
             cout << "Do you want to store your game status? [y/n] " << endl;
             cin >> y_n;
         }
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // this line must be add after any cin <<. Otherwise it willmake a new line in getline
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // this line must be add after any cin >>. Otherwise it will remain a new line character in getline for absolutly no reason
         if (y_n == 'y') {
             ofstream fout("game_status.txt");
             if (fout.is_open()) {
@@ -517,8 +520,8 @@ void round_to_five(int &x){
 }
 
 void GAME::stats(MainCharacter &m, int lucky_draw_no, int health, int attack, int defence, int magic){
-    if (lucky_draw_no == 0){
-        srand(time(0));
+    if (lucky_draw_no == 0){ // if the player just press enter and do not input anything
+        srand(time(0)); // randomly assign a number to it by current time
     }
     else{
         srand(lucky_draw_no);

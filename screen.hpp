@@ -47,12 +47,12 @@ class Screen{
         void print_screen();
         // print all the format location
         void print_format();
-        // insert the battelfield to the screen
+        // insert the battelfield to the screen including player and enemy information and the battel logs
         void insert_battelfield(MainCharacter& m, Enemy& e);
         // insert the information of the enemy of character
         void insert_information(int row, Enemy info);
         void insert_information(int row, MainCharacter info);
-        //insert a line to seperate the display screen
+        //insert a line to seperate the display screen at "row"
         void insert_speration(int row);
         //insert dialog
         void insert_dialog(int start_row);
@@ -62,7 +62,7 @@ class Screen{
     private:
         //make the edge and conern of the screen
         void create_edge();
-        // only use in sort_list(), 
+        // only use in sort_list()
         static bool compareItems(const format &item1, const format &item2);
         // sort the format_position by column position in descending order
         void sort_list();

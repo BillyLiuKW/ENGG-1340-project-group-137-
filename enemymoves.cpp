@@ -68,6 +68,8 @@ int EnemyMoves::chooseSkillType(){
     vector<Enemy_Skill> attack_skills, defend_skills, interfence_skills, regerneration_skills;
     vector<int> skill_num(type_num, 0);
     vector<double> skill_uses(type_num, 0), skill_weighting = {0.4, 0.2, 0.25, 0.15}; // with the same order
+
+    // change the probability under different situation
     if (e.hp < e.max_hp * 0.8){
         normal_attack_prob -= 0.05;
         skill_weighting[3] += 0.1;
@@ -188,7 +190,7 @@ int EnemyMoves::chooseSkillType(){
         for (auto i: probability){
             total_sum += i;
         }
-        for (int i = 0; i < probability.size(); i++){
+        for (int i = 0; i < probability.size(); i++){ // calibrate the prob
             probability[i] /= total_sum;
         }
     }
@@ -216,6 +218,7 @@ int EnemyMoves::chooseSkillType(){
     dialogs.push_back(sss);
     // *** end*/
 
+    // from <random> library
     random_device rd;
     mt19937 generator(rd()); 
     discrete_distribution<int> distribution(probability.begin(), probability.end());
@@ -351,7 +354,7 @@ void EnemyMoves::use_skill(int skill_id){
             cout << "skill option: " << option << " not found in skill: " << e.skill_list[skill_id-1].skill_name;
             continue;
         }
-        skill_option[option](*this, value, other);
+        skill_option[option](*this, value, other); // use the skill according to the skill map
     }
 }
 void EnemyMoves::e_hp(double multiplier, double other){

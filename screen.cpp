@@ -90,7 +90,7 @@ void Screen::insert_item(int start_row, int start_col, vector<string> item, vect
     int row_size = item.size();
     //insert the provide format to every line in the item
     string start_format = "", end_format = "";
-    if (!types.empty()){
+    if (!types.empty()){ // if there are some format exist in the "types"
         start_format += "<format>";
         for (string type: types){
             start_format += ("<|" + type + "|>");
@@ -115,10 +115,10 @@ void Screen::formatting(int row, int col, string &line){
     int start_pos = 0;
     while(true){
         start_pos = line.find("<format>", start_pos);
-        if (start_pos == string::npos) {
+        if (start_pos == string::npos) { // if no format
             break;
         } 
-        bool return_value = false;
+        bool return_value = false; // to confirm whether any format is in correct syntax. Don't return anything if no
         format f;
         f.start_row = row;
         f.start_col = col + start_pos;
@@ -131,17 +131,17 @@ void Screen::formatting(int row, int col, string &line){
             if (type_pos == string::npos){
                 break;
             }
-            if (type_pos > line.find("<end>", start_pos)){ // do not find anything exceed <end>
+            if (type_pos > line.find("<end>", start_pos)){ // do not find any format (e.g. <|red|>) between <format> and <end>
                 break;
             }
             int stop_pos = line.find("|>", start_pos);
-            string type = line.substr(type_pos+2, stop_pos-type_pos-2); //<|type|>
+            string type = line.substr(type_pos+2, stop_pos-type_pos-2); //extract "type" from <|type|>
             line.erase(type_pos, stop_pos-type_pos+2);
             auto find_type = formatMap.find(type); // find if the elemet exist in format map
             if (find_type == formatMap.end()){ // if not exist
                 continue;
             }
-            return_value = true;
+            return_value = true; // any suitable format will make it true
             f.format_types.push_back(type);
         }
         int end_pos = line.find("<end>", start_pos);
@@ -152,7 +152,7 @@ void Screen::formatting(int row, int col, string &line){
         }
     }
 }
-void Screen::print_format(){
+void Screen::print_format(){ // for debug only
     for (auto &f : format_position){
         for (auto &type : f.format_types){
             cout << type << " ";
@@ -169,9 +169,9 @@ void Screen::insert_speration(int row){
     }
 }
 void Screen::insert_dialog(int start_row){
-    int dialog_length = dialogs.size(); // number of dialog to display
+    int dialog_length = dialogs.size(); // number of dialog in the dialogs storage
     if (dialog_length > 0){
-        if (height - (start_row+1) < max_dialog){
+        if (height - (start_row+1) < max_dialog){ 
             max_dialog = height - start_row;
         }
         vector<string> subset(dialogs.end() - max_dialog, dialogs.end());

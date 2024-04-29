@@ -45,23 +45,23 @@ class EnemyMoves{
         // change enemy hp by continue damage/ regen
         void hp_change(); // apply the conyinue damage or regeneration
     private:
-        vector<double> z_score(vector<double> &skill_uses, vector<int> &skill_num, int& type_num_s);
-        int chooseSkillType(); // returm skill chosen in chooseSkill()
-        int chooseSkill(vector<Enemy_Skill> skills); // only use in chooseSkillType()
-        void e_hp(double multiplier, double other);
-        void m_hp(double multiplier, double other);
-        void e_atk(double multiplier, double other);
-        void m_atk(double multiplier, double other);
-        void e_def(double multiplier, double other);
-        void m_def(double multiplier, double other);
-        void e_cont_hp(double multiplier, double other);
-        void e_cont_hp_const(double multiplier, double other);
-        void m_cont_hp(double multiplier, double other);
-        void m_cont_hp_const(double multiplier, double other);
-        void e_crit_chance(double multiplier, double other);
-        void e_crit_damage(double multiplier, double other);
-        void m_mp(double multiplier, double other);
-        int is_critical(double probability);
+        vector<double> z_score(vector<double> &skill_uses, vector<int> &skill_num, int& type_num_s); // convert the skills uses to a standard score.
+        int chooseSkillType(); // choose a skill type to use base on their number of uses. return skill index chosen in chooseSkill()
+        int chooseSkill(vector<Enemy_Skill> skills); // only use in chooseSkillType(), choose a skill in "skills" lists and return its index.
+        void e_hp(double multiplier, double other); // add enemy HP by "multiplier"
+        void m_hp(double multiplier, double other); // damage player HP by "multiplier" * some calculation, corrlected by "other"
+        void e_atk(double multiplier, double other); // increase/decrease enemy attack by "multiplier" for "other" rounds
+        void m_atk(double multiplier, double other); // increase/decrease player atttack by "multiplier" for "other" rounds
+        void e_def(double multiplier, double other); // increase/decrease enemy defend by "multiplier" for "other" rounds
+        void m_def(double multiplier, double other); // increase/decrease player defend by "multiplier" for "other" rounds
+        void e_cont_hp(double multiplier, double other); // increase/decrease enemy HP by "multiplier" * some calculation for "other" rounds
+        void e_cont_hp_const(double multiplier, double other); // increase/decrease enemy HP by constant "multiplier" for "other" rounds
+        void m_cont_hp(double multiplier, double other); // increase/decrease player HP by "multiplier" * some calculation for "other" rounds
+        void m_cont_hp_const(double multiplier, double other); // increase/decrease player HP by constant "multiplier" for "other" rounds
+        void e_crit_chance(double multiplier, double other); // increase/decrease enemy critical chance by "multiplier" for "other" rounds
+        void e_crit_damage(double multiplier, double other); // increase/decrease enemy critical damage by "multiplier" for "other" rounds
+        void m_mp(double multiplier, double other); // increase/decrease player mp by "multiplier" for "other" rounds
+        int is_critical(double probability); // calculate is the attack critical with chance "probability". return 1 if critical
 };
 
 #endif

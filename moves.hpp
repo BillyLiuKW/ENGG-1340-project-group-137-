@@ -17,7 +17,8 @@ void Critical_hit(int &dmg, vector<string> &dialogs,int chance); //Physical move
 
 void miss(int &dmg, vector<string> &dialogs,int chance); //Use this for moves that have a chance to miss
 
-int calculate_damage(double power, int self_atk, int enemy_def); //Apply the damage formula
+int calculate_damage(double power, int self_atk, int enemy_def); //Apply the damage formula and return the damage
+
 //Define moves outside moves class
 
 void slash(MainCharacter &m, Enemy &e, Move_info info, vector<string> &dialogs); //deals phys dmg to enemy, base moves
@@ -68,6 +69,7 @@ class moves{
 
         vector<string> &dialogs;
 
+        // execute skill ID chosen by the player. return false if the ID is invalid, else true
         bool Maincharacter_ExecuteMove(int ID, MainCharacter &m, Enemy &e);
 
         string getMoveName(int ID);
@@ -75,6 +77,7 @@ class moves{
 
         static void addMove(MainCharacter& character, int ID, vector<string> &dialogs); 
         //Add moves to character's moveSet
+        
         static vector<Move_info> FULL_MOVE_POOL;
 
         void deleteMove(MainCharacter& character, int ID); // For testing purposes
@@ -83,7 +86,7 @@ class moves{
         void hp_change(MainCharacter &m);
         // calculate the boosts
         void calculate_boost(MainCharacter &m);
-        // decrease all boost by 1 every half round
+        // decrease all boost (exclude HP change) by 1 every half round
         static void display_moves(MainCharacter &m);
 
         void resetBuffs(MainCharacter &m); //Reset the buffs after battle

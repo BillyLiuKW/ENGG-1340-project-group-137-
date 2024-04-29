@@ -164,7 +164,7 @@ void select_option(int option, GAME game) {
         {
             break;
         }
-        case 6: // 
+        case 123: //
         {
             // cheat code // for testing 
             MainCharacter m;
